@@ -1,29 +1,42 @@
 package chessEngine.position;
+import jakarta.persistence.*;
 
-import chessEngine.position.positionID.PositionID;
-import jakarta.persistence.Column;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
+import java.util.Objects;
 
 @Entity
+@Table(
+        name = "Position",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"positionCode", "whiteMoves"})
+)
 public class Position {
 
-    @EmbeddedId
-    private PositionID positionID;
+    @Id
+    @SequenceGenerator(
+            name = "position_sequence",
+            sequenceName = "position_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy= GenerationType.SEQUENCE,
+            generator = "position_sequence"
+    )
+    private Long id;
     @Column(length = 128)
     private String positionCode;
+    private boolean whiteMoves;
 
-    public Position(PositionID positionID, String positionCode) {
-        this.positionID = positionID;
+    public Position(Long id, String positionCode, boolean whiteMoves) {
+        this.id = id;
         this.positionCode = positionCode;
+        this.whiteMoves = whiteMoves;
     }
 
-    public PositionID getPositionID() {
-        return positionID;
+    public Long getId() {
+        return id;
     }
 
-    public void setPositionID(PositionID positionID) {
-        this.positionID = positionID;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getPositionCode() {
@@ -34,5 +47,32 @@ public class Position {
         this.positionCode = positionCode;
     }
 
+    public boolean isWhiteMoves() {
+        return whiteMoves;
+    }
 
+    public void setWhiteMoves(boolean whiteMoves) {
+        this.whiteMoves = whiteMoves;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Position position)) return false;
+        return whiteMoves == position.whiteMoves && Objects.equals(id, position.id) && Objects.equals(positionCode, position.positionCode);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, positionCode, whiteMoves);
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "id=" + id +
+                ", positionCode='" + positionCode + '\'' +
+                ", whiteMoves=" + whiteMoves +
+                '}';
+    }
 }
