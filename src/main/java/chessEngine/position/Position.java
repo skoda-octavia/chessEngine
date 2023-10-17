@@ -31,6 +31,9 @@ public class Position {
         this.whiteMoves = whiteMoves;
     }
 
+    public Position() {
+    }
+
     public Long getId() {
         return id;
     }
