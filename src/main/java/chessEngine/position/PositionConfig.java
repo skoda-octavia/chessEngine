@@ -12,7 +12,15 @@ public class PositionConfig {
     @Bean
     CommandLineRunner commandLineRunner(PositionRepository repository) {
         return args -> {
-            Position pos = new Position(1L,"fds", true);
+            String posCode = "bRbkbBbQbKbBbkbR";
+            posCode += "bPbPbPbPbPbPbPbP";
+            posCode += "                ";
+            posCode += "                ";
+            posCode += "                ";
+            posCode += "                ";
+            posCode += "wPwPwPwPwPwPwPwP";
+            posCode += "wRwkwBwQwKwBwkwR";
+            Position pos = new Position(1L, posCode, true);
             repository.saveAll(List.of(pos));
         };
     }
