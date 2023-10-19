@@ -3,7 +3,7 @@ package chessEngine.chess.piece.infiniteRangePiece.bishop;
 import chessEngine.chess.piece.Piece;
 import chessEngine.chess.piece.PieceColor;
 
-public abstract class WhiteBishop extends Bishop {
+public class WhiteBishop extends Bishop {
 
     private final PieceColor pieceColor = PieceColor.WHITE;
 

@@ -1,10 +1,11 @@
 package chessEngine.chess.piece;
 
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public abstract class Piece {
-    private PieceColor pieceColor;
     private int height;
     private int width;
 
