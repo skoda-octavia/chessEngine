@@ -3,7 +3,7 @@ package chessEngine.chess.piece.constantMovesPiece.knight;
 import chessEngine.chess.piece.constantMovesPiece.ConstantMovesPiece;
 
 public abstract class Knight extends ConstantMovesPiece {
-    private final int [][] possibleMoves = {
+    private final byte [][] possibleMoves = {
             {-2, 1},
             {2, 1},
             {-2, -1},
@@ -14,7 +14,7 @@ public abstract class Knight extends ConstantMovesPiece {
             {-1, -2}
     };
 
-    public Knight(int height, int width) {
+    public Knight(byte height, byte width) {
         super(height, width);
     }
 }

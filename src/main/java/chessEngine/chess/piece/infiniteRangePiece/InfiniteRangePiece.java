@@ -3,9 +3,9 @@ package chessEngine.chess.piece.infiniteRangePiece;
 import chessEngine.chess.piece.Piece;
 
 public abstract class InfiniteRangePiece extends Piece {
-    private int[][] directions;
+    private byte[][] directions;
 
-    public InfiniteRangePiece(int height, int width) {
+    public InfiniteRangePiece(byte height, byte width) {
         super(height, width);
     }
 }

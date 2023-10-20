@@ -6,10 +6,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public abstract class Piece {
-    private int height;
-    private int width;
+    private byte height;
+    private byte width;
 
-    void setHeight(int height) {
+    void setHeight(byte height) {
         if (height < 0 || height > 7) {
             String message = "Illegal height: " + height;
             throw new IllegalArgumentException(message);
@@ -17,7 +17,7 @@ public abstract class Piece {
         else {this.height = height;}
     }
 
-    void setWidth(int width) {
+    void setWidth(byte width) {
         if (width < 0 || width > 7) {
             String message = "Illegal width: " + width;
             throw new IllegalArgumentException(message);
@@ -25,7 +25,7 @@ public abstract class Piece {
         else {this.width = width;}
     }
 
-    public Piece(int height, int width) {
+    public Piece(byte height, byte width) {
         this.height = height;
         this.width = width;
     }

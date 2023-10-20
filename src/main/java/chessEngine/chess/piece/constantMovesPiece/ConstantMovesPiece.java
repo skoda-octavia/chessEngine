@@ -3,9 +3,9 @@ package chessEngine.chess.piece.constantMovesPiece;
 import chessEngine.chess.piece.Piece;
 
 public abstract class ConstantMovesPiece extends Piece {
-    private int[][] possibleMoves;
+    private byte[][] possibleMoves;
 
-    public ConstantMovesPiece(int height, int width) {
+    public ConstantMovesPiece(byte height, byte width) {
         super(height, width);
     }
 }

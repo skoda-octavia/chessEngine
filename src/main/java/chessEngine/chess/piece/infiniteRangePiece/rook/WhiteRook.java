@@ -5,7 +5,7 @@ import chessEngine.chess.piece.PieceColor;
 public class WhiteRook extends Rook {
     private PieceColor pieceColor = PieceColor.WHITE;
 
-    public WhiteRook(int height, int width) {
+    public WhiteRook(byte height, byte width) {
         super(height, width);
     }
 }

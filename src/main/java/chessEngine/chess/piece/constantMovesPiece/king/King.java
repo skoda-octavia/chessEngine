@@ -3,7 +3,7 @@ package chessEngine.chess.piece.constantMovesPiece.king;
 import chessEngine.chess.piece.constantMovesPiece.ConstantMovesPiece;
 
 public abstract class King extends ConstantMovesPiece {
-    private final int[][] possibleMoves = {
+    private final byte[][] possibleMoves = {
             {1, 0},
             {0, 1},
             {-1, 0},
@@ -14,7 +14,7 @@ public abstract class King extends ConstantMovesPiece {
             {-1, -1}
     };
 
-    public King(int height, int width) {
+    public King(byte height, byte width) {
         super(height, width);
     }
 }

@@ -5,7 +5,7 @@ import chessEngine.chess.piece.PieceColor;
 public class WhiteQueen  extends Queen {
     private final PieceColor pieceColor = PieceColor.WHITE;
 
-    public WhiteQueen(int height, int width) {
+    public WhiteQueen(byte height, byte width) {
         super(height, width);
     }
 }

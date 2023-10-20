@@ -3,7 +3,7 @@ package chessEngine.chess.piece.infiniteRangePiece.queen;
 import chessEngine.chess.piece.infiniteRangePiece.InfiniteRangePiece;
 
 public abstract class Queen  extends InfiniteRangePiece {
-    private final int[][] directions = {
+    private final byte[][] directions = {
             {1, 0},
             {0, 1},
             {-1, 0},
@@ -14,7 +14,7 @@ public abstract class Queen  extends InfiniteRangePiece {
             {-1, -1}
     };
 
-    public Queen(int height, int width) {
+    public Queen(byte height, byte width) {
         super(height, width);
     }
 }
