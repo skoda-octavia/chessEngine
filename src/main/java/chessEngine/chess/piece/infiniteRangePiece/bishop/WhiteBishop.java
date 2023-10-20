@@ -7,7 +7,7 @@ public class WhiteBishop extends Bishop {
 
     private final PieceColor pieceColor = PieceColor.WHITE;
 
-    public WhiteBishop(int height, int width) {
+    public WhiteBishop(byte height, byte width) {
         super(height, width);
     }
 }
