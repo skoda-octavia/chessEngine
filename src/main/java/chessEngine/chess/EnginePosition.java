@@ -20,6 +20,27 @@ public class EnginePosition {
     private String positionCode = "";
     private PieceColor movingColor = PieceColor.NONE;
     private Piece[][] chessBoard = new Piece[this.boardHeight][this.boardWidth];
+    private PieceColor[][] colorMap = null;
+
+    public PieceColor[][] getColorMap() {
+        if (this.colorMap == null) {
+            this.colorMap = this.generateColorMap();
+        }
+        return this.colorMap;
+    }
+
+    private PieceColor[][] generateColorMap() {
+
+        PieceColor[][] colorMap = new PieceColor[this.boardHeight][this.boardWidth];
+        for (byte h = 0; h < this.boardHeight; h++) {
+            for (byte w = 0; w< this.boardWidth; w++ ) {
+                Piece tempPiece = this.chessBoard[h][w];
+                if (tempPiece == null) {colorMap[h][w] = PieceColor.NONE;}
+                else {colorMap[h][w] = tempPiece.getPieceColor();}
+            }
+        }
+        return colorMap;
+    }
 
     public EnginePosition(String positionCode, boolean whiteMoves) {
         if (positionCode.length() != this.boardHeight * this.boardWidth * 2) {
@@ -38,7 +59,7 @@ public class EnginePosition {
                 char char1 = positionCode.charAt(codeIndex);
                 char char2 = positionCode.charAt(codeIndex + 1);
                 pieceCode += String.valueOf(char1) + String.valueOf(char2);
-                Piece tempPiece = PieceGenerator.generatePiece(pieceCode, height, width);
+                Piece tempPiece = PieceGenerator.generatePiece(pieceCode, height, width, this);
                 chessBoard[height][width] = tempPiece;
                 codeIndex += 2;
             }

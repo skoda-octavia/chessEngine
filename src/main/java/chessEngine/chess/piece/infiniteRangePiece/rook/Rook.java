@@ -1,5 +1,6 @@
 package chessEngine.chess.piece.infiniteRangePiece.rook;
 
+import chessEngine.chess.EnginePosition;
 import chessEngine.chess.piece.infiniteRangePiece.InfiniteRangePiece;
 
 public abstract class Rook extends InfiniteRangePiece {
@@ -10,7 +11,7 @@ public abstract class Rook extends InfiniteRangePiece {
             {0, -1}
     };
 
-    public Rook(byte height, byte width) {
-        super(height, width);
+    public Rook(byte height, byte width, EnginePosition pos) {
+        super(height, width, pos);
     }
 }

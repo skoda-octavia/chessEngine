@@ -1,5 +1,6 @@
 package chessEngine.chess.piece.constantMovesPiece.king;
 
+import chessEngine.chess.EnginePosition;
 import chessEngine.chess.piece.constantMovesPiece.ConstantMovesPiece;
 
 public abstract class King extends ConstantMovesPiece {
@@ -14,7 +15,7 @@ public abstract class King extends ConstantMovesPiece {
             {-1, -1}
     };
 
-    public King(byte height, byte width) {
-        super(height, width);
+    public King(byte height, byte width, EnginePosition pos) {
+        super(height, width, pos);
     }
 }
