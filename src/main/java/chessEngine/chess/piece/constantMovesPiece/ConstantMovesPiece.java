@@ -8,14 +8,15 @@ import chessEngine.chess.piece.PieceColor;
 import java.util.ArrayList;
 
 public abstract class ConstantMovesPiece extends Piece {
-    private byte[][] possibleMoves;
+    protected final byte[][] constantsMoves;
 
     @Override
     public ArrayList<Move> possibleMoves(PieceColor[][] colorMap) {
         return new ArrayList<>();
     }
 
-    public ConstantMovesPiece(byte height, byte width, EnginePosition pos) {
+    public ConstantMovesPiece(byte height, byte width, EnginePosition pos, byte[][] constantsMoves) {
         super(height, width, pos);
+        this.constantsMoves = constantsMoves;
     }
 }

@@ -12,8 +12,8 @@ import java.util.ArrayList;
 public abstract class Piece {
     protected byte height;
     protected byte width;
-    private EnginePosition position;
-    private PieceColor pieceColor;
+    protected EnginePosition position;
+    protected PieceColor pieceColor;
 
     void setHeight(byte height) {
         if (height < 0 || height >= this.position.getBoardHeight()) {
@@ -31,7 +31,7 @@ public abstract class Piece {
         else {this.width = width;}
     }
 
-    public boolean correctFieldCoordinates(byte height, byte width) {
+    public boolean correctFieldCoordinates(int height, int width) {
         if (height < 0 || height >= this.position.getBoardHeight()) {return false;}
         if (width < 0 || width >= this.position.getBoardWidth()) {return false;}
         return true;
