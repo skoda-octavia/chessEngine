@@ -1,4 +1,4 @@
-package chessEngine.chessTest.piece;
+package chessEngine.chessTest.piece.infiniteRangePiece;
 
 import chessEngine.chess.EnginePosition;
 import chessEngine.chess.Move;
@@ -54,6 +54,4 @@ public class InfiniteRangePieceTest {
         assertTrue(bishopMoves.size() == 7);
         assertTrue(queenMoves.size() == 15);
     }
-
-
 }
