@@ -32,7 +32,28 @@ public class InfiniteRangePieceTest {
         assertTrue(rookMoves.size() == 0);
         assertTrue(bishopMoves.size() == 0);
         assertTrue(queenMoves.size() == 0);
-
-
     }
+    @Test
+    void piecesInCenterTest() {
+        String posCode = "";
+        posCode += "bRbkbBbQbKbBbkbR";
+        posCode += "bPbPbPbPbPbPbPbP";
+        posCode += "    wQ    wR    ";
+        posCode += "                ";
+        posCode += "                ";
+        posCode += "          bB    ";
+        posCode += "wPwPwPwPwPwPwPwP";
+        posCode += "wRwkwBwQwKwBwkwR";
+        EnginePosition enginePosition = new EnginePosition(posCode, true);
+        Piece[][] chessBoard = enginePosition.getChessBoard();
+        PieceColor[][] colorMap = enginePosition.getColorMap();
+        ArrayList<Move> rookMoves = chessBoard[2][5].possibleMoves(colorMap);
+        ArrayList<Move> bishopMoves = chessBoard[5][5].possibleMoves(colorMap);
+        ArrayList<Move> queenMoves = chessBoard[2][2].possibleMoves(colorMap);
+        assertTrue(rookMoves.size() == 8);
+        assertTrue(bishopMoves.size() == 7);
+        assertTrue(queenMoves.size() == 15);
+    }
+
+
 }
