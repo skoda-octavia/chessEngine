@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @Getter
@@ -21,6 +22,8 @@ public class EnginePosition {
     private PieceColor movingColor = PieceColor.NONE;
     private Piece[][] chessBoard = new Piece[this.boardHeight][this.boardWidth];
     private PieceColor[][] colorMap = null;
+    private LinkedList<Piece> blackPieces;
+    private LinkedList<Piece> whitePieces;
 
     public PieceColor[][] getColorMap() {
         if (this.colorMap == null) {

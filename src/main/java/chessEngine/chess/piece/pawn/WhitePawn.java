@@ -10,7 +10,7 @@ import lombok.Setter;
 public class WhitePawn extends Pawn{
 
     public WhitePawn(byte height, byte width, EnginePosition pos) {
-        super(PieceColor.WHITE, pos, (byte)-1);
+        super(PieceColor.WHITE, pos, (byte)-1, (byte)6);
         this.height = height;
         this.width = width;
     }
