@@ -8,10 +8,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BlackRook extends Rook {
-    private PieceColor pieceColor = PieceColor.BLACK;
 
     public BlackRook(byte height, byte width, EnginePosition pos) {
-        super(height, width, pos);
+        super(PieceColor.BLACK, pos);
+        this.height = height;
+        this.width = width;
 
     }
 }

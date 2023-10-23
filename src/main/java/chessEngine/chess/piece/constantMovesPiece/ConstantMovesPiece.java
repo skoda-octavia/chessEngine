@@ -4,9 +4,13 @@ import chessEngine.chess.EnginePosition;
 import chessEngine.chess.Move;
 import chessEngine.chess.piece.Piece;
 import chessEngine.chess.piece.PieceColor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 
+@Getter
+@Setter
 public abstract class ConstantMovesPiece extends Piece {
     protected final byte[][] constantsMoves;
 
@@ -15,8 +19,8 @@ public abstract class ConstantMovesPiece extends Piece {
         return new ArrayList<>();
     }
 
-    public ConstantMovesPiece(byte height, byte width, EnginePosition pos, byte[][] constantsMoves) {
-        super(height, width, pos);
+    public ConstantMovesPiece(PieceColor pieceColor, EnginePosition pos, byte[][] constantsMoves) {
+        super(pieceColor, pos);
         this.constantsMoves = constantsMoves;
     }
 }

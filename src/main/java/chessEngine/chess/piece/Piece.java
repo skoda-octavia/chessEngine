@@ -12,8 +12,8 @@ import java.util.ArrayList;
 public abstract class Piece {
     protected byte height;
     protected byte width;
-    protected EnginePosition position;
-    protected PieceColor pieceColor;
+    protected final EnginePosition position;
+    protected final PieceColor pieceColor;
 
     void setHeight(byte height) {
         if (height < 0 || height >= this.position.getBoardHeight()) {
@@ -39,9 +39,8 @@ public abstract class Piece {
 
     public abstract ArrayList<Move> possibleMoves(PieceColor[][] colorMap);
 
-    public Piece(byte height, byte width, EnginePosition pos) {
-        this.height = height;
-        this.width = width;
+    public Piece(PieceColor pieceColor, EnginePosition pos) {
+        this.pieceColor = pieceColor;
         this.position = pos;
     }
 }

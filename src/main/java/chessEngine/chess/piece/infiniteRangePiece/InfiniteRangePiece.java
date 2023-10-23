@@ -4,12 +4,14 @@ import chessEngine.chess.EnginePosition;
 import chessEngine.chess.Move;
 import chessEngine.chess.piece.Piece;
 import chessEngine.chess.piece.PieceColor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
 
+
+@Getter
+@Setter
 public abstract class InfiniteRangePiece extends Piece {
     protected final byte[][] directions;
 
@@ -23,10 +25,10 @@ public abstract class InfiniteRangePiece extends Piece {
             byte nextX = (byte) (this.width + xDir);
             while (this.correctFieldCoordinates(nextY, nextX)) {
                 PieceColor tempPieceColor = colorMap[nextY][nextX];
-                if (tempPieceColor == this.pieceColor) {
+                if (tempPieceColor.equals(this.pieceColor)) {
                     break;
                 }
-                else if (tempPieceColor == PieceColor.NONE) {
+                else if (tempPieceColor.equals(PieceColor.NONE)) {
                     movesList.add(new Move(this.height, this.width, nextY, nextX));
                     nextY += yDir;
                     nextX += xDir;
@@ -40,8 +42,8 @@ public abstract class InfiniteRangePiece extends Piece {
         return movesList;
     }
 
-    public InfiniteRangePiece(byte height, byte width, EnginePosition pos, byte[][] directions) {
-        super(height, width, pos);
+    public InfiniteRangePiece(PieceColor pieceColor, EnginePosition pos, byte[][] directions) {
+        super(pieceColor, pos);
         this.directions = directions;
     }
 }

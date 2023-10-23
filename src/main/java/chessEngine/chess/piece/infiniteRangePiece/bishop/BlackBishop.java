@@ -2,13 +2,17 @@ package chessEngine.chess.piece.infiniteRangePiece.bishop;
 
 import chessEngine.chess.EnginePosition;
 import chessEngine.chess.piece.PieceColor;
-import org.apache.catalina.Engine;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class BlackBishop extends Bishop {
 
-    private final PieceColor pieceColor = PieceColor.BLACK;
-
     public BlackBishop(byte height, byte width, EnginePosition pos) {
-        super(height, width, pos);
+
+        super(PieceColor.BLACK, pos);
+        this.height = height;
+        this.width = width;
     }
 }
