@@ -22,8 +22,8 @@ public abstract class InfiniteRangePiece extends Piece {
         for (byte[] direction : this.directions) {
             byte yDir = direction[0];
             byte xDir = direction[1];
-            byte nextY = (byte) (this.height + yDir);
-            byte nextX = (byte) (this.width + xDir);
+            byte nextY = (byte) (this.field.height() + yDir);
+            byte nextX = (byte) (this.field.width() + xDir);
             while (this.correctFieldCoordinates(nextY, nextX)) {
                 PieceColor tempPieceColor = colorMap[nextY][nextX];
                 if (tempPieceColor.equals(this.pieceColor)) {
@@ -31,14 +31,14 @@ public abstract class InfiniteRangePiece extends Piece {
                 }
                 else if (tempPieceColor.equals(PieceColor.NONE)) {
                     movesList.add(new Move(
-                            new Field(this.height, this.width), new Field(nextY, nextX)
+                            this.field, new Field(nextY, nextX)
                     ));
                     nextY += yDir;
                     nextX += xDir;
                 }
                 else {
                     movesList.add(new Move(
-                            new Field(this.height, this.width), new Field(nextY, nextX)
+                            this.field, new Field(nextY, nextX)
                     ));
                     break;
                 }

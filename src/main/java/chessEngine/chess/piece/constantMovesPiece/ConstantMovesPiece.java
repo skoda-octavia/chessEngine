@@ -21,12 +21,12 @@ public abstract class ConstantMovesPiece extends Piece {
         for (byte[] direction : this.constantMoves) {
             byte yDir = direction[0];
             byte xDir = direction[1];
-            byte nextY = (byte) (this.height + yDir);
-            byte nextX = (byte) (this.width + xDir);
+            byte nextY = (byte) (this.field.height() + yDir);
+            byte nextX = (byte) (this.field.width() + xDir);
             if (!this.correctFieldCoordinates(nextY, nextX)) {continue;}
             PieceColor tempPieceColor = colorMap[nextY][nextX];
             if (!tempPieceColor.equals(this.pieceColor)) {movesList.add(new Move(
-                    new Field(this.height, this.width), new Field(nextY, nextX))
+                    this.field, new Field(nextY, nextX))
             );}
         }
         return movesList;

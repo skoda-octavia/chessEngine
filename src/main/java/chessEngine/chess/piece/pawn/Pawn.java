@@ -20,8 +20,8 @@ public abstract class Pawn extends Piece {
     public ArrayList<Move> possibleMoves(PieceColor[][] colorMap) {
         ArrayList<Move> possibleMoves = new ArrayList<>();
         byte[][] captureFields = new byte[][]{
-                {(byte)(this.height + this.movingDirection), (byte)(this.width + 1)},
-                {(byte)(this.height + this.movingDirection), (byte)(this.width - 1)}
+                {(byte)(this.field.height() + this.movingDirection), (byte)(this.field.width() + 1)},
+                {(byte)(this.field.height() + this.movingDirection), (byte)(this.field.width() - 1)}
         };
         for (byte[] field : captureFields) {
             byte nextY = field[0], nextX = field[1];
@@ -29,23 +29,23 @@ public abstract class Pawn extends Piece {
                 PieceColor tempPieceColor = colorMap[nextY][nextX];
                 if (tempPieceColor.equals(this.pieceColor) || tempPieceColor.equals(PieceColor.NONE)) {}
                 else {possibleMoves.add(new Move(
-                        new Field(this.height, this.width), new Field(nextY, nextX))
+                        this.field, new Field(nextY, nextX))
                 );}
             }
         }
 
-        byte nextY = (byte)(this.height + this.movingDirection), nextX = this.width;
+        byte nextY = (byte)(this.field.height() + this.movingDirection), nextX = this.field.width();
         if (this.correctFieldCoordinates(nextY, nextX) && colorMap[nextY][nextX].equals(PieceColor.NONE)) {
             possibleMoves.add(new Move(
-                    new Field(this.height, this.width), new Field(nextY, nextX)
+                    this.field, new Field(nextY, nextX)
             ));
         }
 
-        if (this.height == this.startingRow && colorMap[nextY][nextX].equals(PieceColor.NONE)) {
-            byte nextYJump = (byte)(this.height + 2 * this.movingDirection);
+        if (this.field.height() == this.startingRow && colorMap[nextY][nextX].equals(PieceColor.NONE)) {
+            byte nextYJump = (byte)(this.field.height() + 2 * this.movingDirection);
             if (colorMap[nextYJump][nextX].equals(PieceColor.NONE)) {
                 possibleMoves.add(new Move(
-                        new Field(this.height, this.width), new Field(nextY, nextX))
+                        this.field, new Field(nextY, nextX))
                 );
             }
         }

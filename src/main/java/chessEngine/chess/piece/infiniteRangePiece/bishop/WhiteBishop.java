@@ -1,6 +1,7 @@
 package chessEngine.chess.piece.infiniteRangePiece.bishop;
 
 import chessEngine.chess.EnginePosition;
+import chessEngine.chess.move.field.Field;
 import chessEngine.chess.piece.PieceColor;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,10 +9,12 @@ import lombok.Setter;
 @Getter
 @Setter
 public class WhiteBishop extends Bishop {
-    public WhiteBishop(byte height, byte width, EnginePosition pos) {
+    public WhiteBishop(Field field, EnginePosition pos) {
 
         super(PieceColor.WHITE, pos);
-        this.height = height;
-        this.width = width;
+        if (!correctFieldCoordinates(field.height(), field.width())) {
+            throw new IllegalArgumentException("illegal height or width in constructor: " + field);
+        }
+        this.field = field;
     }
 }
