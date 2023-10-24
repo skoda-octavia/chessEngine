@@ -1,7 +1,7 @@
 package chessEngine.chess.piece;
 
 import chessEngine.chess.EnginePosition;
-import chessEngine.chess.Move;
+import chessEngine.chess.move.Move;
 import lombok.Getter;
 import lombok.Setter;
 

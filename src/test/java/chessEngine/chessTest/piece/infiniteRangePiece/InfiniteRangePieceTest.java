@@ -1,7 +1,7 @@
 package chessEngine.chessTest.piece.infiniteRangePiece;
 
 import chessEngine.chess.EnginePosition;
-import chessEngine.chess.Move;
+import chessEngine.chess.move.Move;
 import chessEngine.chess.piece.Piece;
 import chessEngine.chess.piece.PieceColor;
 import org.junit.jupiter.api.Test;

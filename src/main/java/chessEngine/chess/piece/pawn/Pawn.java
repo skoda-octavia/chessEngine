@@ -1,7 +1,8 @@
 package chessEngine.chess.piece.pawn;
 
 import chessEngine.chess.EnginePosition;
-import chessEngine.chess.Move;
+import chessEngine.chess.move.Move;
+import chessEngine.chess.move.field.Field;
 import chessEngine.chess.piece.Piece;
 import chessEngine.chess.piece.PieceColor;
 import lombok.Getter;
@@ -27,19 +28,25 @@ public abstract class Pawn extends Piece {
             if (this.correctFieldCoordinates(nextY, nextX)) {
                 PieceColor tempPieceColor = colorMap[nextY][nextX];
                 if (tempPieceColor.equals(this.pieceColor) || tempPieceColor.equals(PieceColor.NONE)) {}
-                else {possibleMoves.add(new Move(this.height, this.width, nextY, nextX));}
+                else {possibleMoves.add(new Move(
+                        new Field(this.height, this.width), new Field(nextY, nextX))
+                );}
             }
         }
 
         byte nextY = (byte)(this.height + this.movingDirection), nextX = this.width;
         if (this.correctFieldCoordinates(nextY, nextX) && colorMap[nextY][nextX].equals(PieceColor.NONE)) {
-            possibleMoves.add(new Move(this.height, this.width, nextY, nextX));
+            possibleMoves.add(new Move(
+                    new Field(this.height, this.width), new Field(nextY, nextX)
+            ));
         }
 
         if (this.height == this.startingRow && colorMap[nextY][nextX].equals(PieceColor.NONE)) {
             byte nextYJump = (byte)(this.height + 2 * this.movingDirection);
             if (colorMap[nextYJump][nextX].equals(PieceColor.NONE)) {
-                possibleMoves.add(new Move(this.height, this.width, nextYJump, nextX));
+                possibleMoves.add(new Move(
+                        new Field(this.height, this.width), new Field(nextY, nextX))
+                );
             }
         }
         // TODO: 24.10.2023 en passant

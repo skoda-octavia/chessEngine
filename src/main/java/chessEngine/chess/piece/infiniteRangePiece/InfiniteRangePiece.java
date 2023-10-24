@@ -1,7 +1,8 @@
 package chessEngine.chess.piece.infiniteRangePiece;
 
 import chessEngine.chess.EnginePosition;
-import chessEngine.chess.Move;
+import chessEngine.chess.move.Move;
+import chessEngine.chess.move.field.Field;
 import chessEngine.chess.piece.Piece;
 import chessEngine.chess.piece.PieceColor;
 import lombok.Getter;
@@ -29,12 +30,16 @@ public abstract class InfiniteRangePiece extends Piece {
                     break;
                 }
                 else if (tempPieceColor.equals(PieceColor.NONE)) {
-                    movesList.add(new Move(this.height, this.width, nextY, nextX));
+                    movesList.add(new Move(
+                            new Field(this.height, this.width), new Field(nextY, nextX)
+                    ));
                     nextY += yDir;
                     nextX += xDir;
                 }
                 else {
-                    movesList.add(new Move(this.height, this.width, nextY, nextX));
+                    movesList.add(new Move(
+                            new Field(this.height, this.width), new Field(nextY, nextX)
+                    ));
                     break;
                 }
             }

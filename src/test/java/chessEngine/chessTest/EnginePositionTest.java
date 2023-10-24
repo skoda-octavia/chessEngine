@@ -47,5 +47,7 @@ public class EnginePositionTest {
         assertTrue(chessBoard[7][3] instanceof WhiteQueen);
         assertTrue(chessBoard[7][4] instanceof WhiteKing);
         assertTrue(chessBoard[6][4] instanceof WhitePawn);
+        assertTrue(enginePosition.getBlackPieces().size() == 16);
+        assertTrue(enginePosition.getWhitePieces().size() == 16);
     }
 }

@@ -1,5 +1,6 @@
-package chessEngine.chess;
+package chessEngine.chess.pieceGenerator;
 
+import chessEngine.chess.EnginePosition;
 import chessEngine.chess.piece.Piece;
 import chessEngine.chess.piece.constantMovesPiece.king.BlackKing;
 import chessEngine.chess.piece.constantMovesPiece.king.WhiteKing;

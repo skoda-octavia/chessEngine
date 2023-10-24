@@ -2,17 +2,16 @@ package chessEngine.chess;
 
 import chessEngine.chess.piece.Piece;
 import chessEngine.chess.piece.PieceColor;
-import lombok.AllArgsConstructor;
+import chessEngine.chess.piece.constantMovesPiece.king.BlackKing;
+import chessEngine.chess.piece.constantMovesPiece.king.WhiteKing;
+import chessEngine.chess.pieceGenerator.PieceGenerator;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 @Getter
 @Setter
-@AllArgsConstructor
 public class EnginePosition {
     private final byte boardHeight = 8;
     private final byte boardWidth = 8;
@@ -22,8 +21,10 @@ public class EnginePosition {
     private PieceColor movingColor = PieceColor.NONE;
     private Piece[][] chessBoard = new Piece[this.boardHeight][this.boardWidth];
     private PieceColor[][] colorMap = null;
-    private LinkedList<Piece> blackPieces;
-    private LinkedList<Piece> whitePieces;
+    private LinkedList<Piece> blackPieces = new LinkedList<>();
+    private LinkedList<Piece> whitePieces = new LinkedList<>();
+    private WhiteKing whiteKing = null;
+    private BlackKing blackKing = null;
 
     public PieceColor[][] getColorMap() {
         if (this.colorMap == null) {
@@ -45,6 +46,18 @@ public class EnginePosition {
         return colorMap;
     }
 
+    private void setPiece(Piece tempPiece) {
+        if (tempPiece.getPieceColor().equals(PieceColor.WHITE)) {
+            this.whitePieces.push(tempPiece);
+            if (tempPiece instanceof WhiteKing) {this.whiteKing = (WhiteKing) tempPiece;}
+        }
+        else {
+            this.blackPieces.push(tempPiece);
+            if (tempPiece instanceof BlackKing) {this.blackKing = (BlackKing) tempPiece;}
+        }
+
+    }
+
     public EnginePosition(String positionCode, boolean whiteMoves) {
         if (positionCode.length() != this.boardHeight * this.boardWidth * 2) {
             String message = "Incorrect len of positionCode: " + positionCode.length();
@@ -63,9 +76,14 @@ public class EnginePosition {
                 char char2 = positionCode.charAt(codeIndex + 1);
                 pieceCode += String.valueOf(char1) + String.valueOf(char2);
                 Piece tempPiece = PieceGenerator.generatePiece(pieceCode, height, width, this);
+                if (tempPiece != null) {
+                    this.setPiece(tempPiece);
+                }
                 chessBoard[height][width] = tempPiece;
                 codeIndex += 2;
             }
         }
     }
+
+
 }

@@ -1,7 +1,8 @@
 package chessEngine.chess.piece.constantMovesPiece;
 
 import chessEngine.chess.EnginePosition;
-import chessEngine.chess.Move;
+import chessEngine.chess.move.Move;
+import chessEngine.chess.move.field.Field;
 import chessEngine.chess.piece.Piece;
 import chessEngine.chess.piece.PieceColor;
 import lombok.Getter;
@@ -24,7 +25,9 @@ public abstract class ConstantMovesPiece extends Piece {
             byte nextX = (byte) (this.width + xDir);
             if (!this.correctFieldCoordinates(nextY, nextX)) {continue;}
             PieceColor tempPieceColor = colorMap[nextY][nextX];
-            if (!tempPieceColor.equals(this.pieceColor)) {movesList.add(new Move(this.height, this.width, nextY, nextX));}
+            if (!tempPieceColor.equals(this.pieceColor)) {movesList.add(new Move(
+                    new Field(this.height, this.width), new Field(nextY, nextX))
+            );}
         }
         return movesList;
     }
