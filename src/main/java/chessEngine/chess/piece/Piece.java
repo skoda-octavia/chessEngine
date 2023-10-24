@@ -24,6 +24,8 @@ public abstract class Piece {
 
     public abstract ArrayList<Move> possibleMoves(PieceColor[][] colorMap);
 
+    public abstract ArrayList<Field> controlledFields (PieceColor[][] colorMap);
+
     public Piece(PieceColor pieceColor, EnginePosition pos) {
         this.pieceColor = pieceColor;
         this.position = pos;

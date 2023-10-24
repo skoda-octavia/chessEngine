@@ -47,6 +47,29 @@ public abstract class InfiniteRangePiece extends Piece {
         return movesList;
     }
 
+    @Override
+    public ArrayList<Field> controlledFields(PieceColor[][] colorMap) {
+        ArrayList<Field> controlledFields = new ArrayList<>();
+        for (byte[] direction : this.directions) {
+            byte yDir = direction[0];
+            byte xDir = direction[1];
+            byte nextY = (byte) (this.field.height() + yDir);
+            byte nextX = (byte) (this.field.width() + xDir);
+            while (this.correctFieldCoordinates(nextY, nextX)) {
+                PieceColor tempPieceColor = colorMap[nextY][nextX];
+                controlledFields.add(new Field(nextY, nextX));
+                if (tempPieceColor.equals(PieceColor.NONE)) {
+                    nextY += yDir;
+                    nextX += xDir;
+                }
+                else {
+                    break;
+                }
+            }
+        }
+        return controlledFields;
+    }
+
     public InfiniteRangePiece(PieceColor pieceColor, EnginePosition pos, byte[][] directions) {
         super(pieceColor, pos);
         this.directions = directions;

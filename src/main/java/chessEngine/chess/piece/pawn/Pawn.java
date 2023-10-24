@@ -8,6 +8,7 @@ import chessEngine.chess.piece.PieceColor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.File;
 import java.util.ArrayList;
 
 @Getter
@@ -52,6 +53,23 @@ public abstract class Pawn extends Piece {
         // TODO: 24.10.2023 en passant
         return possibleMoves;
     }
+
+    @Override
+    public ArrayList<Field> controlledFields (PieceColor[][] colorMap) {
+        ArrayList<Field> fieldsControlled = new ArrayList<>();
+        byte[][] captureFields = new byte[][]{
+                {(byte)(this.field.height() + this.movingDirection), (byte)(this.field.width() + 1)},
+                {(byte)(this.field.height() + this.movingDirection), (byte)(this.field.width() - 1)}
+        };
+        for (byte[] field : captureFields) {
+            byte nextY = field[0], nextX = field[1];
+            if (this.correctFieldCoordinates(nextY, nextX)) {
+                fieldsControlled.add(new Field(nextY, nextX));
+            }
+        }
+        return fieldsControlled;
+    }
+
 
     public Pawn(PieceColor pieceColor, EnginePosition pos, byte movingDirection, byte startingRow) {
         super(pieceColor, pos);
