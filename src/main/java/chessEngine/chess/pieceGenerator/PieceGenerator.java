@@ -1,6 +1,7 @@
 package chessEngine.chess.pieceGenerator;
 
 import chessEngine.chess.EnginePosition;
+import chessEngine.chess.move.field.Field;
 import chessEngine.chess.piece.Piece;
 import chessEngine.chess.piece.constantMovesPiece.king.BlackKing;
 import chessEngine.chess.piece.constantMovesPiece.king.WhiteKing;
@@ -22,19 +23,19 @@ public class PieceGenerator {
         }
         switch (pieceCode) {
             case "  " : return null;
-            case "wP" : return new WhitePawn(height, width, pos);
-            case "wR" : return new WhiteRook(height, width, pos);
-            case "wB" : return new WhiteBishop(height, width, pos);
-            case "wk" : return new WhiteKnight(height, width, pos);
-            case "wK" : return new WhiteKing(height, width, pos);
-            case "wQ" : return new WhiteQueen(height, width, pos);
+            case "wP" : return new WhitePawn(new Field(height, width), pos);
+            case "wR" : return new WhiteRook(new Field(height, width), pos);
+            case "wB" : return new WhiteBishop(new Field(height, width), pos);
+            case "wk" : return new WhiteKnight(new Field(height, width), pos);
+            case "wK" : return new WhiteKing(new Field(height, width), pos);
+            case "wQ" : return new WhiteQueen(new Field(height, width), pos);
 
-            case "bP" : return new BlackPawn(height, width, pos);
-            case "bR" : return new BlackRook(height, width, pos);
-            case "bB" : return new BlackBishop(height, width, pos);
-            case "bk" : return new BlackKnight(height, width, pos);
-            case "bK" : return new BlackKing(height, width, pos);
-            case "bQ" : return new BlackQueen(height, width, pos);
+            case "bP" : return new BlackPawn(new Field(height, width), pos);
+            case "bR" : return new BlackRook(new Field(height, width), pos);
+            case "bB" : return new BlackBishop(new Field(height, width), pos);
+            case "bk" : return new BlackKnight(new Field(height, width), pos);
+            case "bK" : return new BlackKing(new Field(height, width), pos);
+            case "bQ" : return new BlackQueen(new Field(height, width), pos);
 
             default:
                 String message = "Not supported piece code: " + pieceCode;

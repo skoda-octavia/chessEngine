@@ -32,6 +32,7 @@ public class EnginePositionTest {
         posCode += "wPwPwPwPwPwPwPwP";
         posCode += "wRwkwBwQwKwBwkwR";
         EnginePosition enginePosition = new EnginePosition(posCode, true);
+        enginePosition.set();
         Piece[][] chessBoard = enginePosition.getChessBoard();
         assertTrue(chessBoard[0][0] instanceof BlackRook);
         assertTrue(chessBoard[0][1] instanceof BlackKnight);

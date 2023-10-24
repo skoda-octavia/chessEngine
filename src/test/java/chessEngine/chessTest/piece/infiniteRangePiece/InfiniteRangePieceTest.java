@@ -24,6 +24,7 @@ public class InfiniteRangePieceTest {
         posCode += "wPwPwPwPwPwPwPwP";
         posCode += "wRwkwBwQwKwBwkwR";
         EnginePosition enginePosition = new EnginePosition(posCode, true);
+        enginePosition.set();
         Piece[][] chessBoard = enginePosition.getChessBoard();
         PieceColor[][] colorMap = enginePosition.getColorMap();
         ArrayList<Move> rookMoves = chessBoard[0][0].possibleMoves(colorMap);
@@ -45,6 +46,7 @@ public class InfiniteRangePieceTest {
         posCode += "wPwPwPwPwPwPwPwP";
         posCode += "wRwkwBwQwKwBwkwR";
         EnginePosition enginePosition = new EnginePosition(posCode, true);
+        enginePosition.set();
         Piece[][] chessBoard = enginePosition.getChessBoard();
         PieceColor[][] colorMap = enginePosition.getColorMap();
         ArrayList<Move> rookMoves = chessBoard[2][5].possibleMoves(colorMap);

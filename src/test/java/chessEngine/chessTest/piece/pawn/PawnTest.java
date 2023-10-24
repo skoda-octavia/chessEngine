@@ -25,6 +25,7 @@ public class PawnTest {
         posCode += "wPwPwP  wPwPwPwP";
         posCode += "wRwkwBwQwKwBwkwR";
         EnginePosition enginePosition = new EnginePosition(posCode, true);
+        enginePosition.set();
         Piece[][] chessBoard = enginePosition.getChessBoard();
         PieceColor[][] colorMap = enginePosition.getColorMap();
         ArrayList<Move> aBlackPawn = chessBoard[1][0].possibleMoves(colorMap);

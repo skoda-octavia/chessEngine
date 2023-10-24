@@ -1,5 +1,7 @@
 package chessEngine.chess;
 
+import chessEngine.chess.move.Move;
+import chessEngine.chess.move.field.Field;
 import chessEngine.chess.piece.Piece;
 import chessEngine.chess.piece.PieceColor;
 import chessEngine.chess.piece.constantMovesPiece.king.BlackKing;
@@ -8,6 +10,8 @@ import chessEngine.chess.pieceGenerator.PieceGenerator;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 @Getter
@@ -18,7 +22,7 @@ public class EnginePosition {
     private EnginePosition parentPosition = null;
     private int value = 0;
     private String positionCode = "";
-    private PieceColor movingColor = PieceColor.NONE;
+    private boolean whiteMoves;
     private Piece[][] chessBoard = new Piece[this.boardHeight][this.boardWidth];
     private PieceColor[][] colorMap = null;
     private LinkedList<Piece> blackPieces = new LinkedList<>();
@@ -46,6 +50,25 @@ public class EnginePosition {
         return colorMap;
     }
 
+    public boolean revealingMove(Move move) {
+        Field from = move.getFrom();
+        Field to = move.getTo();
+        PieceColor[][] tempColorMap = getColorMap();
+        PieceColor capturedColor = tempColorMap[to.height()][to.width()];
+        tempColorMap[from.height()][from.width()] = PieceColor.NONE;
+        tempColorMap[to.height()][to.width()] = getChessBoard()[from.height()][from.width()].getPieceColor();
+
+        LinkedList<Piece> oppositePieces = !whiteMoves ? this.whitePieces : this.blackPieces;
+        Iterator<Piece> iterator = oppositePieces.iterator();
+        while (iterator.hasNext()) {
+            Piece piece = iterator.next();
+        }
+
+
+
+        return false;
+    }
+
     private void setPiece(Piece tempPiece) {
         if (tempPiece.getPieceColor().equals(PieceColor.WHITE)) {
             this.whitePieces.push(tempPiece);
@@ -55,19 +78,9 @@ public class EnginePosition {
             this.blackPieces.push(tempPiece);
             if (tempPiece instanceof BlackKing) {this.blackKing = (BlackKing) tempPiece;}
         }
-
     }
 
-    public EnginePosition(String positionCode, boolean whiteMoves) {
-        if (positionCode.length() != this.boardHeight * this.boardWidth * 2) {
-            String message = "Incorrect len of positionCode: " + positionCode.length();
-            throw new IllegalArgumentException(message);
-        }
-
-        PieceColor movingColor = whiteMoves ? PieceColor.WHITE : PieceColor.BLACK;
-        this.setMovingColor(movingColor);
-        this.setPositionCode(positionCode);
-
+    public void set() {
         int codeIndex = 0;
         for (byte height = 0; height < this.boardHeight; height++) {
             for (byte width = 0; width < this.boardWidth; width++) {
@@ -84,6 +97,12 @@ public class EnginePosition {
             }
         }
     }
-
-
+    public EnginePosition(String positionCode, boolean whiteMoves) {
+        if (positionCode.length() != this.boardHeight * this.boardWidth * 2) {
+            String message = "Incorrect len of positionCode: " + positionCode.length();
+            throw new IllegalArgumentException(message);
+        }
+        this.positionCode = positionCode;
+        this.whiteMoves = whiteMoves;
+    }
 }

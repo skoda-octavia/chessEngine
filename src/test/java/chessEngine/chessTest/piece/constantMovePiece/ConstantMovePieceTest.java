@@ -24,6 +24,7 @@ public class ConstantMovePieceTest {
         posCode += "wPwPwPwPwPwPwPwP";
         posCode += "wRwkwBwQ  wBwkwR";
         EnginePosition enginePosition = new EnginePosition(posCode, true);
+        enginePosition.set();
         Piece[][] chessBoard = enginePosition.getChessBoard();
         PieceColor[][] colorMap = enginePosition.getColorMap();
         ArrayList<Move> blackKnightMoves = chessBoard[0][6].possibleMoves(colorMap);
