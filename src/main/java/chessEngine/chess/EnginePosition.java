@@ -51,25 +51,15 @@ public class EnginePosition {
         return colorMap;
     }
 
-    public PieceColor[][] colorMapCopy() {
-        PieceColor[][] copy = new PieceColor[this.boardHeight][];
-        for (int i = 0; i < this.boardHeight; i++) {
-            copy[i] = new PieceColor[this.boardWidth];
-            for (int j = 0; j < this.boardWidth; j++) {
-                copy[i][j] = colorMap[i][j];
-            }
-        }
-        return copy;
-    }
-
-    public boolean revealingMove(Move move) {
+    public boolean unveilingMove(Move move) {
         boolean answer = false;
         Field from = move.getFrom();
         Field to = move.getTo();
-        PieceColor[][] tempColorMap = colorMapCopy();
+        PieceColor[][] tempColorMap = getColorMap();
         PieceColor oldColor = tempColorMap[to.height()][to.width()];
-        tempColorMap[from.height()][from.width()] = PieceColor.NONE;
         tempColorMap[to.height()][to.width()] = tempColorMap[from.height()][from.width()];
+        tempColorMap[from.height()][from.width()] = PieceColor.NONE;
+
 
 
         Field kingsField = null;
@@ -78,11 +68,12 @@ public class EnginePosition {
                 tempColorMap[from.height()][from.width()].equals(movingColor)) {
                 kingsField = new Field(to.height(), to.width());
         }
-        else {
-            kingsField = whiteMoves ? whiteKing.getField() : blackKing.getField();
-        }
+        else {kingsField = whiteMoves ? whiteKing.getField() : blackKing.getField();}
 
+        if (inCheck(movingColor, tempColorMap, kingsField)) {answer = true;}
 
+        tempColorMap[from.height()][from.width()] = tempColorMap[to.height()][to.width()];
+        tempColorMap[to.height()][to.width()] = oldColor;
 
         return answer;
     }
@@ -92,7 +83,11 @@ public class EnginePosition {
         Iterator<Piece> iterator = oppositePieces.iterator();
         while (iterator.hasNext()) {
             Piece tempPiece = iterator.next();
-            if (tempPiece.getField().equals(kingsField)) {continue;}
+            Field tempPieceField = tempPiece.getField();
+            //when piece captured
+            if (!tempPiece.getPieceColor().equals(colorMap[tempPieceField.height()][tempPieceField.width()])) {
+                continue;
+            }
             ArrayList<Field> controlledFields = tempPiece.controlledFields(colorMap);
             if (controlledFields.contains(kingsField)) {return true;}
         }
@@ -129,6 +124,7 @@ public class EnginePosition {
             }
         }
     }
+
     public EnginePosition(String positionCode, boolean whiteMoves) {
         if (positionCode.length() != this.boardHeight * this.boardWidth * 2) {
             String message = "Incorrect len of positionCode: " + positionCode.length();
