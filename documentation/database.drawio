@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-10-25T16:44:20.710Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36" etag="AvUN6Q71GoXhHGjL2gzi" version="22.0.8" type="device">
+<mxfile host="app.diagrams.net" modified="2023-10-25T17:20:50.312Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36" etag="1KFVjcKV3NFouIpeCFBa" version="22.0.8" type="device">
   <diagram id="R2lEEEUBdFMjLlhIrx00" name="Page-1">
     <mxGraphModel dx="1434" dy="758" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0" extFonts="Permanent Marker^https://fonts.googleapis.com/css?family=Permanent+Marker">
       <root>
@@ -101,7 +101,7 @@
             <mxRectangle width="30" height="90" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="ELnQRtM2t1CYtcRQsExb-28" value="player_id int NOT NULL&lt;br&gt;&lt;br&gt;game_code varchar NOT_NULL&lt;br&gt;&lt;br&gt;finished boolean NOT NULL" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;whiteSpace=wrap;html=1;" vertex="1" parent="ELnQRtM2t1CYtcRQsExb-26">
+        <mxCell id="ELnQRtM2t1CYtcRQsExb-28" value="account_id int NOT NULL&lt;br&gt;&lt;br&gt;game_code TEXT NOT_NULL&lt;br&gt;&lt;br&gt;finished boolean NOT NULL" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;whiteSpace=wrap;html=1;" vertex="1" parent="ELnQRtM2t1CYtcRQsExb-26">
           <mxGeometry x="30" width="270" height="90" as="geometry">
             <mxRectangle width="270" height="90" as="alternateBounds" />
           </mxGeometry>
