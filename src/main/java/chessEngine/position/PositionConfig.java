@@ -10,7 +10,7 @@ import java.util.List;
 public class PositionConfig {
 
     @Bean
-    CommandLineRunner commandLineRunner(PositionRepository repository) {
+    CommandLineRunner PositionCommandLineRunner(PositionRepository repository) {
         return args -> {
             String posCode = "bRbkbBbQbKbBbkbR";
             posCode += "bPbPbPbPbPbPbPbP";

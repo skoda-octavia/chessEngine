@@ -1,9 +1,7 @@
 package chessEngine.move;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import chessEngine.position.Position;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -15,4 +13,10 @@ public class Move {
     private MoveId moveId;
     @Column(length = 5, nullable = false, name = "move_code")
     private String moveCode;
+
+    @MapsId("child_id")
+    @ManyToOne
+    @JoinColumn(name = "child_id", referencedColumnName = "id")
+    private Position childPosition;
+
 }
