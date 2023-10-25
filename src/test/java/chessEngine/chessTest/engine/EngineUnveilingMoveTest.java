@@ -4,6 +4,7 @@ import chessEngine.chess.EnginePosition;
 import chessEngine.chess.move.Move;
 import chessEngine.chess.move.field.Field;
 import chessEngine.chess.piece.Piece;
+import chessEngine.chess.piece.constantMovesPiece.king.BlackKing;
 import chessEngine.chess.piece.constantMovesPiece.knight.BlackKnight;
 import chessEngine.chess.piece.infiniteRangePiece.bishop.WhiteBishop;
 import chessEngine.chess.piece.infiniteRangePiece.queen.WhiteQueen;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class EngineUnveilingMoveTest {
 
@@ -118,5 +120,43 @@ public class EngineUnveilingMoveTest {
         for (Move move : knightsMoves) {
             assertEquals(enginePosition.unveilingMove(move), true);
         }
+    }
+
+    @Test
+    void unveilingMoveTestBlackKing() {
+        String posCode = "";
+        posCode += "bRbkbBbQ  bBbkbR";
+        posCode += "bPbPbPbPbkbP  bP";
+        posCode += "    bB    bK    ";
+        posCode += "  wP  wPwQ      ";
+        posCode += "              wR";
+        posCode += "                ";
+        posCode += "wPwPwPwPwPwPwP  ";
+        posCode += "wRwkwBwQwKwBwk  ";
+        EnginePosition enginePosition = new EnginePosition(posCode, false);
+        enginePosition.set();
+        Piece[][] chessBoard = enginePosition.getChessBoard();
+        BlackKing blackKing = (BlackKing) chessBoard[2][5];
+        ArrayList<Move> kingsMoves = blackKing.possibleMoves(enginePosition.getColorMap());
+        ArrayList<Move> correctMoves = new ArrayList<>();
+        for (Move move : kingsMoves) {
+            boolean correct = !enginePosition.unveilingMove(move);
+            if (correct) {
+                correctMoves.add(move);
+            }
+        }
+        assertEquals(correctMoves.size(), 2);
+        assertTrue(correctMoves.contains(
+                new Move(
+                        new Field((byte)2, (byte)5),
+                        new Field((byte)2, (byte)6)
+                )
+        ));
+        assertTrue(correctMoves.contains(
+                new Move(
+                        new Field((byte)2, (byte)5),
+                        new Field((byte)3, (byte)4)
+                )
+        ));
     }
 }

@@ -65,7 +65,7 @@ public class EnginePosition {
         Field kingsField = null;
         PieceColor movingColor = whiteMoves ? PieceColor.WHITE : PieceColor.BLACK;
         if (chessBoard[from.height()][from.width()] instanceof King &&
-                tempColorMap[from.height()][from.width()].equals(movingColor)) {
+                tempColorMap[to.height()][to.width()].equals(movingColor)) {
                 kingsField = new Field(to.height(), to.width());
         }
         else {kingsField = whiteMoves ? whiteKing.getField() : blackKing.getField();}
