@@ -2,6 +2,7 @@ package chessEngine.game;
 
 
 import chessEngine.account.Account;
+import chessEngine.currentGame.CurrentGame;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.OnDelete;
@@ -23,16 +24,20 @@ public class Game {
     )
     private Long id;
 
-    @Column(name = "finished")
+    @Column(name = "finished", nullable = false)
     private boolean finished;
 
 
     @ManyToOne
-    @JoinColumn(name = "account_id")
+    @JoinColumn(name = "account_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Account account;
 
 
     @Column(name = "game_code", columnDefinition = "TEXT")
     private String gameCode;
+
+    @OneToOne(mappedBy = "game", optional = true)
+    private CurrentGame currentGame;
+
 }
