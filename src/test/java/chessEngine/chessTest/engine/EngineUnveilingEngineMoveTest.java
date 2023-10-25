@@ -1,7 +1,7 @@
 package chessEngine.chessTest.engine;
 
 import chessEngine.chess.EnginePosition;
-import chessEngine.chess.move.Move;
+import chessEngine.chess.move.EngineMove;
 import chessEngine.chess.move.field.Field;
 import chessEngine.chess.piece.Piece;
 import chessEngine.chess.piece.constantMovesPiece.king.BlackKing;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class EngineUnveilingMoveTest {
+public class EngineUnveilingEngineMoveTest {
 
     @Test
     void unveilingMoveTest() {
@@ -29,15 +29,15 @@ public class EngineUnveilingMoveTest {
         posCode += "wRwkwBwQ  wBwk  ";
         EnginePosition enginePosition = new EnginePosition(posCode, true);
         enginePosition.set();
-        Move pawnCaptureMove = new Move(
+        EngineMove pawnCaptureEngineMove = new EngineMove(
                 new Field((byte)3, (byte)1),
                 new Field((byte)2, (byte)2)
         );
-        Move pawnMovesForward = new Move(
+        EngineMove pawnMovesForward = new EngineMove(
                 new Field((byte)3, (byte)1),
                 new Field((byte)2, (byte)1)
         );
-        boolean pawnCaptureUnveiling = enginePosition.unveilingMove(pawnCaptureMove);
+        boolean pawnCaptureUnveiling = enginePosition.unveilingMove(pawnCaptureEngineMove);
         boolean pawnMovesUnveiling = enginePosition.unveilingMove(pawnMovesForward);
         assertEquals(pawnMovesUnveiling, true);
         assertEquals(pawnCaptureUnveiling, false);
@@ -59,9 +59,9 @@ public class EngineUnveilingMoveTest {
         enginePosition.set();
         Piece[][] chessBoard = enginePosition.getChessBoard();
         WhiteBishop whiteBishop = (WhiteBishop) chessBoard[3][4];
-        ArrayList<Move> bishopMoves = whiteBishop.possibleMoves(enginePosition.getColorMap());
-        for (Move move : bishopMoves) {
-            assertEquals(enginePosition.unveilingMove(move), true);
+        ArrayList<EngineMove> bishopEngineMoves = whiteBishop.possibleMoves(enginePosition.getColorMap());
+        for (EngineMove engineMove : bishopEngineMoves) {
+            assertEquals(enginePosition.unveilingMove(engineMove), true);
         }
     }
 
@@ -80,20 +80,20 @@ public class EngineUnveilingMoveTest {
         enginePosition.set();
         Piece[][] chessBoard = enginePosition.getChessBoard();
         WhiteQueen whiteQueen = (WhiteQueen) chessBoard[3][4];
-        ArrayList<Move> queenMoves = whiteQueen.possibleMoves(enginePosition.getColorMap());
+        ArrayList<EngineMove> queenEngineMoves = whiteQueen.possibleMoves(enginePosition.getColorMap());
         int correctMovesCount = 0;
-        Move correctMove = null;
-        for (Move move : queenMoves) {
-            boolean correct = !enginePosition.unveilingMove(move);
+        EngineMove correctEngineMove = null;
+        for (EngineMove engineMove : queenEngineMoves) {
+            boolean correct = !enginePosition.unveilingMove(engineMove);
             if (correct) {
                 correctMovesCount += 1;
-                correctMove = move;
+                correctEngineMove = engineMove;
             }
         }
         assertEquals(correctMovesCount, 1);
         assertEquals(
-                correctMove,
-                new Move(
+                correctEngineMove,
+                new EngineMove(
                         new Field((byte)3, (byte)4),
                         new Field((byte)2, (byte)4)
                 )
@@ -115,9 +115,9 @@ public class EngineUnveilingMoveTest {
         enginePosition.set();
         Piece[][] chessBoard = enginePosition.getChessBoard();
         BlackKnight blackKnight = (BlackKnight) chessBoard[1][4];
-        ArrayList<Move> knightsMoves = blackKnight.possibleMoves(enginePosition.getColorMap());
-        for (Move move : knightsMoves) {
-            assertEquals(enginePosition.unveilingMove(move), true);
+        ArrayList<EngineMove> knightsEngineMoves = blackKnight.possibleMoves(enginePosition.getColorMap());
+        for (EngineMove engineMove : knightsEngineMoves) {
+            assertEquals(enginePosition.unveilingMove(engineMove), true);
         }
     }
 
@@ -136,23 +136,23 @@ public class EngineUnveilingMoveTest {
         enginePosition.set();
         Piece[][] chessBoard = enginePosition.getChessBoard();
         BlackKing blackKing = (BlackKing) chessBoard[2][5];
-        ArrayList<Move> kingsMoves = blackKing.possibleMoves(enginePosition.getColorMap());
-        ArrayList<Move> correctMoves = new ArrayList<>();
-        for (Move move : kingsMoves) {
-            boolean correct = !enginePosition.unveilingMove(move);
+        ArrayList<EngineMove> kingsEngineMoves = blackKing.possibleMoves(enginePosition.getColorMap());
+        ArrayList<EngineMove> correctEngineMoves = new ArrayList<>();
+        for (EngineMove engineMove : kingsEngineMoves) {
+            boolean correct = !enginePosition.unveilingMove(engineMove);
             if (correct) {
-                correctMoves.add(move);
+                correctEngineMoves.add(engineMove);
             }
         }
-        assertEquals(correctMoves.size(), 2);
-        assertTrue(correctMoves.contains(
-                new Move(
+        assertEquals(correctEngineMoves.size(), 2);
+        assertTrue(correctEngineMoves.contains(
+                new EngineMove(
                         new Field((byte)2, (byte)5),
                         new Field((byte)2, (byte)6)
                 )
         ));
-        assertTrue(correctMoves.contains(
-                new Move(
+        assertTrue(correctEngineMoves.contains(
+                new EngineMove(
                         new Field((byte)2, (byte)5),
                         new Field((byte)3, (byte)4)
                 )
@@ -174,23 +174,23 @@ public class EngineUnveilingMoveTest {
         enginePosition.set();
         Piece[][] chessBoard = enginePosition.getChessBoard();
         BlackKing blackKing = (BlackKing) chessBoard[2][5];
-        ArrayList<Move> kingsMoves = blackKing.possibleMoves(enginePosition.getColorMap());
-        ArrayList<Move> correctMoves = new ArrayList<>();
-        for (Move move : kingsMoves) {
-            boolean correct = !enginePosition.unveilingMove(move);
+        ArrayList<EngineMove> kingsEngineMoves = blackKing.possibleMoves(enginePosition.getColorMap());
+        ArrayList<EngineMove> correctEngineMoves = new ArrayList<>();
+        for (EngineMove engineMove : kingsEngineMoves) {
+            boolean correct = !enginePosition.unveilingMove(engineMove);
             if (correct) {
-                correctMoves.add(move);
+                correctEngineMoves.add(engineMove);
             }
         }
-        assertEquals(correctMoves.size(), 1);
-        assertTrue(correctMoves.contains(
-                new Move(
+        assertEquals(correctEngineMoves.size(), 1);
+        assertTrue(correctEngineMoves.contains(
+                new EngineMove(
                         new Field((byte)2, (byte)5),
                         new Field((byte)2, (byte)6)
                 )
         ));
-        assertFalse(correctMoves.contains(
-                new Move(
+        assertFalse(correctEngineMoves.contains(
+                new EngineMove(
                         new Field((byte)2, (byte)5),
                         new Field((byte)3, (byte)4)
                 )

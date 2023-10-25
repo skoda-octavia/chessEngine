@@ -1,7 +1,7 @@
 package chessEngine.chessTest.piece.pawn;
 
 import chessEngine.chess.EnginePosition;
-import chessEngine.chess.move.Move;
+import chessEngine.chess.move.EngineMove;
 import chessEngine.chess.move.field.Field;
 import chessEngine.chess.piece.Piece;
 import chessEngine.chess.piece.PieceColor;
@@ -30,12 +30,12 @@ public class PawnTest {
         enginePosition.set();
         Piece[][] chessBoard = enginePosition.getChessBoard();
         PieceColor[][] colorMap = enginePosition.getColorMap();
-        ArrayList<Move> aBlackPawn = chessBoard[1][0].possibleMoves(colorMap);
-        ArrayList<Move> bBlackPawn = chessBoard[1][1].possibleMoves(colorMap);
-        ArrayList<Move> cBlackPawn = chessBoard[1][2].possibleMoves(colorMap);
-        ArrayList<Move> gBlackPawn = chessBoard[1][6].possibleMoves(colorMap);
-        ArrayList<Move> dWhitePawn = chessBoard[5][3].possibleMoves(colorMap);
-        ArrayList<Move> hWhitePawn = chessBoard[6][7].possibleMoves(colorMap);
+        ArrayList<EngineMove> aBlackPawn = chessBoard[1][0].possibleMoves(colorMap);
+        ArrayList<EngineMove> bBlackPawn = chessBoard[1][1].possibleMoves(colorMap);
+        ArrayList<EngineMove> cBlackPawn = chessBoard[1][2].possibleMoves(colorMap);
+        ArrayList<EngineMove> gBlackPawn = chessBoard[1][6].possibleMoves(colorMap);
+        ArrayList<EngineMove> dWhitePawn = chessBoard[5][3].possibleMoves(colorMap);
+        ArrayList<EngineMove> hWhitePawn = chessBoard[6][7].possibleMoves(colorMap);
         assertEquals(aBlackPawn.size() , 2);
         assertEquals(bBlackPawn.size(), 3);
         assertEquals(cBlackPawn.size() , 0);

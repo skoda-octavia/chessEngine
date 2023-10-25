@@ -1,7 +1,7 @@
 package chessEngine.chess.piece;
 
 import chessEngine.chess.EnginePosition;
-import chessEngine.chess.move.Move;
+import chessEngine.chess.move.EngineMove;
 import chessEngine.chess.move.field.Field;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +22,7 @@ public abstract class Piece {
         return true;
     }
 
-    public abstract ArrayList<Move> possibleMoves(PieceColor[][] colorMap);
+    public abstract ArrayList<EngineMove> possibleMoves(PieceColor[][] colorMap);
 
     public abstract ArrayList<Field> controlledFields (PieceColor[][] colorMap);
 

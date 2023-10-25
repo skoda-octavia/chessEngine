@@ -1,7 +1,7 @@
 package chessEngine.chess.piece.constantMovesPiece;
 
 import chessEngine.chess.EnginePosition;
-import chessEngine.chess.move.Move;
+import chessEngine.chess.move.EngineMove;
 import chessEngine.chess.move.field.Field;
 import chessEngine.chess.piece.Piece;
 import chessEngine.chess.piece.PieceColor;
@@ -16,8 +16,8 @@ public abstract class ConstantMovesPiece extends Piece {
     protected final byte[][] constantMoves;
 
     @Override
-    public ArrayList<Move> possibleMoves(PieceColor[][] colorMap) {
-        ArrayList<Move> movesList = new ArrayList<>();
+    public ArrayList<EngineMove> possibleMoves(PieceColor[][] colorMap) {
+        ArrayList<EngineMove> movesList = new ArrayList<>();
         for (byte[] direction : this.constantMoves) {
             byte yDir = direction[0];
             byte xDir = direction[1];
@@ -25,7 +25,7 @@ public abstract class ConstantMovesPiece extends Piece {
             byte nextX = (byte) (this.field.width() + xDir);
             if (!this.correctFieldCoordinates(nextY, nextX)) {continue;}
             PieceColor tempPieceColor = colorMap[nextY][nextX];
-            if (!tempPieceColor.equals(this.pieceColor)) {movesList.add(new Move(
+            if (!tempPieceColor.equals(this.pieceColor)) {movesList.add(new EngineMove(
                     this.field, new Field(nextY, nextX))
             );}
         }

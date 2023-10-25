@@ -1,7 +1,7 @@
 package chessEngine.chessTest.engine;
 
 import chessEngine.chess.EnginePosition;
-import chessEngine.chess.move.Move;
+import chessEngine.chess.move.EngineMove;
 import chessEngine.chess.move.field.Field;
 import chessEngine.chess.piece.Piece;
 import chessEngine.chess.piece.PieceColor;
@@ -68,12 +68,12 @@ public class EnginePositionTest {
         posCode += "wRwkwBwQwKwBwkwR";
         EnginePosition enginePosition = new EnginePosition(posCode, true);
         enginePosition.set();
-        Move move = new Move(
+        EngineMove engineMove = new EngineMove(
                 new Field((byte)6, (byte)2),
                 new Field((byte)5, (byte)2)
         );
         PieceColor[][] colorMapAfter = enginePosition.getColorMap();
-        enginePosition.unveilingMove(move);
+        enginePosition.unveilingMove(engineMove);
         enginePosition.setColorMap(null);
         PieceColor[][] colorMapBefore = enginePosition.getColorMap();
         for(int h = 0; h < enginePosition.getBoardHeight(); h++) {

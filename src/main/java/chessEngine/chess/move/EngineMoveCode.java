@@ -1,6 +1,6 @@
 package chessEngine.chess.move;
 
-public enum MoveCode {
+public enum EngineMoveCode {
     NONE((byte)0),
     ENPASSANT((byte)1),
     KNIGHT((byte)2),
@@ -10,7 +10,7 @@ public enum MoveCode {
 
     public byte number;
 
-    MoveCode(byte number) {
+    EngineMoveCode(byte number) {
         this.number = number;
     }
 }

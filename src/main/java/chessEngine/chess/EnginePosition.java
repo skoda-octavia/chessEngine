@@ -1,6 +1,6 @@
 package chessEngine.chess;
 
-import chessEngine.chess.move.Move;
+import chessEngine.chess.move.EngineMove;
 import chessEngine.chess.move.field.Field;
 import chessEngine.chess.piece.Piece;
 import chessEngine.chess.piece.PieceColor;
@@ -51,10 +51,10 @@ public class EnginePosition {
         return colorMap;
     }
 
-    public boolean unveilingMove(Move move) {
+    public boolean unveilingMove(EngineMove engineMove) {
         boolean answer = false;
-        Field from = move.getFrom();
-        Field to = move.getTo();
+        Field from = engineMove.getFrom();
+        Field to = engineMove.getTo();
         PieceColor[][] tempColorMap = getColorMap();
         PieceColor oldColor = tempColorMap[to.height()][to.width()];
         tempColorMap[to.height()][to.width()] = tempColorMap[from.height()][from.width()];

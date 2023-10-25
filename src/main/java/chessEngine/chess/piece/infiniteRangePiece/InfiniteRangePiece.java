@@ -1,7 +1,7 @@
 package chessEngine.chess.piece.infiniteRangePiece;
 
 import chessEngine.chess.EnginePosition;
-import chessEngine.chess.move.Move;
+import chessEngine.chess.move.EngineMove;
 import chessEngine.chess.move.field.Field;
 import chessEngine.chess.piece.Piece;
 import chessEngine.chess.piece.PieceColor;
@@ -17,8 +17,8 @@ public abstract class InfiniteRangePiece extends Piece {
     protected final byte[][] directions;
 
     @Override
-    public ArrayList<Move> possibleMoves(PieceColor[][] colorMap) {
-        ArrayList<Move> movesList = new ArrayList<>();
+    public ArrayList<EngineMove> possibleMoves(PieceColor[][] colorMap) {
+        ArrayList<EngineMove> movesList = new ArrayList<>();
         for (byte[] direction : this.directions) {
             byte yDir = direction[0];
             byte xDir = direction[1];
@@ -30,14 +30,14 @@ public abstract class InfiniteRangePiece extends Piece {
                     break;
                 }
                 else if (tempPieceColor.equals(PieceColor.NONE)) {
-                    movesList.add(new Move(
+                    movesList.add(new EngineMove(
                             this.field, new Field(nextY, nextX)
                     ));
                     nextY += yDir;
                     nextX += xDir;
                 }
                 else {
-                    movesList.add(new Move(
+                    movesList.add(new EngineMove(
                             this.field, new Field(nextY, nextX)
                     ));
                     break;

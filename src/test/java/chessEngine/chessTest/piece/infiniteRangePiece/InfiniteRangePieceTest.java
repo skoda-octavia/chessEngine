@@ -1,7 +1,7 @@
 package chessEngine.chessTest.piece.infiniteRangePiece;
 
 import chessEngine.chess.EnginePosition;
-import chessEngine.chess.move.Move;
+import chessEngine.chess.move.EngineMove;
 import chessEngine.chess.move.field.Field;
 import chessEngine.chess.piece.Piece;
 import chessEngine.chess.piece.PieceColor;
@@ -29,12 +29,12 @@ public class InfiniteRangePieceTest {
         enginePosition.set();
         Piece[][] chessBoard = enginePosition.getChessBoard();
         PieceColor[][] colorMap = enginePosition.getColorMap();
-        ArrayList<Move> rookMoves = chessBoard[0][0].possibleMoves(colorMap);
-        ArrayList<Move> bishopMoves = chessBoard[7][2].possibleMoves(colorMap);
-        ArrayList<Move> queenMoves = chessBoard[0][3].possibleMoves(colorMap);
-        assertEquals(rookMoves.size() , 0);
-        assertEquals(bishopMoves.size() ,0);
-        assertEquals(queenMoves.size() , 0);
+        ArrayList<EngineMove> rookEngineMoves = chessBoard[0][0].possibleMoves(colorMap);
+        ArrayList<EngineMove> bishopEngineMoves = chessBoard[7][2].possibleMoves(colorMap);
+        ArrayList<EngineMove> queenEngineMoves = chessBoard[0][3].possibleMoves(colorMap);
+        assertEquals(rookEngineMoves.size() , 0);
+        assertEquals(bishopEngineMoves.size() ,0);
+        assertEquals(queenEngineMoves.size() , 0);
     }
     @Test
     void possibleMovespiecesInCenterTest() {
@@ -51,12 +51,12 @@ public class InfiniteRangePieceTest {
         enginePosition.set();
         Piece[][] chessBoard = enginePosition.getChessBoard();
         PieceColor[][] colorMap = enginePosition.getColorMap();
-        ArrayList<Move> rookMoves = chessBoard[2][5].possibleMoves(colorMap);
-        ArrayList<Move> bishopMoves = chessBoard[5][5].possibleMoves(colorMap);
-        ArrayList<Move> queenMoves = chessBoard[2][2].possibleMoves(colorMap);
-        assertEquals(rookMoves.size(), 8);
-        assertEquals(bishopMoves.size(), 7);
-        assertEquals(queenMoves.size(), 15);
+        ArrayList<EngineMove> rookEngineMoves = chessBoard[2][5].possibleMoves(colorMap);
+        ArrayList<EngineMove> bishopEngineMoves = chessBoard[5][5].possibleMoves(colorMap);
+        ArrayList<EngineMove> queenEngineMoves = chessBoard[2][2].possibleMoves(colorMap);
+        assertEquals(rookEngineMoves.size(), 8);
+        assertEquals(bishopEngineMoves.size(), 7);
+        assertEquals(queenEngineMoves.size(), 15);
     }
 
     @Test

@@ -1,7 +1,7 @@
 package chessEngine.chessTest.piece.constantMovePiece;
 
 import chessEngine.chess.EnginePosition;
-import chessEngine.chess.move.Move;
+import chessEngine.chess.move.EngineMove;
 import chessEngine.chess.move.field.Field;
 import chessEngine.chess.piece.Piece;
 import chessEngine.chess.piece.PieceColor;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class ConstantMovePieceTest {
+public class ConstantEngineMovePieceTest {
 
     @Test
     void possibleMovesTest () {
@@ -29,12 +29,12 @@ public class ConstantMovePieceTest {
         enginePosition.set();
         Piece[][] chessBoard = enginePosition.getChessBoard();
         PieceColor[][] colorMap = enginePosition.getColorMap();
-        ArrayList<Move> blackKnightMoves = chessBoard[0][6].possibleMoves(colorMap);
-        ArrayList<Move> whiteKnightMoves = chessBoard[7][1].possibleMoves(colorMap);
-        ArrayList<Move> whiteKingMoves = chessBoard[5][5].possibleMoves(colorMap);
-        assertEquals(blackKnightMoves.size(), 3);
-        assertEquals(whiteKnightMoves.size(), 2);
-        assertEquals(whiteKingMoves.size(), 5);
+        ArrayList<EngineMove> blackKnightEngineMoves = chessBoard[0][6].possibleMoves(colorMap);
+        ArrayList<EngineMove> whiteKnightEngineMoves = chessBoard[7][1].possibleMoves(colorMap);
+        ArrayList<EngineMove> whiteKingEngineMoves = chessBoard[5][5].possibleMoves(colorMap);
+        assertEquals(blackKnightEngineMoves.size(), 3);
+        assertEquals(whiteKnightEngineMoves.size(), 2);
+        assertEquals(whiteKingEngineMoves.size(), 5);
     }
 
 

@@ -1,14 +1,13 @@
 package chessEngine.chess.piece.pawn;
 
 import chessEngine.chess.EnginePosition;
-import chessEngine.chess.move.Move;
+import chessEngine.chess.move.EngineMove;
 import chessEngine.chess.move.field.Field;
 import chessEngine.chess.piece.Piece;
 import chessEngine.chess.piece.PieceColor;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.File;
 import java.util.ArrayList;
 
 @Getter
@@ -18,8 +17,8 @@ public abstract class Pawn extends Piece {
     protected final byte startingRow;
 
     @Override
-    public ArrayList<Move> possibleMoves(PieceColor[][] colorMap) {
-        ArrayList<Move> possibleMoves = new ArrayList<>();
+    public ArrayList<EngineMove> possibleMoves(PieceColor[][] colorMap) {
+        ArrayList<EngineMove> possibleEngineMoves = new ArrayList<>();
         byte[][] captureFields = new byte[][]{
                 {(byte)(this.field.height() + this.movingDirection), (byte)(this.field.width() + 1)},
                 {(byte)(this.field.height() + this.movingDirection), (byte)(this.field.width() - 1)}
@@ -29,7 +28,8 @@ public abstract class Pawn extends Piece {
             if (this.correctFieldCoordinates(nextY, nextX)) {
                 PieceColor tempPieceColor = colorMap[nextY][nextX];
                 if (tempPieceColor.equals(this.pieceColor) || tempPieceColor.equals(PieceColor.NONE)) {}
-                else {possibleMoves.add(new Move(
+                else {
+                    possibleEngineMoves.add(new EngineMove(
                         this.field, new Field(nextY, nextX))
                 );}
             }
@@ -37,7 +37,7 @@ public abstract class Pawn extends Piece {
 
         byte nextY = (byte)(this.field.height() + this.movingDirection), nextX = this.field.width();
         if (this.correctFieldCoordinates(nextY, nextX) && colorMap[nextY][nextX].equals(PieceColor.NONE)) {
-            possibleMoves.add(new Move(
+            possibleEngineMoves.add(new EngineMove(
                     this.field, new Field(nextY, nextX)
             ));
         }
@@ -45,13 +45,13 @@ public abstract class Pawn extends Piece {
         if (this.field.height() == this.startingRow && colorMap[nextY][nextX].equals(PieceColor.NONE)) {
             byte nextYJump = (byte)(this.field.height() + 2 * this.movingDirection);
             if (colorMap[nextYJump][nextX].equals(PieceColor.NONE)) {
-                possibleMoves.add(new Move(
+                possibleEngineMoves.add(new EngineMove(
                         this.field, new Field(nextY, nextX))
                 );
             }
         }
         // TODO: 24.10.2023 en passant
-        return possibleMoves;
+        return possibleEngineMoves;
     }
 
     @Override
