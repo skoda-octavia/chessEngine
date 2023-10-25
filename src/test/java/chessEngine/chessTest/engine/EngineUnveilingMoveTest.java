@@ -12,8 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class EngineUnveilingMoveTest {
 
@@ -153,6 +152,44 @@ public class EngineUnveilingMoveTest {
                 )
         ));
         assertTrue(correctMoves.contains(
+                new Move(
+                        new Field((byte)2, (byte)5),
+                        new Field((byte)3, (byte)4)
+                )
+        ));
+    }
+
+    @Test
+    void unveilingMoveTestBlackKingCantCapture() {
+        String posCode = "";
+        posCode += "bRbkbBbQ  bBbkbR";
+        posCode += "bPbPbPbPbkbP  bP";
+        posCode += "    bB    bK    ";
+        posCode += "  wP  wPwQ    wR";
+        posCode += "                ";
+        posCode += "                ";
+        posCode += "wPwPwPwPwPwPwP  ";
+        posCode += "wRwkwBwQwKwBwk  ";
+        EnginePosition enginePosition = new EnginePosition(posCode, false);
+        enginePosition.set();
+        Piece[][] chessBoard = enginePosition.getChessBoard();
+        BlackKing blackKing = (BlackKing) chessBoard[2][5];
+        ArrayList<Move> kingsMoves = blackKing.possibleMoves(enginePosition.getColorMap());
+        ArrayList<Move> correctMoves = new ArrayList<>();
+        for (Move move : kingsMoves) {
+            boolean correct = !enginePosition.unveilingMove(move);
+            if (correct) {
+                correctMoves.add(move);
+            }
+        }
+        assertEquals(correctMoves.size(), 1);
+        assertTrue(correctMoves.contains(
+                new Move(
+                        new Field((byte)2, (byte)5),
+                        new Field((byte)2, (byte)6)
+                )
+        ));
+        assertFalse(correctMoves.contains(
                 new Move(
                         new Field((byte)2, (byte)5),
                         new Field((byte)3, (byte)4)
