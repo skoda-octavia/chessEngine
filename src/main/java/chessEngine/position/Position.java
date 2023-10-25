@@ -1,5 +1,7 @@
 package chessEngine.position;
+import chessEngine.chess.EnginePosition;
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,8 +13,8 @@ import java.util.Objects;
         name = "Position",
         uniqueConstraints = @UniqueConstraint(columnNames = {"positionCode", "whiteMoves"})
 )
-@Getter
-@Setter
+
+@Data
 @NoArgsConstructor
 public class Position {
 
@@ -31,32 +33,13 @@ public class Position {
     private String positionCode;
     private boolean whiteMoves;
 
+    @Transient
+    private EnginePosition enginePosition;
+
     public Position(Long id, String positionCode, boolean whiteMoves) {
         this.id = id;
         this.positionCode = positionCode;
         this.whiteMoves = whiteMoves;
     }
 
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Position position)) return false;
-        return whiteMoves == position.whiteMoves && Objects.equals(id, position.id) && Objects.equals(positionCode, position.positionCode);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, positionCode, whiteMoves);
-    }
-
-    @Override
-    public String toString() {
-        return "Position{" +
-                "id=" + id +
-                ", positionCode='" + positionCode + '\'' +
-                ", whiteMoves=" + whiteMoves +
-                '}';
-    }
 }
