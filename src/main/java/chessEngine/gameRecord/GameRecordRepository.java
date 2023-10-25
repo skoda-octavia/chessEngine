@@ -1,6 +1,6 @@
-package chessEngine.game;
+package chessEngine.gameRecord;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface GameRepository extends JpaRepository<Game, Long> {
+public interface GameRecordRepository extends JpaRepository<GameRecord, Long> {
 }

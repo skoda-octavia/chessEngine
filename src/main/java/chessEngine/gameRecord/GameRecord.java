@@ -1,4 +1,4 @@
-package chessEngine.game;
+package chessEngine.gameRecord;
 
 
 import chessEngine.account.Account;
@@ -9,9 +9,9 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
-@Table(name = "Game")
+@Table(name = "game_record")
 @Data
-public class Game {
+public class GameRecord {
     @Id
     @SequenceGenerator(
             name = "game_sequence",
@@ -37,7 +37,8 @@ public class Game {
     @Column(name = "game_code", columnDefinition = "TEXT")
     private String gameCode;
 
-    @OneToOne(mappedBy = "game", optional = true)
+    @OneToOne(optional = true)
+    @JoinColumn(name = "current_game_id")
     private CurrentGame currentGame;
 
 }

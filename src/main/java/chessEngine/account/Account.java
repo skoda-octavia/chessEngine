@@ -1,11 +1,15 @@
 package chessEngine.account;
 
+import chessEngine.currentGame.CurrentGame;
+import chessEngine.gameRecord.GameRecord;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Entity
-@Table(name = "Account")
+@Table(name = "account")
 public class Account {
 
     @Id
@@ -29,8 +33,13 @@ public class Account {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "current_game_id", nullable = true)
-    private Long currentGameId;
+    @OneToOne(mappedBy = "account", optional = true)
+    @PrimaryKeyJoinColumn(name = "current_game_id")
+    private CurrentGame currentGame;
+
+    @OneToMany(mappedBy = "account")
+    private List<GameRecord> gameRecordList;
+
 
     public Account(String login, String email, String password) {
         this.login = login;
