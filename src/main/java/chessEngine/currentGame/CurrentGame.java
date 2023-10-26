@@ -13,6 +13,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @Table(name = "current_game")
 @Data
 public class CurrentGame {
+
     public CurrentGame(Account account, GameRecord gameRecord, Position position) {
         this.account = account;
         this.gameRecord = gameRecord;

@@ -18,7 +18,7 @@ public class AccountController {
     }
 
     @GetMapping
-    public Account getGameRecords() {
-        return this.accountService.getAccountById(1L);
+    public List<GameRecord> getGameRecords() {
+        return this.accountService.getAccountById(1L).getGameRecordList();
     }
 }

@@ -2,6 +2,7 @@ package chessEngine.account;
 
 import chessEngine.currentGame.CurrentGame;
 import chessEngine.gameRecord.GameRecord;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -40,6 +41,7 @@ public class Account {
     @PrimaryKeyJoinColumn(name = "current_game_id")
     private CurrentGame currentGame;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "account")
     private List<GameRecord> gameRecordList = new ArrayList<>();
 

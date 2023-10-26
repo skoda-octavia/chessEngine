@@ -49,4 +49,8 @@ public class Position {
         this.whiteMoves = whiteMoves;
     }
 
+    public Position(String positionCode, boolean whiteMoves) {
+        this.positionCode = positionCode;
+        this.whiteMoves = whiteMoves;
+    }
 }

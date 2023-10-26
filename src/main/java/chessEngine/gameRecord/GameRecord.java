@@ -3,6 +3,7 @@ package chessEngine.gameRecord;
 
 import chessEngine.account.Account;
 import chessEngine.currentGame.CurrentGame;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.OnDelete;
@@ -27,6 +28,7 @@ public class GameRecord {
     @Column(name = "finished", nullable = false)
     private boolean finished;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "account_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
