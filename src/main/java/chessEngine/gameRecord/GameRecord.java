@@ -14,22 +14,21 @@ import org.hibernate.annotations.OnDeleteAction;
 public class GameRecord {
     @Id
     @SequenceGenerator(
-            name = "game_sequence",
-            sequenceName = "game_sequence",
+            name = "game_record_sequence",
+            sequenceName = "game_record_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy= GenerationType.SEQUENCE,
-            generator = "game_sequence"
+            generator = "game_record_sequence"
     )
     private Long id;
 
     @Column(name = "finished", nullable = false)
     private boolean finished;
 
-
     @ManyToOne
-    @JoinColumn(name = "account_id", nullable = false)
+    @JoinColumn(name = "account_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Account account;
 

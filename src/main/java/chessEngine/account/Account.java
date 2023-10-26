@@ -4,12 +4,15 @@ import chessEngine.currentGame.CurrentGame;
 import chessEngine.gameRecord.GameRecord;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @Entity
 @Table(name = "account")
+@NoArgsConstructor
 public class Account {
 
     @Id
@@ -38,7 +41,7 @@ public class Account {
     private CurrentGame currentGame;
 
     @OneToMany(mappedBy = "account")
-    private List<GameRecord> gameRecordList;
+    private List<GameRecord> gameRecordList = new ArrayList<>();
 
 
     public Account(String login, String email, String password) {
