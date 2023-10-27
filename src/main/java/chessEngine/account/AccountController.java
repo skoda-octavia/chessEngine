@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/account")
+@RequestMapping("api/account/")
 public class AccountController {
 
     private final AccountService accountService;
@@ -17,8 +17,8 @@ public class AccountController {
         this.accountService = accountService;
     }
 
-    @GetMapping
-    public Account getGameRecords() {
-        return this.accountService.getAccountById(1L);
+    @GetMapping("myAccount")
+    public List<GameRecord> getGameRecords() {
+        return this.accountService.getGameRecords();
     }
 }
