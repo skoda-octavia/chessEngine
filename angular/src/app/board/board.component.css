@@ -1,0 +1,21 @@
+/*board component */
+:host {
+    display: flex;
+    justify-content: center; /* Wyśrodkowanie poziome */
+    align-items: center; /* Wyśrodkowanie pionowe */
+    height: 100vh; /* Dostosowanie wysokości do okna przeglądarki */
+    background-color: #f0f0f0; /* Kolor tła */
+}
+
+.row {
+  display: flex;
+}
+
+.board-container {
+  margin-top: 5px; /* Dodaje odstęp między divami */
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+}

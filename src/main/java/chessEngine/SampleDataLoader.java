@@ -2,10 +2,12 @@ package chessEngine;
 
 import chessEngine.account.Account;
 import chessEngine.account.AccountRepository;
+import chessEngine.currentGame.CurrentGame;
 import chessEngine.currentGame.CurrentGameRepository;
 import chessEngine.gameRecord.GameRecord;
 import chessEngine.gameRecord.GameRecordRepository;
 import chessEngine.move.MoveRepository;
+import chessEngine.position.Position;
 import chessEngine.position.PositionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -52,7 +54,7 @@ public class SampleDataLoader implements CommandLineRunner {
         GameRecord gameRecord2 = new GameRecord();
         gameRecord2.setAccount(account);
         gameRecord2.setFinished(true);
-        gameRecord2.setGameCode("gameRec2");
+        gameRecord2.setGameCode("");
 
 
         List<GameRecord> gameRecordList = new ArrayList<>();
@@ -64,6 +66,21 @@ public class SampleDataLoader implements CommandLineRunner {
 
         gameRecordRepository.save(gameRecord);
         gameRecordRepository.save(gameRecord2);
+
+
+        String posCode = "bRbkbBbQbKbBbkbR";
+        posCode += "bPbPbPbPbPbPbPbP";
+        posCode += "                ";
+        posCode += "                ";
+        posCode += "                ";
+        posCode += "                ";
+        posCode += "wPwPwPwPwPwPwPwP";
+        posCode += "wRwkwBwQwKwBwkwR";
+        Position pos = new Position(posCode, true);
+        positionRepository.save(pos);
+
+        CurrentGame currentGame = new CurrentGame(account, gameRecord2, pos);
+        currentGameRepository.save(currentGame);
 
     }
 

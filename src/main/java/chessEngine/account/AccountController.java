@@ -20,5 +20,6 @@ public class AccountController {
     @GetMapping("myAccount")
     public List<GameRecord> getGameRecords() {
         return this.accountService.getGameRecords();
+
     }
 }
