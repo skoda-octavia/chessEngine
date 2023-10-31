@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 @Getter
 @Setter
@@ -55,8 +56,8 @@ public abstract class Pawn extends Piece {
     }
 
     @Override
-    public ArrayList<Field> controlledFields (PieceColor[][] colorMap) {
-        ArrayList<Field> fieldsControlled = new ArrayList<>();
+    public HashSet<Field> controlledFields (PieceColor[][] colorMap) {
+        HashSet<Field> fieldsControlled = new HashSet<>();
         byte[][] captureFields = new byte[][]{
                 {(byte)(this.field.height() + this.movingDirection), (byte)(this.field.width() + 1)},
                 {(byte)(this.field.height() + this.movingDirection), (byte)(this.field.width() - 1)}

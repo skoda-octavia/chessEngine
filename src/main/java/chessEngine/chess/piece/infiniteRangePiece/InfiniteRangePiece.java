@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 
 @Getter
@@ -48,8 +49,9 @@ public abstract class InfiniteRangePiece extends Piece {
     }
 
     @Override
-    public ArrayList<Field> controlledFields(PieceColor[][] colorMap) {
-        ArrayList<Field> controlledFields = new ArrayList<>();
+    public HashSet<Field> controlledFields(PieceColor[][] colorMap) {
+        if (this.controlledFields != null) {return this.controlledFields;}
+        HashSet<Field> controlledFields = new HashSet<>();
         for (byte[] direction : this.directions) {
             byte yDir = direction[0];
             byte xDir = direction[1];
@@ -67,6 +69,7 @@ public abstract class InfiniteRangePiece extends Piece {
                 }
             }
         }
+        this.controlledFields = controlledFields;
         return controlledFields;
     }
 

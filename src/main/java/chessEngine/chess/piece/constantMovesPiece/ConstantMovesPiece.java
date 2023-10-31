@@ -9,14 +9,15 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 @Getter
 @Setter
 public abstract class ConstantMovesPiece extends Piece {
     protected final byte[][] constantMoves;
 
-    @Override
-    public ArrayList<EngineMove> possibleMoves(PieceColor[][] colorMap) {
+
+    public ArrayList<EngineMove> possibleConstantMoves(PieceColor[][] colorMap) {
         ArrayList<EngineMove> movesList = new ArrayList<>();
         for (byte[] direction : this.constantMoves) {
             byte yDir = direction[0];
@@ -33,8 +34,8 @@ public abstract class ConstantMovesPiece extends Piece {
     }
 
     @Override
-    public ArrayList<Field> controlledFields(PieceColor[][] colorMap) {
-        ArrayList<Field> controlledFields = new ArrayList<>();
+    public HashSet<Field> controlledFields(PieceColor[][] colorMap) {
+        HashSet<Field> controlledFields = new HashSet<>();
         for (byte[] direction : this.constantMoves) {
             byte yDir = direction[0];
             byte xDir = direction[1];

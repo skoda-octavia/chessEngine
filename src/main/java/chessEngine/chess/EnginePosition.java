@@ -11,9 +11,7 @@ import chessEngine.chess.pieceGenerator.PieceGenerator;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.*;
 
 @Getter
 @Setter
@@ -30,12 +28,34 @@ public class EnginePosition {
     private LinkedList<Piece> whitePieces = new LinkedList<>();
     private WhiteKing whiteKing = null;
     private BlackKing blackKing = null;
+    private boolean whiteKingMoved;
+    private boolean blackKingMoved;
+    private boolean whiteLeftRookMoved;
+    private boolean whiteRightRookMoved;
+    private boolean blackLeftRookMoved;
+    private boolean blackRightRookMoved;
 
     public PieceColor[][] getColorMap() {
         if (this.colorMap == null) {
             this.colorMap = this.generateColorMap();
         }
         return this.colorMap;
+    }
+
+
+    public HashSet<Field> controlledFields(PieceColor color) {
+        HashSet<Field> fields = null;
+        LinkedList<Piece> pieces = null;
+        if (color.equals(PieceColor.WHITE)) {pieces = this.whitePieces;}
+        else if (color.equals(PieceColor.BLACK)) {pieces = this.blackPieces;}
+        else {throw new IllegalArgumentException("invalid piece color in argument");}
+
+        Iterator<Piece> iterator = pieces.iterator();
+        while (iterator.hasNext()) {
+            Piece tempPiece = iterator.next();
+
+        }
+        return new HashSet<>();
     }
 
     private PieceColor[][] generateColorMap() {
@@ -88,7 +108,7 @@ public class EnginePosition {
             if (!tempPiece.getPieceColor().equals(colorMap[tempPieceField.height()][tempPieceField.width()])) {
                 continue;
             }
-            ArrayList<Field> controlledFields = tempPiece.controlledFields(colorMap);
+            HashSet<Field> controlledFields = tempPiece.controlledFields(colorMap);
             if (controlledFields.contains(kingsField)) {return true;}
         }
         return false;
@@ -123,6 +143,24 @@ public class EnginePosition {
                 codeIndex += 2;
             }
         }
+    }
+
+    public EnginePosition(String positionCode,
+                          boolean whiteMoves,
+                          boolean whiteKingMoved,
+                          boolean blackKingMoved,
+                          boolean whiteLeftRookMoved,
+                          boolean whiteRightRookMoved,
+                          boolean blackLeftRookMoved,
+                          boolean blackRightRookMoved) {
+        this.positionCode = positionCode;
+        this.whiteMoves = whiteMoves;
+        this.whiteKingMoved = whiteKingMoved;
+        this.blackKingMoved = blackKingMoved;
+        this.whiteLeftRookMoved = whiteLeftRookMoved;
+        this.whiteRightRookMoved = whiteRightRookMoved;
+        this.blackLeftRookMoved = blackLeftRookMoved;
+        this.blackRightRookMoved = blackRightRookMoved;
     }
 
     public EnginePosition(String positionCode, boolean whiteMoves) {
