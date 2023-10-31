@@ -9,11 +9,6 @@ import java.util.ArrayList;
 
 public abstract class Knight extends ConstantMovesPiece {
 
-    @Override
-    public ArrayList<EngineMove> possibleMoves(PieceColor[][] colorMap) {
-        return this.possibleConstantMoves(colorMap);
-    }
-
     public Knight(PieceColor pieceColor, EnginePosition pos) {
         super(pieceColor, pos, new byte[][] {
                 {-2, 1},

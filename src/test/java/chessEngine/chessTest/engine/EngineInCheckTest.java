@@ -2,11 +2,15 @@ package chessEngine.chessTest.engine;
 
 import chessEngine.chess.EnginePosition;
 import chessEngine.chess.move.field.Field;
+import chessEngine.chess.piece.Piece;
 import chessEngine.chess.piece.PieceColor;
+import chessEngine.chess.piece.infiniteRangePiece.queen.WhiteQueen;
+import chessEngine.chess.piece.pawn.BlackPawn;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class EngineInCheckTest {
 
@@ -24,16 +28,11 @@ public class EngineInCheckTest {
         posCode += "wRwkwBwQwKwBwkwR";
         EnginePosition enginePosition = new EnginePosition(posCode, true);
         enginePosition.set();
-        boolean whiteInCheck = enginePosition.inCheck(
-                PieceColor.WHITE,
-                enginePosition.getColorMap(),
-                new Field((byte)7, (byte)4));
-        boolean blackInCheck = enginePosition.inCheck(
-                PieceColor.BLACK,
-                enginePosition.getColorMap(),
-                new Field((byte)0, (byte)4));
-        assertFalse(whiteInCheck);
-        assertFalse(blackInCheck);
+        ArrayList<Piece> attackingWhite = enginePosition.checkingPieces(PieceColor.WHITE);
+        ArrayList<Piece> attackingBlack = enginePosition.checkingPieces(PieceColor.BLACK);
+        assertEquals(attackingBlack.size(), 0);
+        assertEquals(attackingWhite.size(), 0);
+
     }
 
     @Test
@@ -49,16 +48,12 @@ public class EngineInCheckTest {
         posCode += "wRwkwBwQ  wBwkwR";
         EnginePosition enginePosition = new EnginePosition(posCode, true);
         enginePosition.set();
-        boolean whiteInCheck = enginePosition.inCheck(
-                PieceColor.WHITE,
-                enginePosition.getColorMap(),
-                enginePosition.getWhiteKing().getField());
-        boolean blackInCheck = enginePosition.inCheck(
-                PieceColor.BLACK,
-                enginePosition.getColorMap(),
-                enginePosition.getBlackKing().getField());
-        assertTrue(whiteInCheck);
-        assertTrue(blackInCheck);
+        ArrayList<Piece> attackingWhite = enginePosition.checkingPieces(PieceColor.WHITE);
+        ArrayList<Piece> attackingBlack = enginePosition.checkingPieces(PieceColor.BLACK);
+        assertEquals(attackingBlack.size(), 1);
+        assertEquals(attackingWhite.size(), 1);
+        assertTrue(attackingWhite.get(0) instanceof WhiteQueen);
+        assertTrue(attackingBlack.get(0) instanceof BlackPawn);
     }
 
     @Test
@@ -74,16 +69,10 @@ public class EngineInCheckTest {
         posCode += "wRwkwBwQ  wBwkwR";
         EnginePosition enginePosition = new EnginePosition(posCode, true);
         enginePosition.set();
-        boolean whiteInCheck = enginePosition.inCheck(
-                PieceColor.WHITE,
-                enginePosition.getColorMap(),
-                enginePosition.getWhiteKing().getField());
-        boolean blackInCheck = enginePosition.inCheck(
-                PieceColor.BLACK,
-                enginePosition.getColorMap(),
-                enginePosition.getBlackKing().getField());
-        assertTrue(whiteInCheck);
-        assertTrue(blackInCheck);
+        ArrayList<Piece> attackingWhite = enginePosition.checkingPieces(PieceColor.WHITE);
+        ArrayList<Piece> attackingBlack = enginePosition.checkingPieces(PieceColor.BLACK);
+        assertEquals(attackingBlack.size(), 0);
+        assertEquals(attackingWhite.size(), 0);
     }
 
     @Test
@@ -99,16 +88,10 @@ public class EngineInCheckTest {
         posCode += "wRwkwBwQ  wBwkwR";
         EnginePosition enginePosition = new EnginePosition(posCode, true);
         enginePosition.set();
-        boolean whiteInCheck = enginePosition.inCheck(
-                PieceColor.WHITE,
-                enginePosition.getColorMap(),
-                enginePosition.getWhiteKing().getField());
-        boolean blackInCheck = enginePosition.inCheck(
-                PieceColor.BLACK,
-                enginePosition.getColorMap(),
-                enginePosition.getBlackKing().getField());
-        assertTrue(whiteInCheck);
-        assertTrue(blackInCheck);
+        ArrayList<Piece> attackingWhite = enginePosition.checkingPieces(PieceColor.WHITE);
+        ArrayList<Piece> attackingBlack = enginePosition.checkingPieces(PieceColor.BLACK);
+        assertEquals(attackingBlack.size(), 0);
+        assertEquals(attackingWhite.size(), 0);
     }
 
     @Test
@@ -124,15 +107,9 @@ public class EngineInCheckTest {
         posCode += "wRwkwBwQ  wBwk  ";
         EnginePosition enginePosition = new EnginePosition(posCode, true);
         enginePosition.set();
-        boolean whiteInCheck = enginePosition.inCheck(
-                PieceColor.WHITE,
-                enginePosition.getColorMap(),
-                enginePosition.getWhiteKing().getField());
-        boolean blackInCheck = enginePosition.inCheck(
-                PieceColor.BLACK,
-                enginePosition.getColorMap(),
-                enginePosition.getBlackKing().getField());
-        assertFalse(whiteInCheck);
-        assertTrue(blackInCheck);
+        ArrayList<Piece> attackingWhite = enginePosition.checkingPieces(PieceColor.WHITE);
+        ArrayList<Piece> attackingBlack = enginePosition.checkingPieces(PieceColor.BLACK);
+        assertEquals(attackingBlack.size(), 0);
+        assertEquals(attackingWhite.size(), 0);
     }
 }

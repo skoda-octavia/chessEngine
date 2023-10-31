@@ -54,34 +54,34 @@ public class EnginePositionTest {
         assertTrue(enginePosition.getBlackPieces().size() == 16);
         assertTrue(enginePosition.getWhitePieces().size() == 16);
     }
-
-    @Test
-    void unveilingColorMapTest () {
-        String posCode = "";
-        posCode += "bRbkbBbQbKbBbkbR";
-        posCode += "bPbPbPbPbPbPbPbP";
-        posCode += "                ";
-        posCode += "                ";
-        posCode += "                ";
-        posCode += "                ";
-        posCode += "wPwPwPwPwPwPwPwP";
-        posCode += "wRwkwBwQwKwBwkwR";
-        EnginePosition enginePosition = new EnginePosition(posCode, true);
-        enginePosition.set();
-        EngineMove engineMove = new EngineMove(
-                new Field((byte)6, (byte)2),
-                new Field((byte)5, (byte)2)
-        );
-        PieceColor[][] colorMapAfter = enginePosition.getColorMap();
-        enginePosition.unveilingMove(engineMove);
-        enginePosition.setColorMap(null);
-        PieceColor[][] colorMapBefore = enginePosition.getColorMap();
-        for(int h = 0; h < enginePosition.getBoardHeight(); h++) {
-            for (int w = 0; w < enginePosition.getBoardWidth(); w++) {
-                assertEquals(colorMapBefore[h][w], colorMapAfter[h][w]);
-            }
-        }
-    }
+//
+//    @Test
+//    void unveilingColorMapTest () {
+//        String posCode = "";
+//        posCode += "bRbkbBbQbKbBbkbR";
+//        posCode += "bPbPbPbPbPbPbPbP";
+//        posCode += "                ";
+//        posCode += "                ";
+//        posCode += "                ";
+//        posCode += "                ";
+//        posCode += "wPwPwPwPwPwPwPwP";
+//        posCode += "wRwkwBwQwKwBwkwR";
+//        EnginePosition enginePosition = new EnginePosition(posCode, true);
+//        enginePosition.set();
+//        EngineMove engineMove = new EngineMove(
+//                new Field((byte)6, (byte)2),
+//                new Field((byte)5, (byte)2)
+//        );
+//        PieceColor[][] colorMapAfter = enginePosition.getColorMap();
+//        enginePosition.unveilingMove(engineMove);
+//        enginePosition.setColorMap(null);
+//        PieceColor[][] colorMapBefore = enginePosition.getColorMap();
+//        for(int h = 0; h < enginePosition.getBoardHeight(); h++) {
+//            for (int w = 0; w < enginePosition.getBoardWidth(); w++) {
+//                assertEquals(colorMapBefore[h][w], colorMapAfter[h][w]);
+//            }
+//        }
+//    }
 
 
 

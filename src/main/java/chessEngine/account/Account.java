@@ -41,8 +41,7 @@ public class Account {
     @PrimaryKeyJoinColumn(name = "current_game_id")
     private CurrentGame currentGame;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "account")
+    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
     private List<GameRecord> gameRecordList = new ArrayList<>();
 
 

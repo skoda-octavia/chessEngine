@@ -16,62 +16,65 @@ import java.util.HashSet;
 @Setter
 public abstract class InfiniteRangePiece extends Piece {
     protected final byte[][] directions;
+    protected boolean pinsQueen = false;
+    protected boolean pinsKing = false;
 
     @Override
-    public ArrayList<EngineMove> possibleMoves(PieceColor[][] colorMap) {
+    public void setMyPossibilities(PieceColor[][] colorMap) {
+        PieceColor enemyPieceColor = this.enemyPieceColor();
         ArrayList<EngineMove> movesList = new ArrayList<>();
+        HashSet<Field> controlledFields = new HashSet<>();
+        Field queensField = this.position.queensField(enemyPieceColor);
+        Field kingsField = this.position.kingsField(enemyPieceColor);
         for (byte[] direction : this.directions) {
             byte yDir = direction[0];
             byte xDir = direction[1];
             byte nextY = (byte) (this.field.height() + yDir);
             byte nextX = (byte) (this.field.width() + xDir);
+            boolean blocked = false;
+            Piece pinnedPiece = null;
             while (this.correctFieldCoordinates(nextY, nextX)) {
                 PieceColor tempPieceColor = colorMap[nextY][nextX];
-                if (tempPieceColor.equals(this.pieceColor)) {
-                    break;
+                if (tempPieceColor.equals(this.pieceColor) && blocked == false) {
+                    controlledFields.add(new Field(nextY, nextX));
+                    blocked = true;
+                    nextY += yDir;
+                    nextX += xDir;
                 }
-                else if (tempPieceColor.equals(PieceColor.NONE)) {
+                else if (tempPieceColor.equals(PieceColor.NONE) && blocked == false) {
                     movesList.add(new EngineMove(
                             this.field, new Field(nextY, nextX)
                     ));
                     nextY += yDir;
                     nextX += xDir;
                 }
-                else {
-                    movesList.add(new EngineMove(
-                            this.field, new Field(nextY, nextX)
-                    ));
+                else if (tempPieceColor.equals(enemyPieceColor) && blocked == false){
+                    blocked = true;
+                    pinnedPiece = this.position.getChessBoard()[nextY][nextX];
+                    movesList.add(new EngineMove(this.field, new Field(nextY, nextX)));
+                    nextY += yDir;
+                    nextX += xDir;
+                }
+                else if (blocked && tempPieceColor.equals(pieceColor.NONE)) {
+                    nextY += yDir;
+                    nextX += xDir;
+                }
+                else if (blocked && tempPieceColor.equals(enemyPieceColor)){
+                    if (nextY == kingsField.height() && nextX == kingsField.width()) {
+                        pinnedPiece.setPinnedDirection(new byte[]{yDir, xDir});
+                        this.pinsKing = true;
+                    } else if (nextY == queensField.height() && nextX == queensField.width()) {
+                        this.pinsQueen = true;
+                    }
                     break;
                 }
+                else {break;}
             }
         }
-        return movesList;
+        this.possibleMoves = movesList;
+        this.controlledFields = controlledFields;
     }
 
-    @Override
-    public HashSet<Field> controlledFields(PieceColor[][] colorMap) {
-        if (this.controlledFields != null) {return this.controlledFields;}
-        HashSet<Field> controlledFields = new HashSet<>();
-        for (byte[] direction : this.directions) {
-            byte yDir = direction[0];
-            byte xDir = direction[1];
-            byte nextY = (byte) (this.field.height() + yDir);
-            byte nextX = (byte) (this.field.width() + xDir);
-            while (this.correctFieldCoordinates(nextY, nextX)) {
-                PieceColor tempPieceColor = colorMap[nextY][nextX];
-                controlledFields.add(new Field(nextY, nextX));
-                if (tempPieceColor.equals(PieceColor.NONE)) {
-                    nextY += yDir;
-                    nextX += xDir;
-                }
-                else {
-                    break;
-                }
-            }
-        }
-        this.controlledFields = controlledFields;
-        return controlledFields;
-    }
 
     public InfiniteRangePiece(PieceColor pieceColor, EnginePosition pos, byte[][] directions) {
         super(pieceColor, pos);

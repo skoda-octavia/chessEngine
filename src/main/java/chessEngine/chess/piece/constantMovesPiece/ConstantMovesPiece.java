@@ -16,25 +16,9 @@ import java.util.HashSet;
 public abstract class ConstantMovesPiece extends Piece {
     protected final byte[][] constantMoves;
 
-
-    public ArrayList<EngineMove> possibleConstantMoves(PieceColor[][] colorMap) {
-        ArrayList<EngineMove> movesList = new ArrayList<>();
-        for (byte[] direction : this.constantMoves) {
-            byte yDir = direction[0];
-            byte xDir = direction[1];
-            byte nextY = (byte) (this.field.height() + yDir);
-            byte nextX = (byte) (this.field.width() + xDir);
-            if (!this.correctFieldCoordinates(nextY, nextX)) {continue;}
-            PieceColor tempPieceColor = colorMap[nextY][nextX];
-            if (!tempPieceColor.equals(this.pieceColor)) {movesList.add(new EngineMove(
-                    this.field, new Field(nextY, nextX))
-            );}
-        }
-        return movesList;
-    }
-
     @Override
-    public HashSet<Field> controlledFields(PieceColor[][] colorMap) {
+    public void setMyPossibilities(PieceColor[][] colorMap) {
+        ArrayList<EngineMove> movesList = new ArrayList<>();
         HashSet<Field> controlledFields = new HashSet<>();
         for (byte[] direction : this.constantMoves) {
             byte yDir = direction[0];
@@ -42,10 +26,16 @@ public abstract class ConstantMovesPiece extends Piece {
             byte nextY = (byte) (this.field.height() + yDir);
             byte nextX = (byte) (this.field.width() + xDir);
             if (!this.correctFieldCoordinates(nextY, nextX)) {continue;}
+            PieceColor tempPieceColor = colorMap[nextY][nextX];
+            if (!tempPieceColor.equals(this.pieceColor)) {
+                movesList.add(new EngineMove(this.field, new Field(nextY, nextX)));
+            }
             controlledFields.add(new Field(nextY, nextX));
         }
-        return controlledFields;
+        this.possibleMoves = movesList;
+        this.controlledFields = controlledFields;
     }
+
 
     public ConstantMovesPiece(PieceColor pieceColor, EnginePosition pos, byte[][] constantsMoves) {
         super(pieceColor, pos);

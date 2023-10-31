@@ -8,6 +8,8 @@ import chessEngine.chess.piece.PieceColor;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.logging.Handler;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -29,13 +31,12 @@ public class PawnTest {
         EnginePosition enginePosition = new EnginePosition(posCode, true);
         enginePosition.set();
         Piece[][] chessBoard = enginePosition.getChessBoard();
-        PieceColor[][] colorMap = enginePosition.getColorMap();
-        ArrayList<EngineMove> aBlackPawn = chessBoard[1][0].possibleMoves(colorMap);
-        ArrayList<EngineMove> bBlackPawn = chessBoard[1][1].possibleMoves(colorMap);
-        ArrayList<EngineMove> cBlackPawn = chessBoard[1][2].possibleMoves(colorMap);
-        ArrayList<EngineMove> gBlackPawn = chessBoard[1][6].possibleMoves(colorMap);
-        ArrayList<EngineMove> dWhitePawn = chessBoard[5][3].possibleMoves(colorMap);
-        ArrayList<EngineMove> hWhitePawn = chessBoard[6][7].possibleMoves(colorMap);
+        ArrayList<EngineMove> aBlackPawn = chessBoard[1][0].getPossibleMoves();
+        ArrayList<EngineMove> bBlackPawn = chessBoard[1][1].getPossibleMoves();
+        ArrayList<EngineMove> cBlackPawn = chessBoard[1][2].getPossibleMoves();
+        ArrayList<EngineMove> gBlackPawn = chessBoard[1][6].getPossibleMoves();
+        ArrayList<EngineMove> dWhitePawn = chessBoard[5][3].getPossibleMoves();
+        ArrayList<EngineMove> hWhitePawn = chessBoard[6][7].getPossibleMoves();
         assertEquals(aBlackPawn.size() , 2);
         assertEquals(bBlackPawn.size(), 3);
         assertEquals(cBlackPawn.size() , 0);
@@ -58,12 +59,11 @@ public class PawnTest {
         EnginePosition enginePosition = new EnginePosition(posCode, true);
         enginePosition.set();
         Piece[][] chessBoard = enginePosition.getChessBoard();
-        PieceColor[][] colorMap = enginePosition.getColorMap();
-        ArrayList<Field> aBlackPawn = chessBoard[1][0].controlledFields(colorMap);
-        ArrayList<Field> bBlackPawn = chessBoard[1][1].controlledFields(colorMap);
-        ArrayList<Field> cBlackPawn = chessBoard[1][2].controlledFields(colorMap);
-        ArrayList<Field> hBlackPawn = chessBoard[1][7].controlledFields(colorMap);
-        ArrayList<Field> eWhitePawn = chessBoard[6][4].controlledFields(colorMap);
+        HashSet<Field> aBlackPawn = chessBoard[1][0].getControlledFields();
+        HashSet<Field> bBlackPawn = chessBoard[1][1].getControlledFields();
+        HashSet<Field> cBlackPawn = chessBoard[1][2].getControlledFields();
+        HashSet<Field> hBlackPawn = chessBoard[1][7].getControlledFields();
+        HashSet<Field> eWhitePawn = chessBoard[6][4].getControlledFields();
         assertEquals(hBlackPawn.size() , 1);
         assertEquals(eWhitePawn.size(), 2);
         assertEquals(aBlackPawn.size() , 1);

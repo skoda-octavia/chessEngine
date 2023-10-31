@@ -9,12 +9,6 @@ import java.util.ArrayList;
 
 public abstract class King extends ConstantMovesPiece {
 
-    @Override
-    public ArrayList<EngineMove> possibleMoves(PieceColor[][] colorMap) {
-        return this.possibleConstantMoves(colorMap);
-    }
-
-
     public King(PieceColor pieceColor, EnginePosition pos) {
         super(pieceColor, pos, new byte[][] {
                 {1, 0},

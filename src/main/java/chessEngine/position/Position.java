@@ -36,7 +36,7 @@ public class Position {
     @Column(nullable = false, name = "white_moves")
     private boolean whiteMoves;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     private List<Move> childMoves;
 

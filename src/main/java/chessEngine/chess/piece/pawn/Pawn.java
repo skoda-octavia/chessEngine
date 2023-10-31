@@ -18,8 +18,9 @@ public abstract class Pawn extends Piece {
     protected final byte startingRow;
 
     @Override
-    public ArrayList<EngineMove> possibleMoves(PieceColor[][] colorMap) {
+    public void setMyPossibilities(PieceColor[][] colorMap) {
         ArrayList<EngineMove> possibleEngineMoves = new ArrayList<>();
+        HashSet<Field> controlledFields = new HashSet<>();
         byte[][] captureFields = new byte[][]{
                 {(byte)(this.field.height() + this.movingDirection), (byte)(this.field.width() + 1)},
                 {(byte)(this.field.height() + this.movingDirection), (byte)(this.field.width() - 1)}
@@ -28,11 +29,10 @@ public abstract class Pawn extends Piece {
             byte nextY = field[0], nextX = field[1];
             if (this.correctFieldCoordinates(nextY, nextX)) {
                 PieceColor tempPieceColor = colorMap[nextY][nextX];
-                if (tempPieceColor.equals(this.pieceColor) || tempPieceColor.equals(PieceColor.NONE)) {}
-                else {
-                    possibleEngineMoves.add(new EngineMove(
-                        this.field, new Field(nextY, nextX))
-                );}
+                if (!tempPieceColor.equals(this.pieceColor)) {
+                    possibleEngineMoves.add(new EngineMove(this.field, new Field(nextY, nextX)));
+                    }
+                controlledFields.add(new Field(nextY, nextX));
             }
         }
 
@@ -52,24 +52,9 @@ public abstract class Pawn extends Piece {
             }
         }
         // TODO: 24.10.2023 en passant
-        return possibleEngineMoves;
-    }
-
-    @Override
-    public HashSet<Field> controlledFields (PieceColor[][] colorMap) {
-        HashSet<Field> fieldsControlled = new HashSet<>();
-        byte[][] captureFields = new byte[][]{
-                {(byte)(this.field.height() + this.movingDirection), (byte)(this.field.width() + 1)},
-                {(byte)(this.field.height() + this.movingDirection), (byte)(this.field.width() - 1)}
-        };
-        for (byte[] field : captureFields) {
-            byte nextY = field[0], nextX = field[1];
-            if (this.correctFieldCoordinates(nextY, nextX)) {
-                fieldsControlled.add(new Field(nextY, nextX));
-            }
-        }
-        return fieldsControlled;
-    }
+        this.possibleMoves = possibleEngineMoves;
+        this.controlledFields = controlledFields;
+     }
 
 
     public Pawn(PieceColor pieceColor, EnginePosition pos, byte movingDirection, byte startingRow) {

@@ -3,6 +3,7 @@ package chessEngine.chess.piece;
 import chessEngine.chess.EnginePosition;
 import chessEngine.chess.move.EngineMove;
 import chessEngine.chess.move.field.Field;
+import chessEngine.move.Move;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,6 +17,8 @@ public abstract class Piece {
     protected final EnginePosition position;
     protected final PieceColor pieceColor;
     protected HashSet<Field> controlledFields = null;
+    protected ArrayList<EngineMove> possibleMoves = null;
+    protected byte[] pinnedDirection;
 
     public boolean correctFieldCoordinates(int height, int width) {
         if (height < 0 || height >= this.position.getBoardHeight()) {return false;}
@@ -23,9 +26,12 @@ public abstract class Piece {
         return true;
     }
 
-    public abstract ArrayList<EngineMove> possibleMoves(PieceColor[][] colorMap);
+    public abstract void setMyPossibilities(PieceColor[][] colorMap);
 
-    public abstract HashSet<Field> controlledFields (PieceColor[][] colorMap);
+    public PieceColor enemyPieceColor() {
+        if (this.pieceColor.equals(PieceColor.WHITE)) {return PieceColor.BLACK;}
+        return PieceColor.WHITE;
+    }
 
     public Piece(PieceColor pieceColor, EnginePosition pos) {
         this.pieceColor = pieceColor;

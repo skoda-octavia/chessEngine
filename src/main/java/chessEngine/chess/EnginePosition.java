@@ -7,6 +7,8 @@ import chessEngine.chess.piece.PieceColor;
 import chessEngine.chess.piece.constantMovesPiece.king.BlackKing;
 import chessEngine.chess.piece.constantMovesPiece.king.King;
 import chessEngine.chess.piece.constantMovesPiece.king.WhiteKing;
+import chessEngine.chess.piece.infiniteRangePiece.queen.BlackQueen;
+import chessEngine.chess.piece.infiniteRangePiece.queen.WhiteQueen;
 import chessEngine.chess.pieceGenerator.PieceGenerator;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,6 +30,8 @@ public class EnginePosition {
     private LinkedList<Piece> whitePieces = new LinkedList<>();
     private WhiteKing whiteKing = null;
     private BlackKing blackKing = null;
+    private WhiteQueen whiteQueen = null;
+    private BlackQueen blackQueen = null;
     private boolean whiteKingMoved;
     private boolean blackKingMoved;
     private boolean whiteLeftRookMoved;
@@ -43,20 +47,6 @@ public class EnginePosition {
     }
 
 
-    public HashSet<Field> controlledFields(PieceColor color) {
-        HashSet<Field> fields = null;
-        LinkedList<Piece> pieces = null;
-        if (color.equals(PieceColor.WHITE)) {pieces = this.whitePieces;}
-        else if (color.equals(PieceColor.BLACK)) {pieces = this.blackPieces;}
-        else {throw new IllegalArgumentException("invalid piece color in argument");}
-
-        Iterator<Piece> iterator = pieces.iterator();
-        while (iterator.hasNext()) {
-            Piece tempPiece = iterator.next();
-
-        }
-        return new HashSet<>();
-    }
 
     private PieceColor[][] generateColorMap() {
 
@@ -70,60 +60,71 @@ public class EnginePosition {
         }
         return colorMap;
     }
-
-    public boolean unveilingMove(EngineMove engineMove) {
-        boolean answer = false;
-        Field from = engineMove.getFrom();
-        Field to = engineMove.getTo();
-        PieceColor[][] tempColorMap = getColorMap();
-        PieceColor oldColor = tempColorMap[to.height()][to.width()];
-        tempColorMap[to.height()][to.width()] = tempColorMap[from.height()][from.width()];
-        tempColorMap[from.height()][from.width()] = PieceColor.NONE;
-
-
-
-        Field kingsField = null;
-        PieceColor movingColor = whiteMoves ? PieceColor.WHITE : PieceColor.BLACK;
-        if (chessBoard[from.height()][from.width()] instanceof King &&
-                tempColorMap[to.height()][to.width()].equals(movingColor)) {
-                kingsField = new Field(to.height(), to.width());
-        }
-        else {kingsField = whiteMoves ? whiteKing.getField() : blackKing.getField();}
-
-        if (inCheck(movingColor, tempColorMap, kingsField)) {answer = true;}
-
-        tempColorMap[from.height()][from.width()] = tempColorMap[to.height()][to.width()];
-        tempColorMap[to.height()][to.width()] = oldColor;
-
-        return answer;
-    }
-
-    public boolean inCheck(PieceColor pieceColor, PieceColor[][] colorMap, Field kingsField) {
-        LinkedList<Piece> oppositePieces = pieceColor.equals(PieceColor.BLACK) ? this.whitePieces : this.blackPieces;
+//
+//    public boolean unveilingMove(EngineMove engineMove) {
+//        boolean answer = false;
+//        Field from = engineMove.getFrom();
+//        Field to = engineMove.getTo();
+//        PieceColor[][] tempColorMap = getColorMap();
+//        PieceColor oldColor = tempColorMap[to.height()][to.width()];
+//        tempColorMap[to.height()][to.width()] = tempColorMap[from.height()][from.width()];
+//        tempColorMap[from.height()][from.width()] = PieceColor.NONE;
+//
+//
+//
+//        Field kingsField = null;
+//        PieceColor movingColor = whiteMoves ? PieceColor.WHITE : PieceColor.BLACK;
+//        if (chessBoard[from.height()][from.width()] instanceof King &&
+//                tempColorMap[to.height()][to.width()].equals(movingColor)) {
+//                kingsField = new Field(to.height(), to.width());
+//        }
+//        else {kingsField = whiteMoves ? whiteKing.getField() : blackKing.getField();}
+//
+//        if (inCheck(movingColor, tempColorMap, kingsField)) {answer = true;}
+//
+//        tempColorMap[from.height()][from.width()] = tempColorMap[to.height()][to.width()];
+//        tempColorMap[to.height()][to.width()] = oldColor;
+//
+//        return answer;
+//    }
+//
+    public ArrayList<Piece> checkingPieces(PieceColor pieceColor) {
+        LinkedList<Piece> oppositePieces = pieceColor.equals(PieceColor.WHITE) ? this.whitePieces : this.blackPieces;
+        Field kingsField = pieceColor.equals(PieceColor.WHITE) ? this.blackKing.getField() : this.whiteKing.getField();
+        ArrayList<Piece> checkingPieces = new ArrayList<>();
         Iterator<Piece> iterator = oppositePieces.iterator();
         while (iterator.hasNext()) {
             Piece tempPiece = iterator.next();
             Field tempPieceField = tempPiece.getField();
-            //when piece captured
-            if (!tempPiece.getPieceColor().equals(colorMap[tempPieceField.height()][tempPieceField.width()])) {
-                continue;
-            }
-            HashSet<Field> controlledFields = tempPiece.controlledFields(colorMap);
-            if (controlledFields.contains(kingsField)) {return true;}
+            HashSet<Field> controlledFields = tempPiece.getControlledFields();
+            if (controlledFields.contains(kingsField)) {checkingPieces.add(tempPiece);}
         }
-        return false;
+        return checkingPieces;
     }
 
+    public Field kingsField(PieceColor pieceColor) {
+        if (pieceColor.equals(PieceColor.WHITE)) {return this.whiteKing.getField();}
+        else if (pieceColor.equals(PieceColor.BLACK)) {return this.blackKing.getField();}
+        else {throw new IllegalArgumentException("pieceColor is none");}
+    }
+
+    public Field queensField(PieceColor pieceColor) {
+        if (pieceColor.equals(PieceColor.WHITE)) {return this.whiteQueen.getField();}
+        else if (pieceColor.equals(PieceColor.BLACK)) {return this.blackQueen.getField();}
+        else {throw new IllegalArgumentException("pieceColor is none");}
+    }
 
 
     public void setPiece(Piece tempPiece) {
         if (tempPiece.getPieceColor().equals(PieceColor.WHITE)) {
             this.whitePieces.push(tempPiece);
             if (tempPiece instanceof WhiteKing) {this.whiteKing = (WhiteKing) tempPiece;}
+            else if (tempPiece instanceof WhiteQueen) {this.whiteQueen = (WhiteQueen) tempPiece;}
         }
         else {
             this.blackPieces.push(tempPiece);
             if (tempPiece instanceof BlackKing) {this.blackKing = (BlackKing) tempPiece;}
+            else if (tempPiece instanceof BlackQueen) {this.blackQueen = (BlackQueen) tempPiece;}
         }
     }
 
@@ -143,6 +144,9 @@ public class EnginePosition {
                 codeIndex += 2;
             }
         }
+        PieceColor[][] colorMap = generateColorMap();
+        for (Piece piece : blackPieces) {piece.setMyPossibilities(colorMap);}
+        for (Piece piece : whitePieces) {piece.setMyPossibilities(colorMap);}
     }
 
     public EnginePosition(String positionCode,
