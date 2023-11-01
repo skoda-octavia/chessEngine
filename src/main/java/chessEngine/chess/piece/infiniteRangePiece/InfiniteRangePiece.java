@@ -1,8 +1,8 @@
 package chessEngine.chess.piece.infiniteRangePiece;
 
 import chessEngine.chess.EnginePosition;
-import chessEngine.chess.move.EngineMove;
-import chessEngine.chess.move.field.Field;
+import chessEngine.chess.engineMove.EngineMove;
+import chessEngine.chess.engineMove.field.Field;
 import chessEngine.chess.piece.Piece;
 import chessEngine.chess.piece.PieceColor;
 import lombok.Getter;
@@ -16,15 +16,19 @@ import java.util.HashSet;
 @Setter
 public abstract class InfiniteRangePiece extends Piece {
     protected final byte[][] directions;
-    protected boolean pinsQueen = false;
-    protected boolean pinsKing = false;
+    protected boolean pinningQueen = false;
+    protected boolean pinningKing = false;
 
     @Override
     public void setMyPossibilities(PieceColor[][] colorMap) {
         PieceColor enemyPieceColor = this.enemyPieceColor();
         ArrayList<EngineMove> movesList = new ArrayList<>();
         HashSet<Field> controlledFields = new HashSet<>();
-        Field queensField = this.position.queensField(enemyPieceColor);
+        Field queensField = null;
+        try {
+            queensField = this.position.queensField(enemyPieceColor);
+        }
+        catch (Exception e) {}
         Field kingsField = this.position.kingsField(enemyPieceColor);
         for (byte[] direction : this.directions) {
             byte yDir = direction[0];
@@ -55,9 +59,9 @@ public abstract class InfiniteRangePiece extends Piece {
                 else if (blocked && tempPieceColor.equals(enemyPieceColor)){
                     if (nextY == kingsField.height() && nextX == kingsField.width()) {
                         pinnedPiece.setPinnedDirection(new byte[]{yDir, xDir});
-                        this.pinsKing = true;
-                    } else if (nextY == queensField.height() && nextX == queensField.width()) {
-                        this.pinsQueen = true;
+                        this.pinningKing = true;
+                    } else if (queensField != null && nextY == queensField.height() && nextX == queensField.width()) {
+                        this.pinningQueen = true;
                     }
                     pinnedPiece = null;
                     break;

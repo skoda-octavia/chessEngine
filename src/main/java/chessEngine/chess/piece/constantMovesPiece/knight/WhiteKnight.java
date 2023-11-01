@@ -1,7 +1,7 @@
 package chessEngine.chess.piece.constantMovesPiece.knight;
 
 import chessEngine.chess.EnginePosition;
-import chessEngine.chess.move.field.Field;
+import chessEngine.chess.engineMove.field.Field;
 import chessEngine.chess.piece.PieceColor;
 import lombok.Getter;
 import lombok.Setter;

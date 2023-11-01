@@ -1,10 +1,9 @@
 package chessEngine.chessTest.piece.constantMovePiece;
 
 import chessEngine.chess.EnginePosition;
-import chessEngine.chess.move.EngineMove;
-import chessEngine.chess.move.field.Field;
+import chessEngine.chess.engineMove.EngineMove;
+import chessEngine.chess.engineMove.field.Field;
 import chessEngine.chess.piece.Piece;
-import chessEngine.chess.piece.PieceColor;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

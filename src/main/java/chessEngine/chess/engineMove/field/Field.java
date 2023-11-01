@@ -1,3 +1,3 @@
-package chessEngine.chess.move.field;
+package chessEngine.chess.engineMove.field;
 
 public record Field(byte height, byte width) {}

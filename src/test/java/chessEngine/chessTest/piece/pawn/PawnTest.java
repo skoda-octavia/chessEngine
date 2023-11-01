@@ -1,15 +1,13 @@
 package chessEngine.chessTest.piece.pawn;
 
 import chessEngine.chess.EnginePosition;
-import chessEngine.chess.move.EngineMove;
-import chessEngine.chess.move.field.Field;
+import chessEngine.chess.engineMove.EngineMove;
+import chessEngine.chess.engineMove.field.Field;
 import chessEngine.chess.piece.Piece;
-import chessEngine.chess.piece.PieceColor;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.logging.Handler;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

@@ -1,7 +1,6 @@
 package chessEngine.chessTest.engine;
 
 import chessEngine.chess.EnginePosition;
-import chessEngine.chess.move.field.Field;
 import chessEngine.chess.piece.Piece;
 import chessEngine.chess.piece.PieceColor;
 import chessEngine.chess.piece.constantMovesPiece.king.BlackKing;

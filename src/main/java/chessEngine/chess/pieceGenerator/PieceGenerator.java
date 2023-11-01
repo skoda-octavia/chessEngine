@@ -1,7 +1,7 @@
 package chessEngine.chess.pieceGenerator;
 
 import chessEngine.chess.EnginePosition;
-import chessEngine.chess.move.field.Field;
+import chessEngine.chess.engineMove.field.Field;
 import chessEngine.chess.piece.Piece;
 import chessEngine.chess.piece.constantMovesPiece.king.BlackKing;
 import chessEngine.chess.piece.constantMovesPiece.king.WhiteKing;

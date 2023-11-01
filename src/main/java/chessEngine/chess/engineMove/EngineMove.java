@@ -1,6 +1,6 @@
-package chessEngine.chess.move;
+package chessEngine.chess.engineMove;
 
-import chessEngine.chess.move.field.Field;
+import chessEngine.chess.engineMove.field.Field;
 import lombok.Getter;
 import lombok.Setter;
 

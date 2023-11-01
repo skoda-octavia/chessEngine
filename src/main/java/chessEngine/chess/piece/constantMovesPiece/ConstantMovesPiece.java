@@ -1,8 +1,8 @@
 package chessEngine.chess.piece.constantMovesPiece;
 
 import chessEngine.chess.EnginePosition;
-import chessEngine.chess.move.EngineMove;
-import chessEngine.chess.move.field.Field;
+import chessEngine.chess.engineMove.EngineMove;
+import chessEngine.chess.engineMove.field.Field;
 import chessEngine.chess.piece.Piece;
 import chessEngine.chess.piece.PieceColor;
 import lombok.Getter;
@@ -16,8 +16,7 @@ import java.util.HashSet;
 public abstract class ConstantMovesPiece extends Piece {
     protected final byte[][] constantMoves;
 
-    @Override
-    public void setMyPossibilities(PieceColor[][] colorMap) {
+    public void setConstantPiecePossibilities(PieceColor[][] colorMap) {
         ArrayList<EngineMove> movesList = new ArrayList<>();
         HashSet<Field> controlledFields = new HashSet<>();
         for (byte[] direction : this.constantMoves) {

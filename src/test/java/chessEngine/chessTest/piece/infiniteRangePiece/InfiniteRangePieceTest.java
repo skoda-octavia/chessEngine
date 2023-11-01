@@ -1,8 +1,8 @@
 package chessEngine.chessTest.piece.infiniteRangePiece;
 
 import chessEngine.chess.EnginePosition;
-import chessEngine.chess.move.EngineMove;
-import chessEngine.chess.move.field.Field;
+import chessEngine.chess.engineMove.EngineMove;
+import chessEngine.chess.engineMove.field.Field;
 import chessEngine.chess.piece.Piece;
 import chessEngine.chess.piece.PieceColor;
 import chessEngine.chess.piece.infiniteRangePiece.bishop.BlackBishop;
@@ -41,7 +41,7 @@ public class InfiniteRangePieceTest {
         assertEquals(bishopEngineMoves.size() ,0);
         assertEquals(queenEngineMoves.size() , 0);
         BlackQueen blackQueen = (BlackQueen) chessBoard[0][3];
-        assertFalse(blackQueen.isPinsKing());
+        assertFalse(blackQueen.isPinningKing());
     }
     @Test
     void possibleMovespiecesInCenterTest() {
@@ -106,13 +106,13 @@ public class InfiniteRangePieceTest {
         WhiteQueen whiteQueen = (WhiteQueen) chessBoard[2][2];
         BlackRook blackRook = (BlackRook) chessBoard[4][3];
         BlackBishop blackBishop = (BlackBishop) chessBoard[3][7];
-        assertTrue(whiteQueen.isPinsKing());
-        assertFalse(whiteQueen.isPinsQueen());
-        assertFalse(whiteRook.isPinsKing());
-        assertFalse(whiteRook.isPinsQueen());
-        assertTrue(blackRook.isPinsQueen());
-        assertFalse(blackRook.isPinsKing());
-        assertTrue(blackBishop.isPinsQueen());
+        assertTrue(whiteQueen.isPinningKing());
+        assertFalse(whiteQueen.isPinningQueen());
+        assertFalse(whiteRook.isPinningKing());
+        assertFalse(whiteRook.isPinningQueen());
+        assertTrue(blackRook.isPinningQueen());
+        assertFalse(blackRook.isPinningKing());
+        assertTrue(blackBishop.isPinningQueen());
 
     }
 

@@ -1,11 +1,10 @@
 package chessEngine.chess.piece.pawn;
 
 import chessEngine.chess.EnginePosition;
-import chessEngine.chess.move.EngineMove;
-import chessEngine.chess.move.field.Field;
+import chessEngine.chess.engineMove.EngineMove;
+import chessEngine.chess.engineMove.field.Field;
 import chessEngine.chess.piece.Piece;
 import chessEngine.chess.piece.PieceColor;
-import chessEngine.chess.pieceGenerator.PieceGenerator;
 import lombok.Getter;
 import lombok.Setter;
 

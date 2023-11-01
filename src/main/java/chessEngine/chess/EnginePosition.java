@@ -1,11 +1,10 @@
 package chessEngine.chess;
 
-import chessEngine.chess.move.EngineMove;
-import chessEngine.chess.move.field.Field;
+import chessEngine.chess.engineMove.EngineMove;
+import chessEngine.chess.engineMove.field.Field;
 import chessEngine.chess.piece.Piece;
 import chessEngine.chess.piece.PieceColor;
 import chessEngine.chess.piece.constantMovesPiece.king.BlackKing;
-import chessEngine.chess.piece.constantMovesPiece.king.King;
 import chessEngine.chess.piece.constantMovesPiece.king.WhiteKing;
 import chessEngine.chess.piece.infiniteRangePiece.queen.BlackQueen;
 import chessEngine.chess.piece.infiniteRangePiece.queen.WhiteQueen;
@@ -20,9 +19,10 @@ import java.util.*;
 public class EnginePosition {
     private final byte boardHeight = 8;
     private final byte boardWidth = 8;
-    private EnginePosition parentPosition = null;
+    private EngineMove parentMove = null;
     private int value = 0;
     private String positionCode = "";
+    private final CastlingOperator castlingOperator;
     private boolean whiteMoves;
     private Piece[][] chessBoard = new Piece[this.boardHeight][this.boardWidth];
     private PieceColor[][] colorMap = null;
@@ -60,34 +60,7 @@ public class EnginePosition {
         }
         return colorMap;
     }
-//
-//    public boolean unveilingMove(EngineMove engineMove) {
-//        boolean answer = false;
-//        Field from = engineMove.getFrom();
-//        Field to = engineMove.getTo();
-//        PieceColor[][] tempColorMap = getColorMap();
-//        PieceColor oldColor = tempColorMap[to.height()][to.width()];
-//        tempColorMap[to.height()][to.width()] = tempColorMap[from.height()][from.width()];
-//        tempColorMap[from.height()][from.width()] = PieceColor.NONE;
-//
-//
-//
-//        Field kingsField = null;
-//        PieceColor movingColor = whiteMoves ? PieceColor.WHITE : PieceColor.BLACK;
-//        if (chessBoard[from.height()][from.width()] instanceof King &&
-//                tempColorMap[to.height()][to.width()].equals(movingColor)) {
-//                kingsField = new Field(to.height(), to.width());
-//        }
-//        else {kingsField = whiteMoves ? whiteKing.getField() : blackKing.getField();}
-//
-//        if (inCheck(movingColor, tempColorMap, kingsField)) {answer = true;}
-//
-//        tempColorMap[from.height()][from.width()] = tempColorMap[to.height()][to.width()];
-//        tempColorMap[to.height()][to.width()] = oldColor;
-//
-//        return answer;
-//    }
-//
+
     public ArrayList<Piece> checkingPieces(PieceColor pieceColor) {
         LinkedList<Piece> oppositePieces = pieceColor.equals(PieceColor.WHITE) ? this.whitePieces : this.blackPieces;
         Field kingsField = pieceColor.equals(PieceColor.WHITE) ? this.blackKing.getField() : this.whiteKing.getField();
@@ -100,6 +73,10 @@ public class EnginePosition {
             if (controlledFields.contains(kingsField)) {checkingPieces.add(tempPiece);}
         }
         return checkingPieces;
+    }
+
+    public ArrayList<EngineMove> possibleCastlingMoves(PieceColor pieceColor) {
+        return this.castlingOperator.possibleCastlingMoves(pieceColor);
     }
 
     public Field kingsField(PieceColor pieceColor) {
@@ -149,6 +126,22 @@ public class EnginePosition {
         for (Piece piece : whitePieces) {piece.setMyPossibilities(colorMap);}
     }
 
+    public boolean controlledField(Field field, PieceColor by) {
+        LinkedList<Piece> pieces =  by.equals(PieceColor.WHITE) ? whitePieces : blackPieces;
+        Iterator<Piece> iterator = pieces.iterator();
+        while (iterator.hasNext()) {
+            Piece tempPiece = iterator.next();
+            if (tempPiece.getControlledFields().contains(field)) {return true;}
+        }
+        return false;
+    }
+
+    public boolean occupiedField(Field field) {
+        if (this.chessBoard[field.height()][field.width()] != null) {return true;}
+        return false;
+    }
+
+
     public EnginePosition(String positionCode,
                           boolean whiteMoves,
                           boolean whiteKingMoved,
@@ -165,6 +158,7 @@ public class EnginePosition {
         this.whiteRightRookMoved = whiteRightRookMoved;
         this.blackLeftRookMoved = blackLeftRookMoved;
         this.blackRightRookMoved = blackRightRookMoved;
+        this.castlingOperator = new CastlingOperator(this);
     }
 
     public EnginePosition(String positionCode, boolean whiteMoves) {
@@ -174,5 +168,6 @@ public class EnginePosition {
         }
         this.positionCode = positionCode;
         this.whiteMoves = whiteMoves;
+        this.castlingOperator = new CastlingOperator(this);
     }
 }
