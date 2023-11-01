@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class BlackBishop extends Bishop {
+public final class BlackBishop extends Bishop {
 
     public BlackBishop(Field field, EnginePosition pos) {
 

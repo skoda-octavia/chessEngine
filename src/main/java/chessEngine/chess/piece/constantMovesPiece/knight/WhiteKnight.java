@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class WhiteKnight extends Knight{
+public final class WhiteKnight extends Knight{
     private final PieceColor pieceColor = PieceColor.WHITE;
 
     public WhiteKnight(Field field, EnginePosition pos) {

@@ -35,33 +35,23 @@ public abstract class InfiniteRangePiece extends Piece {
             Piece pinnedPiece = null;
             while (this.correctFieldCoordinates(nextY, nextX)) {
                 PieceColor tempPieceColor = colorMap[nextY][nextX];
+                Field nextField = new Field(nextY, nextX);
                 if (tempPieceColor.equals(this.pieceColor) && blocked == false) {
-                    controlledFields.add(new Field(nextY, nextX));
+                    controlledFields.add(nextField);
                     blocked = true;
                     pinnedPiece = this.position.getChessBoard()[nextY][nextX];
-                    nextY += yDir;
-                    nextX += xDir;
                 }
                 else if (tempPieceColor.equals(PieceColor.NONE) && blocked == false) {
-                    movesList.add(new EngineMove(
-                            this.field, new Field(nextY, nextX)
-                    ));
-                    controlledFields.add(new Field(nextY, nextX));
-                    nextY += yDir;
-                    nextX += xDir;
+                    movesList.add(new EngineMove(this.field, nextField));
+                    controlledFields.add(nextField);
                 }
                 else if (tempPieceColor.equals(enemyPieceColor) && blocked == false){
                     blocked = true;
                     pinnedPiece = this.position.getChessBoard()[nextY][nextX];
-                    movesList.add(new EngineMove(this.field, new Field(nextY, nextX)));
-                    controlledFields.add(new Field(nextY, nextX));
-                    nextY += yDir;
-                    nextX += xDir;
+                    movesList.add(new EngineMove(this.field, nextField));
+                    controlledFields.add(nextField);
                 }
-                else if (blocked && tempPieceColor.equals(pieceColor.NONE)) {
-                    nextY += yDir;
-                    nextX += xDir;
-                }
+                else if (blocked && tempPieceColor.equals(pieceColor.NONE)) {}
                 else if (blocked && tempPieceColor.equals(enemyPieceColor)){
                     if (nextY == kingsField.height() && nextX == kingsField.width()) {
                         pinnedPiece.setPinnedDirection(new byte[]{yDir, xDir});
@@ -76,6 +66,8 @@ public abstract class InfiniteRangePiece extends Piece {
                     pinnedPiece = null;
                     break;
                 }
+                nextY += yDir;
+                nextX += xDir;
             }
         }
         this.possibleMoves = movesList;

@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class WhitePawn extends Pawn{
+public final class WhitePawn extends Pawn{
 
     public WhitePawn(Field field, EnginePosition pos) {
         super(PieceColor.WHITE, pos, (byte)-1, (byte)6);

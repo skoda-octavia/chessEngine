@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class BlackRook extends Rook {
+public final class BlackRook extends Rook {
 
     public BlackRook(Field field, EnginePosition pos) {
         super(PieceColor.BLACK, pos);

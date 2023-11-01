@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class WhiteKing extends King {
+public final class WhiteKing extends King {
     public WhiteKing(Field field, EnginePosition pos) {
         super(PieceColor.WHITE, pos);
         if (!correctFieldCoordinates(field.height(), field.width())) {

@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class WhiteBishop extends Bishop {
+public final class WhiteBishop extends Bishop {
     public WhiteBishop(Field field, EnginePosition pos) {
 
         super(PieceColor.WHITE, pos);

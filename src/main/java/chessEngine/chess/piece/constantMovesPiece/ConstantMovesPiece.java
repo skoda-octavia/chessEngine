@@ -25,12 +25,13 @@ public abstract class ConstantMovesPiece extends Piece {
             byte xDir = direction[1];
             byte nextY = (byte) (this.field.height() + yDir);
             byte nextX = (byte) (this.field.width() + xDir);
+            Field nextField = new Field(nextY, nextX);
             if (!this.correctFieldCoordinates(nextY, nextX)) {continue;}
             PieceColor tempPieceColor = colorMap[nextY][nextX];
             if (!tempPieceColor.equals(this.pieceColor)) {
-                movesList.add(new EngineMove(this.field, new Field(nextY, nextX)));
+                movesList.add(new EngineMove(this.field, nextField));
             }
-            controlledFields.add(new Field(nextY, nextX));
+            controlledFields.add(nextField);
         }
         this.possibleMoves = movesList;
         this.controlledFields = controlledFields;
