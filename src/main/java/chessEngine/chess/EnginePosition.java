@@ -102,6 +102,19 @@ public class EnginePosition {
     public void buildControlFieldMap() {
         HashMap<Field, Byte> whiteControls = new HashMap<>();
         HashMap<Field, Byte> blackControls = new HashMap<>();
+        Iterator<Piece> iterator = whitePieces.iterator();
+        while (iterator.hasNext()) {
+            Piece tempPiece = iterator.next();
+            tempPiece.setFieldMap(whiteControls);
+        }
+        iterator = blackPieces.iterator();
+        while (iterator.hasNext()) {
+            Piece tempPiece = iterator.next();
+            tempPiece.setFieldMap(blackControls);
+        }
+        this.whiteControls = whiteControls;
+        this.blackControls = blackControls;
+
     }
 
     public ArrayList<EngineMove> possibleLegalMoves() {

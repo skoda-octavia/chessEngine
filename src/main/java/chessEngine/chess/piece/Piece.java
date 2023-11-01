@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 @Getter
@@ -35,5 +36,13 @@ public abstract class Piece {
     public Piece(PieceColor pieceColor, EnginePosition pos) {
         this.pieceColor = pieceColor;
         this.position = pos;
+    }
+
+    public void setFieldMap(HashMap<Field, Byte> map) {
+        for(Field field : controlledFields) {
+            byte number = map.getOrDefault(field, (byte)0);
+            number++;
+            map.put(field, number);
+        }
     }
 }
