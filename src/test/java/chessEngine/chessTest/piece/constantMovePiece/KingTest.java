@@ -26,7 +26,6 @@ public class KingTest {
         BlackKing blackKing = (BlackKing)  enginePosition.getChessBoard()[0][4];
         assertEquals(5, whiteKing.getPossibleMoves().size());
         assertEquals(2, blackKing.getPossibleMoves().size());
-
     }
 
 }
