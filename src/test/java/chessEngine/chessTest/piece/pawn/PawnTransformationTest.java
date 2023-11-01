@@ -1,8 +1,6 @@
 package chessEngine.chessTest.piece.pawn;
 
 import chessEngine.chess.EnginePosition;
-import chessEngine.chess.piece.constantMovesPiece.king.BlackKing;
-import chessEngine.chess.piece.constantMovesPiece.king.WhiteKing;
 import chessEngine.chess.piece.pawn.BlackPawn;
 import chessEngine.chess.piece.pawn.WhitePawn;
 import org.junit.jupiter.api.Test;

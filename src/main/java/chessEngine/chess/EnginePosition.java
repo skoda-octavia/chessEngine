@@ -22,7 +22,7 @@ public class EnginePosition {
     private final byte boardWidth = 8;
     private EngineMove parentMove = null;
     private int value = 0;
-    private String positionCode = "";
+    private final String positionCode;
     private final CastlingOperator castlingOperator;
     private boolean whiteMoves;
     private Piece[][] chessBoard = new Piece[this.boardHeight][this.boardWidth];
@@ -40,14 +40,15 @@ public class EnginePosition {
     private boolean blackLeftRookMoved;
     private boolean blackRightRookMoved;
 
+    private HashMap<Field, Byte> whiteControls;
+    private HashMap<Field, Byte> blackControls;
+
     public PieceColor[][] getColorMap() {
         if (this.colorMap == null) {
             this.colorMap = this.generateColorMap();
         }
         return this.colorMap;
     }
-
-
 
     private PieceColor[][] generateColorMap() {
 
@@ -98,6 +99,39 @@ public class EnginePosition {
         else {throw new IllegalArgumentException("pieceColor is none");}
     }
 
+    public void buildControlFieldMap() {
+        HashMap<Field, Byte> whiteControls = new HashMap<>();
+        HashMap<Field, Byte> blackControls = new HashMap<>();
+    }
+
+    public ArrayList<EngineMove> possibleLegalMoves() {
+        PieceColor checkingColor = whiteMoves ? PieceColor.BLACK : PieceColor.WHITE;
+        ArrayList<Piece> checkingPieces = this.checkingPieces(checkingColor);
+        switch (checkingPieces.size()) {
+            case 0 :
+                return this.standardLegalMoves();
+            case 1 :
+                return this.singleCheckLegalMoves(checkingPieces);
+            case 2 :
+                return this.doubleCheckLegalMoves(checkingPieces);
+            default:
+                throw new IllegalArgumentException("incorrect number of checking pieces");
+        }
+    }
+
+    private ArrayList<EngineMove> doubleCheckLegalMoves(ArrayList<Piece> checkingPieces) {
+        Piece king = whiteMoves ? whiteKing : blackKing;
+        ArrayList<EngineMove> possibleKingsMoves = king.getPossibleMoves();
+        return possibleKingsMoves;
+    }
+
+    private ArrayList<EngineMove> singleCheckLegalMoves(ArrayList<Piece> checkingPieces) {
+        return null;
+    }
+
+    private ArrayList<EngineMove> standardLegalMoves() {
+        return null;
+    }
 
     public void setPiece(Piece tempPiece) {
         if (tempPiece.getPieceColor().equals(PieceColor.WHITE)) {
@@ -131,6 +165,8 @@ public class EnginePosition {
         PieceColor[][] colorMap = generateColorMap();
         for (Piece piece : blackPieces) {piece.setMyPossibilities(colorMap);}
         for (Piece piece : whitePieces) {piece.setMyPossibilities(colorMap);}
+        whiteKing.setCastlingMoves();
+        blackKing.setCastlingMoves();
     }
 
     public boolean controlledField(Field field, PieceColor by) {

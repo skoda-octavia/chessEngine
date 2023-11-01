@@ -16,7 +16,8 @@ import java.util.HashSet;
 public abstract class ConstantMovesPiece extends Piece {
     protected final byte[][] constantMoves;
 
-    public void setConstantPiecePossibilities(PieceColor[][] colorMap) {
+    @Override
+    public void setMyPossibilities(PieceColor[][] colorMap) {
         ArrayList<EngineMove> movesList = new ArrayList<>();
         HashSet<Field> controlledFields = new HashSet<>();
         for (byte[] direction : this.constantMoves) {

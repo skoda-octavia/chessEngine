@@ -103,4 +103,47 @@ public class CastlingOperatorTest {
                 )
         );
     }
+
+    @Test
+    void castlingOperatorOccupiedByKingTest() {
+        String posCode = "";
+        posCode += "bR      bK    bR";
+        posCode += "bPwKbPbPbPbP  bP";
+        posCode += "                ";
+        posCode += "            wR  ";
+        posCode += "                ";
+        posCode += "                ";
+        posCode += "wPwPwPwPwPwPbBwP";
+        posCode += "wR            wR";
+        EnginePosition enginePosition = new EnginePosition(posCode, true);
+        enginePosition.set();
+        ArrayList<EngineMove> whiteCastlingMoves =  enginePosition.getCastlingOperator()
+                .possibleCastlingMoves(PieceColor.WHITE);
+        ArrayList<EngineMove> blackCastlingMoves =  enginePosition.getCastlingOperator()
+                .possibleCastlingMoves(PieceColor.BLACK);
+        assertEquals(0, whiteCastlingMoves.size());
+        assertEquals(0, blackCastlingMoves.size());
+    }
+
+    @Test
+    void castlingOperatorOccupiedByBlackKingTest() {
+        String posCode = "";
+        posCode += "bR            bR";
+        posCode += "bP  bPbPbPbP  bP";
+        posCode += "                ";
+        posCode += "            wR  ";
+        posCode += "                ";
+        posCode += "                ";
+        posCode += "wPbKwPwPwPwPbBwP";
+        posCode += "wR      wK    wR";
+        EnginePosition enginePosition = new EnginePosition(posCode, true);
+        enginePosition.set();
+        ArrayList<EngineMove> whiteCastlingMoves =  enginePosition.getCastlingOperator()
+                .possibleCastlingMoves(PieceColor.WHITE);
+        ArrayList<EngineMove> blackCastlingMoves =  enginePosition.getCastlingOperator()
+                .possibleCastlingMoves(PieceColor.BLACK);
+        assertEquals(0, whiteCastlingMoves.size());
+        assertEquals(0, blackCastlingMoves.size());
+    }
+
 }

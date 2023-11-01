@@ -9,9 +9,7 @@ import java.util.ArrayList;
 
 public abstract class King extends ConstantMovesPiece {
 
-    @Override
-    public void setMyPossibilities(PieceColor[][] colorMap) {
-        setConstantPiecePossibilities(colorMap);
+    public void setCastlingMoves() {
         PieceColor movingColor = position.isWhiteMoves() ? PieceColor.WHITE : PieceColor.BLACK;
         if (movingColor.equals(this.pieceColor)) {
             ArrayList<EngineMove> castlingMoves = position.possibleCastlingMoves(this.pieceColor);
