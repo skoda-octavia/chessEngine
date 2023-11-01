@@ -8,6 +8,7 @@ import chessEngine.chess.piece.constantMovesPiece.king.BlackKing;
 import chessEngine.chess.piece.constantMovesPiece.king.WhiteKing;
 import chessEngine.chess.piece.infiniteRangePiece.queen.BlackQueen;
 import chessEngine.chess.piece.infiniteRangePiece.queen.WhiteQueen;
+import chessEngine.chess.piece.pawn.Pawn;
 import chessEngine.chess.pieceGenerator.PieceGenerator;
 import lombok.Getter;
 import lombok.Setter;
@@ -73,6 +74,12 @@ public class EnginePosition {
             if (controlledFields.contains(kingsField)) {checkingPieces.add(tempPiece);}
         }
         return checkingPieces;
+    }
+
+    public boolean pawnOnField(Field field) {
+        Piece piece = chessBoard[field.height()][field.width()];
+        if (piece instanceof Pawn) {return true;}
+        return false;
     }
 
     public ArrayList<EngineMove> possibleCastlingMoves(PieceColor pieceColor) {

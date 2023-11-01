@@ -9,8 +9,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public final class BlackPawn extends Pawn {
+
     public BlackPawn(Field field, EnginePosition pos) {
-        super(PieceColor.BLACK, pos, (byte)1, (byte)1);
+        super(PieceColor.BLACK, pos, (byte)1, (byte)1, (byte)4);
         if (!correctFieldCoordinates(field.height(), field.width())) {
             throw new IllegalArgumentException("illegal height or width in constructor: " + field);
         }

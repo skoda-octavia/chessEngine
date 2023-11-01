@@ -2,6 +2,7 @@ package chessEngine.chess.piece.pawn;
 
 import chessEngine.chess.EnginePosition;
 import chessEngine.chess.engineMove.EngineMove;
+import chessEngine.chess.engineMove.EngineMoveCode;
 import chessEngine.chess.engineMove.field.Field;
 import chessEngine.chess.piece.Piece;
 import chessEngine.chess.piece.PieceColor;
@@ -16,6 +17,32 @@ import java.util.HashSet;
 public abstract class Pawn extends Piece {
     protected final byte movingDirection;
     protected final byte startingRow;
+
+    protected final byte enpassantRow;
+
+    private boolean possibleEnPassant(PieceColor[][] colorMap) {
+        EngineMove parenMove = position.getParentMove();
+        if (parenMove == null || this.field.height() != this.enpassantRow) {return false;}
+
+        Field from = parenMove.getFrom();
+        Field to = parenMove.getTo();
+
+        if (
+                from.height() != this.field.height() + 2 * this.movingDirection ||
+                to.height() != this.field.height()
+        ) {return false;}
+
+        if (
+                from.width() != to.width() ||
+                Math.abs(this.field.width() - to.width()) != 1
+        ) {return false;}
+
+        if (
+                !position.pawnOnField(to) ||
+                !colorMap[to.height()][to.width()].equals(enemyPieceColor())
+        ) {return false;}
+        return true;
+    }
 
     @Override
     public void setMyPossibilities(PieceColor[][] colorMap) {
@@ -52,15 +79,28 @@ public abstract class Pawn extends Piece {
                 );
             }
         }
-        // TODO: 24.10.2023 en passant
+
+        if (possibleEnPassant(colorMap)) {
+            EngineMove parentMove = position.getParentMove();
+            possibleEngineMoves.add(new EngineMove(
+                    this.field,
+                    new Field(
+                            (byte)(this.field.height() + movingDirection),
+                            parentMove.getTo().width()),
+                            EngineMoveCode.ENPASSANT
+                    )
+                );
+        }
+
         this.possibleMoves = possibleEngineMoves;
         this.controlledFields = controlledFields;
      }
 
 
-    public Pawn(PieceColor pieceColor, EnginePosition pos, byte movingDirection, byte startingRow) {
+    public Pawn(PieceColor pieceColor, EnginePosition pos, byte movingDirection, byte startingRow, byte enpassantRow) {
         super(pieceColor, pos);
         this.startingRow = startingRow;
         this.movingDirection = movingDirection;
+        this.enpassantRow = enpassantRow;
     }
 }
