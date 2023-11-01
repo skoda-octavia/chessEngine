@@ -5,6 +5,7 @@ import chessEngine.chess.move.EngineMove;
 import chessEngine.chess.move.field.Field;
 import chessEngine.chess.piece.Piece;
 import chessEngine.chess.piece.PieceColor;
+import chessEngine.chess.pieceGenerator.PieceGenerator;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,6 +20,7 @@ public abstract class Pawn extends Piece {
 
     @Override
     public void setMyPossibilities(PieceColor[][] colorMap) {
+        PieceColor enemyColor = enemyPieceColor();
         ArrayList<EngineMove> possibleEngineMoves = new ArrayList<>();
         HashSet<Field> controlledFields = new HashSet<>();
         byte[][] captureFields = new byte[][]{
@@ -29,7 +31,7 @@ public abstract class Pawn extends Piece {
             byte nextY = field[0], nextX = field[1];
             if (this.correctFieldCoordinates(nextY, nextX)) {
                 PieceColor tempPieceColor = colorMap[nextY][nextX];
-                if (!tempPieceColor.equals(this.pieceColor)) {
+                if (tempPieceColor.equals(enemyColor)) {
                     possibleEngineMoves.add(new EngineMove(this.field, new Field(nextY, nextX)));
                     }
                 controlledFields.add(new Field(nextY, nextX));

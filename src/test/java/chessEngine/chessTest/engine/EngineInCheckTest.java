@@ -4,8 +4,12 @@ import chessEngine.chess.EnginePosition;
 import chessEngine.chess.move.field.Field;
 import chessEngine.chess.piece.Piece;
 import chessEngine.chess.piece.PieceColor;
+import chessEngine.chess.piece.constantMovesPiece.king.BlackKing;
+import chessEngine.chess.piece.constantMovesPiece.king.WhiteKing;
+import chessEngine.chess.piece.constantMovesPiece.knight.BlackKnight;
 import chessEngine.chess.piece.infiniteRangePiece.queen.WhiteQueen;
 import chessEngine.chess.piece.pawn.BlackPawn;
+import chessEngine.chess.piece.pawn.WhitePawn;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -71,8 +75,10 @@ public class EngineInCheckTest {
         enginePosition.set();
         ArrayList<Piece> attackingWhite = enginePosition.checkingPieces(PieceColor.WHITE);
         ArrayList<Piece> attackingBlack = enginePosition.checkingPieces(PieceColor.BLACK);
-        assertEquals(attackingBlack.size(), 0);
-        assertEquals(attackingWhite.size(), 0);
+        assertEquals(attackingBlack.size(), 1);
+        assertEquals(attackingWhite.size(), 1);
+        assertTrue(attackingBlack.get(0) instanceof BlackKing);
+        assertTrue(attackingWhite.get(0) instanceof WhiteKing);
     }
 
     @Test
@@ -90,8 +96,9 @@ public class EngineInCheckTest {
         enginePosition.set();
         ArrayList<Piece> attackingWhite = enginePosition.checkingPieces(PieceColor.WHITE);
         ArrayList<Piece> attackingBlack = enginePosition.checkingPieces(PieceColor.BLACK);
-        assertEquals(attackingBlack.size(), 0);
-        assertEquals(attackingWhite.size(), 0);
+        assertEquals(attackingBlack.size(), 1);
+        assertEquals(attackingWhite.size(), 2);
+        assertTrue(attackingBlack.get(0) instanceof BlackKnight);
     }
 
     @Test
@@ -109,7 +116,9 @@ public class EngineInCheckTest {
         enginePosition.set();
         ArrayList<Piece> attackingWhite = enginePosition.checkingPieces(PieceColor.WHITE);
         ArrayList<Piece> attackingBlack = enginePosition.checkingPieces(PieceColor.BLACK);
+        WhitePawn whitePawn = (WhitePawn) enginePosition.getChessBoard()[3][1];
         assertEquals(attackingBlack.size(), 0);
-        assertEquals(attackingWhite.size(), 0);
+        assertEquals(attackingWhite.size(), 2);
+        assertTrue(whitePawn.getPinnedDirection() != null);
     }
 }

@@ -38,6 +38,7 @@ public abstract class InfiniteRangePiece extends Piece {
                 if (tempPieceColor.equals(this.pieceColor) && blocked == false) {
                     controlledFields.add(new Field(nextY, nextX));
                     blocked = true;
+                    pinnedPiece = this.position.getChessBoard()[nextY][nextX];
                     nextY += yDir;
                     nextX += xDir;
                 }
@@ -45,6 +46,7 @@ public abstract class InfiniteRangePiece extends Piece {
                     movesList.add(new EngineMove(
                             this.field, new Field(nextY, nextX)
                     ));
+                    controlledFields.add(new Field(nextY, nextX));
                     nextY += yDir;
                     nextX += xDir;
                 }
@@ -52,6 +54,7 @@ public abstract class InfiniteRangePiece extends Piece {
                     blocked = true;
                     pinnedPiece = this.position.getChessBoard()[nextY][nextX];
                     movesList.add(new EngineMove(this.field, new Field(nextY, nextX)));
+                    controlledFields.add(new Field(nextY, nextX));
                     nextY += yDir;
                     nextX += xDir;
                 }
@@ -66,9 +69,13 @@ public abstract class InfiniteRangePiece extends Piece {
                     } else if (nextY == queensField.height() && nextX == queensField.width()) {
                         this.pinsQueen = true;
                     }
+                    pinnedPiece = null;
                     break;
                 }
-                else {break;}
+                else {
+                    pinnedPiece = null;
+                    break;
+                }
             }
         }
         this.possibleMoves = movesList;
