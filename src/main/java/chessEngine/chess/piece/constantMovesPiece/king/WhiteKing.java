@@ -10,10 +10,9 @@ import lombok.Setter;
 @Setter
 public final class WhiteKing extends King {
     public WhiteKing(Field field, EnginePosition pos) {
-        super(PieceColor.WHITE, pos);
+        super(PieceColor.WHITE, pos, "wK", field);
         if (!correctFieldCoordinates(field.height(), field.width())) {
             throw new IllegalArgumentException("illegal height or width in constructor: " + field);
         }
-        this.field = field;
     }
 }

@@ -129,8 +129,10 @@ public abstract class Pawn extends Piece {
                 byte movingDirection,
                 byte startingRow,
                 byte enpassantRow,
-                byte transformationRow) {
-        super(pieceColor, pos);
+                byte transformationRow,
+                String pieceCode,
+                Field field) {
+        super(pieceColor, pos, pieceCode, field);
         this.startingRow = startingRow;
         this.movingDirection = movingDirection;
         this.enpassantRow = enpassantRow;

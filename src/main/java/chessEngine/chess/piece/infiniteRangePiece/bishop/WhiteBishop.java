@@ -11,10 +11,9 @@ import lombok.Setter;
 public final class WhiteBishop extends Bishop {
     public WhiteBishop(Field field, EnginePosition pos) {
 
-        super(PieceColor.WHITE, pos);
+        super(PieceColor.WHITE, pos, "wB", field);
         if (!correctFieldCoordinates(field.height(), field.width())) {
             throw new IllegalArgumentException("illegal height or width in constructor: " + field);
         }
-        this.field = field;
     }
 }

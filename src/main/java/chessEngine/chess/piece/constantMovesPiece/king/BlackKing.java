@@ -10,10 +10,9 @@ import lombok.Setter;
 @Setter
 public final class BlackKing extends King {
     public BlackKing(Field field, EnginePosition pos) {
-        super(PieceColor.BLACK, pos);
+        super(PieceColor.BLACK, pos, "bK", field);
         if (!correctFieldCoordinates(field.height(), field.width())) {
             throw new IllegalArgumentException("illegal height or width in constructor: " + field);
         }
-        this.field = field;
     }
 }

@@ -11,10 +11,9 @@ import lombok.Setter;
 public final class BlackPawn extends Pawn {
 
     public BlackPawn(Field field, EnginePosition pos) {
-        super(PieceColor.BLACK, pos, (byte)1, (byte)1, (byte)4, (byte)7);
+        super(PieceColor.BLACK, pos, (byte)1, (byte)1, (byte)4, (byte)7, "bP", field);
         if (!correctFieldCoordinates(field.height(), field.width())) {
             throw new IllegalArgumentException("illegal height or width in constructor: " + field);
         }
-        this.field = field;
     }
 }

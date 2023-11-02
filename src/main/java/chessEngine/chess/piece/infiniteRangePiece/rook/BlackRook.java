@@ -11,11 +11,9 @@ import lombok.Setter;
 public final class BlackRook extends Rook {
 
     public BlackRook(Field field, EnginePosition pos) {
-        super(PieceColor.BLACK, pos);
+        super(PieceColor.BLACK, pos, "bR", field);
         if (!correctFieldCoordinates(field.height(), field.width())) {
             throw new IllegalArgumentException("illegal height or width in constructor: " + field);
         }
-        this.field = field;
-
     }
 }

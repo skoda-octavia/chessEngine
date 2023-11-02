@@ -11,10 +11,9 @@ import lombok.Setter;
 public final class BlackQueen extends Queen {
     public BlackQueen(Field field, EnginePosition pos) {
 
-        super(PieceColor.BLACK, pos);
+        super(PieceColor.BLACK, pos, "bQ", field);
         if (!correctFieldCoordinates(field.height(), field.width())) {
             throw new IllegalArgumentException("illegal height or width in constructor: " + field);
         }
-        this.field = field;
     }
 }

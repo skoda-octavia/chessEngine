@@ -14,9 +14,11 @@ import java.util.HashSet;
 @Getter
 @Setter
 public abstract class Piece {
-    protected Field field;
     protected final EnginePosition position;
     protected final PieceColor pieceColor;
+    protected final String pieceCode;
+    protected  final Field field;
+
     protected HashSet<Field> controlledFields = null;
     protected ArrayList<EngineMove> possibleMoves = null;
     protected InfiniteRangePiece pinningPiece = null;
@@ -34,16 +36,18 @@ public abstract class Piece {
         return PieceColor.WHITE;
     }
 
-    public Piece(PieceColor pieceColor, EnginePosition pos) {
-        this.pieceColor = pieceColor;
-        this.position = pos;
-    }
-
     public void setFieldMap(HashMap<Field, Byte> map) {
         for(Field field : controlledFields) {
             byte number = map.getOrDefault(field, (byte)0);
             number++;
             map.put(field, number);
         }
+    }
+
+    public Piece(PieceColor pieceColor, EnginePosition position, String pieceCode, Field field) {
+        this.position = position;
+        this.pieceColor = pieceColor;
+        this.pieceCode = pieceCode;
+        this.field = field;
     }
 }

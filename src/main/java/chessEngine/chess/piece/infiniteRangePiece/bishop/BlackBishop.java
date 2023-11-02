@@ -12,10 +12,9 @@ public final class BlackBishop extends Bishop {
 
     public BlackBishop(Field field, EnginePosition pos) {
 
-        super(PieceColor.BLACK, pos);
+        super(PieceColor.BLACK, pos, "bB", field);
         if (!correctFieldCoordinates(field.height(), field.width())) {
             throw new IllegalArgumentException("illegal height or width in constructor: " + field);
         }
-        this.field = field;
     }
 }

@@ -44,6 +44,7 @@ public class EnginePosition {
 
     private HashMap<Field, Byte> whiteControls;
     private HashMap<Field, Byte> blackControls;
+    private boolean set = false;
 
     public PieceColor[][] getColorMap() {
         if (this.colorMap == null) {
@@ -259,6 +260,7 @@ public class EnginePosition {
         buildControlFieldMap();
         whiteKing.setCastlingMoves();
         blackKing.setCastlingMoves();
+        this.set = true;
     }
 
     public boolean controlledField(Field field, PieceColor by) {
@@ -272,6 +274,15 @@ public class EnginePosition {
         return false;
     }
 
+    public ArrayList<EnginePosition> getChildren() {
+        if(!this.set) {set();}
+        return null;
+    }
+
+
+
+
+
 
     public EnginePosition(String positionCode,
                           boolean whiteMoves,
@@ -280,7 +291,8 @@ public class EnginePosition {
                           boolean whiteLeftRookMoved,
                           boolean whiteRightRookMoved,
                           boolean blackLeftRookMoved,
-                          boolean blackRightRookMoved) {
+                          boolean blackRightRookMoved,
+                          EngineMove parentMove) {
         this.positionCode = positionCode;
         this.whiteMoves = whiteMoves;
         this.whiteKingMoved = whiteKingMoved;
@@ -290,6 +302,7 @@ public class EnginePosition {
         this.blackLeftRookMoved = blackLeftRookMoved;
         this.blackRightRookMoved = blackRightRookMoved;
         this.castlingOperator = new CastlingOperator(this);
+        this.parentMove = parentMove;
     }
 
     public EnginePosition(String positionCode, boolean whiteMoves) {

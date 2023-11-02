@@ -38,8 +38,13 @@ public abstract class ConstantMovesPiece extends Piece {
     }
 
 
-    public ConstantMovesPiece(PieceColor pieceColor, EnginePosition pos, byte[][] constantsMoves) {
-        super(pieceColor, pos);
+    public ConstantMovesPiece(PieceColor pieceColor,
+                              EnginePosition pos,
+                              byte[][] constantsMoves,
+                              String pieceCode,
+                              Field field
+    ) {
+        super(pieceColor, pos, pieceCode, field);
         this.constantMoves = constantsMoves;
     }
 }

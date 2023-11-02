@@ -12,10 +12,9 @@ public final class WhiteKnight extends Knight{
     private final PieceColor pieceColor = PieceColor.WHITE;
 
     public WhiteKnight(Field field, EnginePosition pos) {
-        super(PieceColor.WHITE, pos);
+        super(PieceColor.WHITE, pos, "wk", field);
         if (!correctFieldCoordinates(field.height(), field.width())) {
             throw new IllegalArgumentException("illegal height or width in constructor: " + field);
         }
-        this.field = field;
     }
 }

@@ -91,8 +91,8 @@ public abstract class InfiniteRangePiece extends Piece {
     }
 
 
-    public InfiniteRangePiece(PieceColor pieceColor, EnginePosition pos, byte[][] directions) {
-        super(pieceColor, pos);
+    public InfiniteRangePiece(PieceColor pieceColor, EnginePosition pos, byte[][] directions, String pieceCode, Field field) {
+        super(pieceColor, pos, pieceCode, field);
         this.directions = directions;
     }
 }
