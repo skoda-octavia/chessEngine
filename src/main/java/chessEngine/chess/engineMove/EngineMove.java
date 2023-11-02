@@ -1,9 +1,11 @@
 package chessEngine.chess.engineMove;
 
+import chessEngine.chess.EnginePosition;
 import chessEngine.chess.engineMove.field.Field;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 @Getter
@@ -24,6 +26,33 @@ public class EngineMove {
     public int hashCode() {
         return Objects.hash(from, to, engineMoveCode);
     }
+
+    public static byte sgn(int x) {
+        if (x > 0) {
+            return (byte)1;
+        } else if (x < 0) {
+            return (byte)-1;
+        } else {
+            return (byte)0;
+        }
+    }
+
+    public static ArrayList<Field> coveringLine(Field kingsField, Field attackingField) {
+        ArrayList<Field> coveringLine = new ArrayList<>();
+        byte yDiff = (byte)(kingsField.height() - attackingField.height());
+        byte xDiff = (byte)(kingsField.width() - attackingField.width());
+        if (Math.abs(yDiff) == 1 || Math.abs(xDiff) == 1) {return coveringLine;}
+        byte ySgn = sgn(yDiff), xSgn = sgn(xDiff);
+        byte nextY = (byte)(attackingField.height() + ySgn), nextX = (byte)(attackingField.width() + xSgn);
+        Field nextField = new Field(nextY, nextX);
+        do {
+            coveringLine.add(nextField);
+            nextY += ySgn; nextX += xSgn;
+            nextField = new Field(nextY, nextX);
+        } while (!nextField.equals(kingsField));
+        return coveringLine;
+    }
+
 
     public EngineMove(Field from, Field to) {
         this.from = from;

@@ -6,6 +6,7 @@ import chessEngine.chess.piece.Piece;
 import chessEngine.chess.piece.PieceColor;
 import chessEngine.chess.piece.constantMovesPiece.king.BlackKing;
 import chessEngine.chess.piece.constantMovesPiece.king.WhiteKing;
+import chessEngine.chess.piece.infiniteRangePiece.InfiniteRangePiece;
 import chessEngine.chess.piece.infiniteRangePiece.queen.BlackQueen;
 import chessEngine.chess.piece.infiniteRangePiece.queen.WhiteQueen;
 import chessEngine.chess.piece.pawn.Pawn;
@@ -144,6 +145,11 @@ public class EnginePosition {
     }
 
     private ArrayList<EngineMove> singleCheckLegalMoves(ArrayList<Piece> checkingPieces) {
+        Piece checkingPiece = checkingPieces.get(0);
+        if (checkingPiece instanceof InfiniteRangePiece) {
+
+        }
+
         return null;
     }
 
