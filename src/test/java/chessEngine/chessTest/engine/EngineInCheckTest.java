@@ -118,6 +118,6 @@ public class EngineInCheckTest {
         WhitePawn whitePawn = (WhitePawn) enginePosition.getChessBoard()[3][1];
         assertEquals(attackingBlack.size(), 0);
         assertEquals(attackingWhite.size(), 2);
-        assertTrue(whitePawn.getPinnedDirection() != null);
+        assertTrue(whitePawn.getPinningPiece() != null);
     }
 }

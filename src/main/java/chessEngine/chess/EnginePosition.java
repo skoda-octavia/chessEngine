@@ -161,7 +161,7 @@ public class EnginePosition {
             Piece tempPiece = iterator.next();
             ArrayList<EngineMove> possibleMoves = tempPiece.getPossibleMoves();
 
-            if (tempPiece.getPinnedDirection() != null) {continue;}
+            if (tempPiece.getPinningPiece() != null) {continue;}
 
             if (tempPiece instanceof King) {
                 for (EngineMove move : possibleMoves) {
@@ -192,7 +192,34 @@ public class EnginePosition {
     }
 
     private ArrayList<EngineMove> standardLegalMoves() {
-        return null;
+        ArrayList<EngineMove> possibleMoves = new ArrayList<>();
+        Iterator<Piece> iterator = whiteMoves ? whitePieces.iterator() : blackPieces.iterator();
+        HashMap enemyControls = whiteMoves ? blackControls : whiteControls;
+        while (iterator.hasNext()) {
+            Piece tempPiece = iterator.next();
+            ArrayList<EngineMove> possiblePieceMoves = tempPiece.getPossibleMoves();
+
+            if(tempPiece instanceof King) {
+                for(EngineMove move : possiblePieceMoves) {
+                    if(!enemyControls.containsKey(move.getTo())) {possibleMoves.add(move);}
+                }
+                continue;
+            }
+
+            if(tempPiece.getPinningPiece() != null) {
+                Field kingsField = whiteMoves ? whiteKing.getField() : blackKing.getField();
+                InfiniteRangePiece pinningPiece = tempPiece.getPinningPiece();
+                ArrayList<Field> pinnedLine = EngineMove.coveringLine(kingsField, pinningPiece.getField());
+                for(EngineMove move : possiblePieceMoves) {
+                    if(pinnedLine.contains(move.getTo()) || move.getTo().equals(pinningPiece.getField())) {
+                        possibleMoves.add(move);
+                    }
+                }
+                continue;
+            }
+            possibleMoves.addAll(possiblePieceMoves);
+        }
+        return  possibleMoves;
     }
 
     public void setPiece(Piece tempPiece) {

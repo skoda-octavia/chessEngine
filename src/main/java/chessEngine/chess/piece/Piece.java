@@ -3,6 +3,7 @@ package chessEngine.chess.piece;
 import chessEngine.chess.EnginePosition;
 import chessEngine.chess.engineMove.EngineMove;
 import chessEngine.chess.engineMove.field.Field;
+import chessEngine.chess.piece.infiniteRangePiece.InfiniteRangePiece;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,7 +19,7 @@ public abstract class Piece {
     protected final PieceColor pieceColor;
     protected HashSet<Field> controlledFields = null;
     protected ArrayList<EngineMove> possibleMoves = null;
-    protected byte[] pinnedDirection;
+    protected InfiniteRangePiece pinningPiece = null;
 
     public boolean correctFieldCoordinates(int height, int width) {
         if (height < 0 || height >= this.position.getBoardHeight()) {return false;}

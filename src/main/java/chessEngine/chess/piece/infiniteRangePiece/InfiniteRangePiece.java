@@ -69,7 +69,7 @@ public abstract class InfiniteRangePiece extends Piece {
                 else if (blocked && tempPieceColor.equals(pieceColor.NONE)) {}
                 else if (blocked && tempPieceColor.equals(enemyPieceColor)){
                     if (nextY == kingsField.height() && nextX == kingsField.width()) {
-                        pinnedPiece.setPinnedDirection(new byte[]{yDir, xDir});
+                        pinnedPiece.setPinningPiece(this);
                         this.pinningKing = true;
                     } else if (queensField != null && nextY == queensField.height() && nextX == queensField.width()) {
                         this.pinningQueen = true;
