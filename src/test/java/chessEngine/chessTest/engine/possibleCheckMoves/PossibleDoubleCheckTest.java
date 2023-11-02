@@ -1,4 +1,4 @@
-package chessEngine.chessTest.engine.possibleValidMovesTest;
+package chessEngine.chessTest.engine.possibleCheckMoves;
 
 import chessEngine.chess.EnginePosition;
 import chessEngine.chess.engineMove.EngineMove;

@@ -102,7 +102,7 @@ public abstract class Pawn extends Piece {
             byte nextYJump = (byte)(this.field.height() + 2 * this.movingDirection);
             if (colorMap[nextYJump][nextX].equals(PieceColor.NONE)) {
                 possibleEngineMoves.add(new EngineMove(
-                        this.field, new Field(nextY, nextX))
+                        this.field, new Field(nextYJump, nextX))
                 );
             }
         }

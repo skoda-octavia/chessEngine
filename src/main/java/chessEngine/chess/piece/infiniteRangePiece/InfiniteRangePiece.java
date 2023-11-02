@@ -5,6 +5,7 @@ import chessEngine.chess.engineMove.EngineMove;
 import chessEngine.chess.engineMove.field.Field;
 import chessEngine.chess.piece.Piece;
 import chessEngine.chess.piece.PieceColor;
+import chessEngine.chess.piece.constantMovesPiece.king.King;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -56,6 +57,14 @@ public abstract class InfiniteRangePiece extends Piece {
                     pinnedPiece = this.position.getChessBoard()[nextY][nextX];
                     movesList.add(new EngineMove(this.field, nextField));
                     controlledFields.add(nextField);
+                    if (pinnedPiece instanceof King) {
+                        nextY += yDir;
+                        nextX += xDir;
+                        nextField = new Field(nextY, nextX);
+                        controlledFields.add(nextField);
+                        pinnedPiece = null;
+                        break;
+                    }
                 }
                 else if (blocked && tempPieceColor.equals(pieceColor.NONE)) {}
                 else if (blocked && tempPieceColor.equals(enemyPieceColor)){

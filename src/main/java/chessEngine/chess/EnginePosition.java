@@ -5,6 +5,7 @@ import chessEngine.chess.engineMove.field.Field;
 import chessEngine.chess.piece.Piece;
 import chessEngine.chess.piece.PieceColor;
 import chessEngine.chess.piece.constantMovesPiece.king.BlackKing;
+import chessEngine.chess.piece.constantMovesPiece.king.King;
 import chessEngine.chess.piece.constantMovesPiece.king.WhiteKing;
 import chessEngine.chess.piece.infiniteRangePiece.InfiniteRangePiece;
 import chessEngine.chess.piece.infiniteRangePiece.queen.BlackQueen;
@@ -146,11 +147,48 @@ public class EnginePosition {
 
     private ArrayList<EngineMove> singleCheckLegalMoves(ArrayList<Piece> checkingPieces) {
         Piece checkingPiece = checkingPieces.get(0);
-        if (checkingPiece instanceof InfiniteRangePiece) {
+        ArrayList<EngineMove> legalMoves = new ArrayList<>();
+        ArrayList<Field> coveringLine = null;
+        Field kingsField = whiteMoves ? whiteKing.getField() : blackKing.getField();
+        HashMap enemyFields = whiteMoves ? blackControls : whiteControls;
 
+        if (checkingPiece instanceof InfiniteRangePiece) {
+            coveringLine = EngineMove.coveringLine(kingsField, checkingPiece.getField());
         }
 
-        return null;
+        Iterator<Piece> iterator = whiteMoves ? whitePieces.iterator() : blackPieces.iterator();
+        while (iterator.hasNext()) {
+            Piece tempPiece = iterator.next();
+            ArrayList<EngineMove> possibleMoves = tempPiece.getPossibleMoves();
+
+            if (tempPiece.getPinnedDirection() != null) {continue;}
+
+            if (tempPiece instanceof King) {
+                for (EngineMove move : possibleMoves) {
+                    if (!enemyFields.containsKey(move.getTo())) {legalMoves.add(move);}
+                }
+                continue;
+            }
+
+            if (tempPiece instanceof Pawn) {
+                for (EngineMove move : possibleMoves) {
+                    if(move.getTo().equals(checkingPiece.getField()) &&
+                            tempPiece.getField().width() != checkingPiece.getField().width()) {
+                        legalMoves.add(move);
+                        continue;
+                    }
+                    if(coveringLine.contains(move.getTo())) {legalMoves.add(move);}
+                }
+                continue;
+            }
+
+            for (EngineMove move : possibleMoves) {
+                if(move.getTo().equals(checkingPiece.getField()) || coveringLine.contains(move.getTo())) {
+                    legalMoves.add(move);
+                }
+            }
+        }
+        return legalMoves;
     }
 
     private ArrayList<EngineMove> standardLegalMoves() {
