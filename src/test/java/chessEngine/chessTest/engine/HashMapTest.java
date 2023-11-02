@@ -24,7 +24,6 @@ public class HashMapTest {
         posCode += "wRwkwBwQwKwBwkwR";
         EnginePosition enginePosition = new EnginePosition(posCode, true);
         enginePosition.set();
-        enginePosition.buildControlFieldMap();
         HashMap whiteMap = enginePosition.getWhiteControls();
         HashMap blackMap = enginePosition.getBlackControls();
         assertEquals(42, whiteMap.size());

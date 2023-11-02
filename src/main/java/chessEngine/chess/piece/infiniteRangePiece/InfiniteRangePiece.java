@@ -25,11 +25,13 @@ public abstract class InfiniteRangePiece extends Piece {
         ArrayList<EngineMove> movesList = new ArrayList<>();
         HashSet<Field> controlledFields = new HashSet<>();
         Field queensField = null;
-        try {
-            queensField = this.position.queensField(enemyPieceColor);
-        }
+        Field kingsField = null;
+
+        try {queensField = this.position.queensField(enemyPieceColor);}
         catch (Exception e) {}
-        Field kingsField = this.position.kingsField(enemyPieceColor);
+        try {kingsField = this.position.kingsField(enemyPieceColor);}
+        catch (Exception e) {throw new IllegalArgumentException("position has no king");}
+
         for (byte[] direction : this.directions) {
             byte yDir = direction[0];
             byte xDir = direction[1];

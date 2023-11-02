@@ -134,7 +134,12 @@ public class EnginePosition {
 
     private ArrayList<EngineMove> doubleCheckLegalMoves(ArrayList<Piece> checkingPieces) {
         Piece king = whiteMoves ? whiteKing : blackKing;
-        ArrayList<EngineMove> possibleKingsMoves = king.getPossibleMoves();
+        ArrayList<EngineMove> possibleKingsInvalidMoves = king.getPossibleMoves();
+        HashMap controlledFields = whiteMoves ? this.blackControls : whiteControls;
+        ArrayList<EngineMove> possibleKingsMoves = new ArrayList<>();
+        for(EngineMove engineMove : possibleKingsInvalidMoves) {
+            if (!controlledFields.containsKey(engineMove.getTo())) {possibleKingsMoves.add(engineMove);}
+        }
         return possibleKingsMoves;
     }
 
@@ -178,8 +183,11 @@ public class EnginePosition {
         PieceColor[][] colorMap = generateColorMap();
         for (Piece piece : blackPieces) {piece.setMyPossibilities(colorMap);}
         for (Piece piece : whitePieces) {piece.setMyPossibilities(colorMap);}
+        if (whiteKing == null) {throw new IllegalArgumentException("positionCode has no whiteKing: "  + positionCode);}
+        if (blackKing == null) {throw new IllegalArgumentException("positionCode has no blackKing: "  + positionCode);}
         whiteKing.setCastlingMoves();
         blackKing.setCastlingMoves();
+        buildControlFieldMap();
     }
 
     public boolean controlledField(Field field, PieceColor by) {
