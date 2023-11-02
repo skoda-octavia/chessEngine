@@ -77,7 +77,7 @@ public class CoveringLineTest {
     void coveringLineTestBishop() {
 
         String posCode = "";
-        posCode += "bRbkbBbQbKbBbkbR";
+        posCode += "bRbkbBbQ  bBbkbR";
         posCode += "bPbPbPbPbPbPbPbP";
         posCode += "    wB          ";
         posCode += "                ";

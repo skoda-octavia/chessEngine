@@ -148,7 +148,7 @@ public class EnginePosition {
     private ArrayList<EngineMove> singleCheckLegalMoves(ArrayList<Piece> checkingPieces) {
         Piece checkingPiece = checkingPieces.get(0);
         ArrayList<EngineMove> legalMoves = new ArrayList<>();
-        ArrayList<Field> coveringLine = null;
+        ArrayList<Field> coveringLine = new ArrayList<>();
         Field kingsField = whiteMoves ? whiteKing.getField() : blackKing.getField();
         HashMap enemyFields = whiteMoves ? blackControls : whiteControls;
 
@@ -198,12 +198,18 @@ public class EnginePosition {
     public void setPiece(Piece tempPiece) {
         if (tempPiece.getPieceColor().equals(PieceColor.WHITE)) {
             this.whitePieces.push(tempPiece);
-            if (tempPiece instanceof WhiteKing) {this.whiteKing = (WhiteKing) tempPiece;}
+            if (tempPiece instanceof WhiteKing) {
+                if (this.whiteKing != null) {throw new IllegalArgumentException("there are two white kings in posCode");}
+                this.whiteKing = (WhiteKing) tempPiece;
+            }
             else if (tempPiece instanceof WhiteQueen) {this.whiteQueen = (WhiteQueen) tempPiece;}
         }
         else {
             this.blackPieces.push(tempPiece);
-            if (tempPiece instanceof BlackKing) {this.blackKing = (BlackKing) tempPiece;}
+            if (tempPiece instanceof BlackKing) {
+                if (this.blackKing != null) {throw new IllegalArgumentException("there are two black kings in posCode");}
+                this.blackKing = (BlackKing) tempPiece;
+            }
             else if (tempPiece instanceof BlackQueen) {this.blackQueen = (BlackQueen) tempPiece;}
         }
     }

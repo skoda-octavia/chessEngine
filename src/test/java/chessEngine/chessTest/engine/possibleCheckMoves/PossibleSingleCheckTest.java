@@ -200,4 +200,57 @@ public class PossibleSingleCheckTest {
         ArrayList<EngineMove> legalMove = enginePosition.possibleLegalMoves();
         assertEquals(5, legalMove.size());
     }
+
+    @Test
+    void singleCheckPawnCheckingTest() {
+        String posCode = "";
+        posCode += "    bK          ";
+        posCode += "  wP        wR  ";
+        posCode += "                ";
+        posCode += "    bP          ";
+        posCode += "        bk      ";
+        posCode += "            bP  ";
+        posCode += "  wPwPwPwPwBwPbk";
+        posCode += "  wkwB  wKwB    ";
+        EnginePosition enginePosition = new EnginePosition(posCode, false);
+        enginePosition.set();
+        ArrayList<EngineMove> legalMove = enginePosition.possibleLegalMoves();
+        assertEquals(2, legalMove.size());
+    }
+
+    @Test
+    void singleCheckPawnToCaptureCheckingTest() {
+        String posCode = "";
+        posCode += "    bK          ";
+        posCode += "  wP        wR  ";
+        posCode += "  bR            ";
+        posCode += "    bP          ";
+        posCode += "        bk      ";
+        posCode += "            bP  ";
+        posCode += "  wPwPwPwPwBwPbk";
+        posCode += "  wkwB  wKwB    ";
+        EnginePosition enginePosition = new EnginePosition(posCode, false);
+        enginePosition.set();
+        ArrayList<EngineMove> legalMove = enginePosition.possibleLegalMoves();
+        assertEquals(3, legalMove.size());
+    }
+
+    @Test
+    void singleCheckKnightCheckingTest() {
+        String posCode = "";
+        posCode += "    bK          ";
+        posCode += "            wR  ";
+        posCode += "  wk            ";
+        posCode += "    bP          ";
+        posCode += "        bk      ";
+        posCode += "            bP  ";
+        posCode += "  wPwPwPwPwBwPbk";
+        posCode += "  wkwB  wKwB    ";
+        EnginePosition enginePosition = new EnginePosition(posCode, false);
+        enginePosition.set();
+        ArrayList<EngineMove> legalMove = enginePosition.possibleLegalMoves();
+        assertEquals(2, legalMove.size());
+    }
+
+
 }
