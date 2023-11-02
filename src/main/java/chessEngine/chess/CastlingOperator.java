@@ -39,10 +39,10 @@ public class CastlingOperator {
 
         Field kingsField = enginePosition.getBlackKing().getField();
         if (this.possibleRightBlackCastling()) {possibleBlackCastlingMoves.add(
-                new EngineMove(kingsField, new Field((byte)0, (byte)6), EngineMoveCode.RIGHTCASTLING)
+                new EngineMove(kingsField, new Field((byte)0, (byte)6), EngineMoveCode.CASTLING)
         );}
         if (this.possibleLeftBlackCastling()) {possibleBlackCastlingMoves.add(
-                new EngineMove(kingsField, new Field((byte)0, (byte)2), EngineMoveCode.LEFTCASTLING)
+                new EngineMove(kingsField, new Field((byte)0, (byte)2), EngineMoveCode.CASTLING)
         );}
         return possibleBlackCastlingMoves;
     }
@@ -87,10 +87,10 @@ public class CastlingOperator {
 
         Field kingsField = enginePosition.getWhiteKing().getField();
         if (this.possibleRightWhiteCastling()) {possibleWhiteCastlingMoves.add(
-                new EngineMove(kingsField, new Field((byte)7, (byte)6), EngineMoveCode.RIGHTCASTLING)
+                new EngineMove(kingsField, new Field((byte)7, (byte)6), EngineMoveCode.CASTLING)
         );}
         if (this.possibleLeftWhiteCastling()) {possibleWhiteCastlingMoves.add(
-                new EngineMove(kingsField, new Field((byte)7, (byte)2), EngineMoveCode.LEFTCASTLING)
+                new EngineMove(kingsField, new Field((byte)7, (byte)2), EngineMoveCode.CASTLING)
         );}
         return possibleWhiteCastlingMoves;
     }

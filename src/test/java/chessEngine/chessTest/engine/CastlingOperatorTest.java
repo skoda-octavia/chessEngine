@@ -59,7 +59,7 @@ public class CastlingOperatorTest {
                         new EngineMove(
                                 new Field((byte)7, (byte)4),
                                 new Field((byte)7, (byte)2),
-                                EngineMoveCode.LEFTCASTLING
+                                EngineMoveCode.CASTLING
                         )
                 )
         );
@@ -68,7 +68,7 @@ public class CastlingOperatorTest {
                         new EngineMove(
                                 new Field((byte)7, (byte)4),
                                 new Field((byte)7, (byte)6),
-                                EngineMoveCode.RIGHTCASTLING
+                                EngineMoveCode.CASTLING
                         )
                 )
         );
@@ -98,7 +98,7 @@ public class CastlingOperatorTest {
                         new EngineMove(
                                 new Field((byte)7, (byte)4),
                                 new Field((byte)7, (byte)2),
-                                EngineMoveCode.LEFTCASTLING
+                                EngineMoveCode.CASTLING
                         )
                 )
         );

@@ -7,9 +7,7 @@ public enum EngineMoveCode {
     ROOK(3),
     QUEEN(4),
     BISHOP(5),
-    LEFTCASTLING(6),
-    RIGHTCASTLING(7),
-    PAWNMOVE(8);
+    CASTLING(6);
 
     public int number;
 

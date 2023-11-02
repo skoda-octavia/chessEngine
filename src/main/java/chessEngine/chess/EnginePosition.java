@@ -13,6 +13,7 @@ import chessEngine.chess.piece.infiniteRangePiece.queen.WhiteQueen;
 import chessEngine.chess.piece.pawn.Pawn;
 import chessEngine.chess.pieceGenerator.PieceGenerator;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.*;

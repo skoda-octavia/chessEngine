@@ -2,6 +2,7 @@ package chessEngine.chess.engineMove;
 
 import chessEngine.chess.EnginePosition;
 import chessEngine.chess.engineMove.field.Field;
+import chessEngine.chess.piece.PieceColor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -51,6 +52,19 @@ public class EngineMove {
             nextField = new Field(nextY, nextX);
         } while (!nextField.equals(kingsField));
         return coveringLine;
+    }
+
+
+    public static String getNewPieceCode(EngineMoveCode engineMoveCode, PieceColor pieceColor) {
+        String colorChar = pieceColor.equals(PieceColor.WHITE) ? "w" : "b";
+        switch (engineMoveCode) {
+            case QUEEN : return colorChar + "Q";
+            case ROOK : return colorChar + "R";
+            case BISHOP: return colorChar + "B";
+            case KNIGHT: return colorChar + "k";
+            default:
+                throw new IllegalArgumentException("Invalid EngineMoveCode");
+        }
     }
 
 
