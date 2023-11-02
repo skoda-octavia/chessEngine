@@ -111,5 +111,4 @@ public class PossibleStandardMovesTest {
         ArrayList possibleMove = enginePosition.possibleLegalMoves();
         assertEquals(3, possibleMove.size());
     }
-
 }

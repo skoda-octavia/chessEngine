@@ -30,7 +30,8 @@ public abstract class InfiniteRangePiece extends Piece {
 
         try {queensField = this.position.queensField(enemyPieceColor);}
         catch (Exception e) {}
-        try {kingsField = this.position.kingsField(enemyPieceColor);}
+        try {kingsField = this.pieceColor.equals(PieceColor.WHITE) ?
+                position.getBlackKing().getField() : position.getWhiteKing().getField();}
         catch (Exception e) {throw new IllegalArgumentException("position has no king");}
 
         for (byte[] direction : this.directions) {

@@ -89,12 +89,6 @@ public class EnginePosition {
         return this.castlingOperator.possibleCastlingMoves(pieceColor);
     }
 
-    public Field kingsField(PieceColor pieceColor) {
-        if (pieceColor.equals(PieceColor.WHITE)) {return this.whiteKing.getField();}
-        else if (pieceColor.equals(PieceColor.BLACK)) {return this.blackKing.getField();}
-        else {throw new IllegalArgumentException("pieceColor is none");}
-    }
-
     public Field queensField(PieceColor pieceColor) {
         if (pieceColor.equals(PieceColor.WHITE)) {return this.whiteQueen.getField();}
         else if (pieceColor.equals(PieceColor.BLACK)) {return this.blackQueen.getField();}
@@ -262,18 +256,14 @@ public class EnginePosition {
         for (Piece piece : whitePieces) {piece.setMyPossibilities(colorMap);}
         if (whiteKing == null) {throw new IllegalArgumentException("positionCode has no whiteKing: "  + positionCode);}
         if (blackKing == null) {throw new IllegalArgumentException("positionCode has no blackKing: "  + positionCode);}
+        buildControlFieldMap();
         whiteKing.setCastlingMoves();
         blackKing.setCastlingMoves();
-        buildControlFieldMap();
     }
 
     public boolean controlledField(Field field, PieceColor by) {
-        LinkedList<Piece> pieces =  by.equals(PieceColor.WHITE) ? whitePieces : blackPieces;
-        Iterator<Piece> iterator = pieces.iterator();
-        while (iterator.hasNext()) {
-            Piece tempPiece = iterator.next();
-            if (tempPiece.getControlledFields().contains(field)) {return true;}
-        }
+        HashMap controlledMap = by.equals(PieceColor.WHITE) ? whiteControls : blackControls;
+        if (controlledMap.containsKey(field)) {return true;}
         return false;
     }
 
