@@ -1,0 +1,10 @@
+.top-bar {
+  background-color: #333; /* Kolor tła */
+  color: #fff; /* Kolor tekstu */
+  padding: 10px 0; /* Wewnętrzny odstęp na górze i na dole */
+  text-align: center; /* Wyśrodkowanie tekstu */
+}
+
+.top-bar h1 {
+  margin: 0; /* Usunięcie marginesu wewnętrznego dla h1 */
+}
