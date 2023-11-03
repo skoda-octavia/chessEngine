@@ -42,7 +42,7 @@ public class SampleDataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) {
         Account account = new Account();
-        account.setLogin("login123");
+        account.setUsername("login123");
         account.setEmail("lemonPeter123@gmail.com");
         account.setPassword("haslo1");
 

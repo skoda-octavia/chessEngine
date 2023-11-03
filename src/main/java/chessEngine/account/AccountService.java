@@ -1,19 +1,31 @@
 package chessEngine.account;
 
 import chessEngine.gameRecord.GameRecord;
+import chessEngine.registration.token.ConfirmationToken;
+import chessEngine.registration.token.ConfirmationTokenService;
 import jakarta.persistence.EntityNotFoundException;
-import org.hibernate.annotations.Comment;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
+@AllArgsConstructor
 @Component
-public class AccountService {
+public class AccountService implements UserDetailsService {
 
-    @Autowired
+
     private final AccountRepository accountRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final ConfirmationTokenService confirmationTokenService;
 
     public List<GameRecord> getGameRecords() {
         Account account = getAccountById(1L);
@@ -29,8 +41,41 @@ public class AccountService {
         }
     }
 
+    @Transactional
+    public String signUpAccount(Account account) {
+        if (accountRepository.findByEmail(account.getEmail()).isPresent()) {
+            throw new IllegalArgumentException("email already taken");
+        }
 
-    public AccountService(AccountRepository accountRepository) {
-        this.accountRepository = accountRepository;
+        String encodedPass = bCryptPasswordEncoder.encode(account.getPassword());
+        account.setPassword(encodedPass);
+
+        accountRepository.save(account);
+
+        String token = UUID.randomUUID().toString();
+        ConfirmationToken confirmationToken = new ConfirmationToken(
+                token,
+                LocalDateTime.now(),
+                LocalDateTime.now().plusMinutes(15),
+                account
+        );
+        confirmationTokenService.saveCofirmationToken(confirmationToken);
+        return token;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+            return accountRepository.findByUsername(username)
+                    .orElseThrow(() ->
+                            new UsernameNotFoundException(
+                                    String.format("User with username %s not found", username)));
+
+    }
+
+    public void setAccountEnabled(ConfirmationToken confirmationToken) {
+        Account account = confirmationToken.getAccount();
+        accountRepository.enableAccount(account.getEmail());
+
     }
 }
