@@ -17,17 +17,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class RegistrationService {
 
-
-    private final EmailValidator emailValidator;
     private final AccountService accountService;
     private final ConfirmationTokenService confirmationTokenService;
     private final EmailSender emailSender;
 
-    public String register(RegistrationRequest request) throws MessagingException {
-        boolean validEmail = emailValidator.test(request.getEmail());
-        if (!validEmail) {
-            throw new IllegalStateException("invalid email");
-        }
+    public void register(RegistrationRequest request) throws MessagingException {
+
         String token = accountService.signUpAccount(
                 new Account(
                         request.getUsername(),
@@ -37,7 +32,10 @@ public class RegistrationService {
                 ));
         String link = "http://localhost:8080/api/registration/confirm?token=" + token;
         emailSender.send(request.getEmail(), "confirm", buildEmail(request.getUsername(), link));
-        return token;
+    }
+
+    public boolean validEmail(String email) {
+        return this.accountService.validEmail(email);
     }
 
     @Transactional
@@ -54,6 +52,10 @@ public class RegistrationService {
         confirmationTokenService.setTokenConfirmed(token);
         accountService.setAccountEnabled(confirmationToken);
         return "confirmed";
+    }
+
+    public boolean loginTaken(String username) {
+        return this.accountService.loginTaken(username);
     }
 
     private String buildEmail(String name, String link) {
@@ -124,4 +126,6 @@ public class RegistrationService {
                 "\n" +
                 "</div></div>";
     }
+
+
 }

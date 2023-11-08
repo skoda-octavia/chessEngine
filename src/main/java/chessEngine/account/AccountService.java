@@ -1,6 +1,8 @@
 package chessEngine.account;
 
 import chessEngine.gameRecord.GameRecord;
+import chessEngine.registration.EmailValidator;
+import chessEngine.registration.RegistrationRequest;
 import chessEngine.registration.token.ConfirmationToken;
 import chessEngine.registration.token.ConfirmationTokenService;
 import jakarta.persistence.EntityNotFoundException;
@@ -26,6 +28,7 @@ public class AccountService implements UserDetailsService {
     private final AccountRepository accountRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
+    private final EmailValidator emailValidator;
 
     public List<GameRecord> getGameRecords() {
         Account account = getAccountById(1L);
@@ -41,12 +44,16 @@ public class AccountService implements UserDetailsService {
         }
     }
 
+    public boolean validEmail(String email) {
+        boolean validEmail = emailValidator.test(email);
+        if (!validEmail) {return false;}
+        boolean emailTaken = this.accountRepository.findByEmail(email).isPresent();
+        if (emailTaken) {return false;}
+        return true;
+    }
+
     @Transactional
     public String signUpAccount(Account account) {
-        if (accountRepository.findByEmail(account.getEmail()).isPresent()) {
-            throw new IllegalArgumentException("email already taken");
-        }
-
         String encodedPass = bCryptPasswordEncoder.encode(account.getPassword());
         account.setPassword(encodedPass);
 
@@ -81,5 +88,9 @@ public class AccountService implements UserDetailsService {
 
     public List<Account> getAllAccounts() {
         return accountRepository.findAll();
+    }
+
+    public boolean loginTaken(String username) {
+        return accountRepository.findByUsername(username).isPresent();
     }
 }

@@ -11,15 +11,7 @@ export class RegistrationService {
 
   public register(registrationRequest: RegistrationRequest) {
     console.log(registrationRequest)
-    console.log(`${this.apiUrl}/api/registration/register`)
-    return this.http.post<RegistrationRequest>(`${this.apiUrl}/api/registration/register`, registrationRequest).subscribe(
-      (response) => {
-        console.log(response);
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      }
-    );
+    return this.http.post<RegistrationRequest>(`${this.apiUrl}/api/registration/register`, registrationRequest)
   }
   
   constructor(private http: HttpClient) {  }
