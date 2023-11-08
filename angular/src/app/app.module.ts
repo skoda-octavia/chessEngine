@@ -14,7 +14,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { TopbarComponent } from './components/topbar/topbar.component';
 import { RegistrationService } from './services/registration/registration.service';
-import { ConfirmEmailComponent } from './components/confirmEmail/confirm-email/confirm-email.component';
+import { ConfirmEmailComponent } from './components/confirmEmail/confirm-email.component';
+import { TokenConfirmationComponent } from './components/token-confirmation/token-confirmation.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ConfirmEmailComponent } from './components/confirmEmail/confirm-email/c
     LoginComponent,
     RegisterComponent,
     TopbarComponent,
-    ConfirmEmailComponent
+    ConfirmEmailComponent,
+    TokenConfirmationComponent,
   ],
   imports: [
     BrowserModule,

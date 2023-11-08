@@ -32,8 +32,13 @@ public class RegistrationController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping(path="confirm")
-    public String confirm(@RequestParam("token") String token) {
-        return registrationService.confirmToken(token);
+    @PostMapping(path="/confirm")
+    public ResponseEntity<RegistrationResponse> confirm(@RequestBody RegistrationToken token) {
+        RegistrationResponse response = new RegistrationResponse();
+        registrationService.confirmToken(token.getToken(), response);
+        if(response.getMessage() == null) {
+            response.setStatus(0);
+        }
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

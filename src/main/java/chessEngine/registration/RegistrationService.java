@@ -30,7 +30,7 @@ public class RegistrationService {
                         request.getPassword(),
                         AccountRole.USER
                 ));
-        String link = "http://localhost:8080/api/registration/confirm?token=" + token;
+        String link = "http://localhost:4200/confirm?token=" + token;
         emailSender.send(request.getEmail(), "confirm", buildEmail(request.getUsername(), link));
     }
 
@@ -39,19 +39,26 @@ public class RegistrationService {
     }
 
     @Transactional
-    public String confirmToken(String token) {
-        ConfirmationToken confirmationToken = confirmationTokenService.getToken(token).orElseThrow(() ->
-                new IllegalStateException("token not found")
-        );
+    public RegistrationResponse confirmToken(String token, RegistrationResponse response) {
+        if (!confirmationTokenService.getToken(token).isPresent()) {
+            response.setStatus(1);
+            response.setMessage("This token does not exist");
+            return response;
+        }
+        ConfirmationToken confirmationToken = confirmationTokenService.getToken(token).get();
         if (confirmationToken.getConfirmedAt() != null) {
-            throw new IllegalStateException("token alredy confirmed");
+            response.setStatus(1);
+            response.setMessage("This token is already confirmed");
+            return response;
         }
         if (confirmationToken.getExpiresAt().isBefore(LocalDateTime.now()) ) {
-            throw new IllegalStateException("token expired");
+            response.setStatus(1);
+            response.setMessage("Token has expired");
+            return response;
         }
         confirmationTokenService.setTokenConfirmed(token);
         accountService.setAccountEnabled(confirmationToken);
-        return "confirmed";
+        return response;
     }
 
     public boolean loginTaken(String username) {
