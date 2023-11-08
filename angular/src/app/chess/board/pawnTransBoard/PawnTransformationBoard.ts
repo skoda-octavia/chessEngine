@@ -1,4 +1,4 @@
-import { BoardComponent } from "src/app/board/board.component";
+import { BoardComponent } from "src/app/components/board/board.component";
 import { Field } from "../../field/field";
 import { Piece, PieceColor } from "../../pieces/piece";
 import { BlackBishop } from "../../pieces/piece/infiniteRangePiece/bishop/blackBishop/black-bishop";

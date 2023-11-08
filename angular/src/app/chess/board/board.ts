@@ -1,4 +1,4 @@
-import { BoardComponent } from "src/app/board/board.component";
+import { BoardComponent } from "src/app/components/board/board.component";
 import { Field } from "../field/field";
 import { Piece, PieceColor } from "../pieces/piece";
 import { BlackKing } from "../pieces/piece/king/blackKing/black-king";

@@ -78,4 +78,8 @@ public class AccountService implements UserDetailsService {
         accountRepository.enableAccount(account.getEmail());
 
     }
+
+    public List<Account> getAllAccounts() {
+        return accountRepository.findAll();
+    }
 }

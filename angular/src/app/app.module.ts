@@ -3,16 +3,17 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { BoardComponent } from './board/board.component';
-import { SquareComponent } from './square/square.component';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
+import { BoardComponent } from './components/board/board.component';
+import { SquareComponent } from './components/square/square.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
 import { AppRoutingModule } from './app-routing.module';
 import { CardModule } from "primeng/card";
 import { InputTextModule } from 'primeng/inputtext';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
-import { TopbarComponent } from './topbar/topbar.component';
+import { TopbarComponent } from './components/topbar/topbar.component';
+import { RegistrationService } from './services/registration/registration.service';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,7 @@ import { TopbarComponent } from './topbar/topbar.component';
     ReactiveFormsModule,
     ButtonModule
   ],
-  providers: [],
+  providers: [RegistrationService],
   bootstrap: [AppComponent],
   })
 export class AppModule { }

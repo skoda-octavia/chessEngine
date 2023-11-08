@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Board } from '../chess/board/board';
-import { pawnTransformationBoard } from '../chess/board/pawnTransBoard/PawnTransformationBoard';
+import { Board } from '../../chess/board/board';
+import { pawnTransformationBoard } from '../../chess/board/pawnTransBoard/PawnTransformationBoard';
 
 @Component({
   selector: 'app-board',

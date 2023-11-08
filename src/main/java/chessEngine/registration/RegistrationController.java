@@ -15,7 +15,7 @@ public class RegistrationController {
 
     private final RegistrationService registrationService;
 
-    @PostMapping
+    @PostMapping("/register")
     public String register(@RequestBody RegistrationRequest request) throws MessagingException {
         return registrationService.register(request);
     }

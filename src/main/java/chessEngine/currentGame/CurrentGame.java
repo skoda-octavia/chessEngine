@@ -6,12 +6,14 @@ import chessEngine.gameRecord.GameRecord;
 import chessEngine.position.Position;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "current_game")
 @Data
+@NoArgsConstructor
 public class CurrentGame {
 
     public CurrentGame(Account account, GameRecord gameRecord, Position position) {

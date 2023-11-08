@@ -45,6 +45,7 @@ public class SampleDataLoader implements CommandLineRunner {
         account.setUsername("login123");
         account.setEmail("lemonPeter123@gmail.com");
         account.setPassword("haslo1");
+        account.setEnabled(true);
 
         GameRecord gameRecord = new GameRecord();
         gameRecord.setAccount(account);

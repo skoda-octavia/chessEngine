@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
-// import { User } from 'src/app/interfaces/auth';
-import { AuthService } from 'src/app/services/auth.service';
+import { RegistrationRequest } from 'src/app/interfaces/registration';
+import { RegistrationService } from 'src/app/services/registration/registration.service';
 import { passwordMatchValidator } from 'src/app/shared/password-match.directive';
+
 
 
 @Component({
@@ -13,6 +12,7 @@ import { passwordMatchValidator } from 'src/app/shared/password-match.directive'
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
+
 
   registerForm = this.fb.group({
     login: ['', [Validators.required, Validators.pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)]],
@@ -23,13 +23,15 @@ export class RegisterComponent {
     validators: passwordMatchValidator
   })
 
-  constructor(
-    private fb: FormBuilder,
-  ) { }
+  constructor(private fb: FormBuilder, private registrationService: RegistrationService) {}
 
-submitDetails() {
-    
+  submitDetails() {
+    const request: RegistrationRequest = {
+      username: "John",
+      email: "Doe@gmail.com",
+      password: "qqqwww"
+    };
+    this.registrationService.register(request);
+
   }
-
-
 }

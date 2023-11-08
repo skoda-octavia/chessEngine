@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -16,6 +17,9 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     Optional<Account> findById(Long aLong);
     Optional<Account> findByEmail(String email);
     Optional<Account> findByUsername(String username);
+
+    @Override
+    List<Account> findAll();
 
     @Transactional
     @Modifying
