@@ -9,15 +9,19 @@ import chessEngine.gameRecord.GameRecordRepository;
 import chessEngine.move.MoveRepository;
 import chessEngine.position.Position;
 import chessEngine.position.PositionRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@AllArgsConstructor
 public class SampleDataLoader implements CommandLineRunner {
 
     private AccountRepository accountRepository;
@@ -25,6 +29,7 @@ public class SampleDataLoader implements CommandLineRunner {
     private GameRecordRepository gameRecordRepository;
     private MoveRepository moveRepository;
     private PositionRepository positionRepository;
+    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
     public SampleDataLoader(AccountRepository accountRepository,
@@ -37,6 +42,7 @@ public class SampleDataLoader implements CommandLineRunner {
         this.gameRecordRepository = gameRecordRepository;
         this.moveRepository = moveRepository;
         this.positionRepository = positionRepository;
+
     }
 
     @Override
@@ -44,7 +50,7 @@ public class SampleDataLoader implements CommandLineRunner {
         Account account = new Account();
         account.setUsername("login123");
         account.setEmail("lemonPeter123@gmail.com");
-        account.setPassword("haslo1");
+        account.setPassword(passwordEncoder.encode("haslo1"));
         account.setEnabled(true);
 
         GameRecord gameRecord = new GameRecord();

@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +27,7 @@ public class AccountService implements UserDetailsService {
 
 
     private final AccountRepository accountRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final PasswordEncoder passwordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
     private final EmailValidator emailValidator;
 
@@ -54,7 +55,7 @@ public class AccountService implements UserDetailsService {
 
     @Transactional
     public String signUpAccount(Account account) {
-        String encodedPass = bCryptPasswordEncoder.encode(account.getPassword());
+        String encodedPass = passwordEncoder.encode(account.getPassword());
         account.setPassword(encodedPass);
 
         accountRepository.save(account);

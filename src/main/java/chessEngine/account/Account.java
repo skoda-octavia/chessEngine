@@ -4,8 +4,7 @@ import chessEngine.currentGame.CurrentGame;
 import chessEngine.gameRecord.GameRecord;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,6 +19,8 @@ import java.util.List;
 @Entity
 @Table(name = "account")
 @NoArgsConstructor
+@Builder
+@AllArgsConstructor
 public class Account implements UserDetails {
 
     @Id

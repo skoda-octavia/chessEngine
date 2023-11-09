@@ -15,10 +15,15 @@ public class AccountController {
 
     private final AccountService accountService;
 
-    @GetMapping("all")
-    public List<Account> getAllAccounts() {
-        System.out.println("get account req");
-        return this.accountService.getAllAccounts();
+//    @GetMapping("all")
+//    public List<Account> getAllAccounts() {
+//        System.out.println("get account req");
+//        return this.accountService.getAllAccounts();
+//    }
 
+    @GetMapping("all")
+    public String getAllAccounts() {
+        System.out.println("get account req");
+        return "accounts";
     }
 }
