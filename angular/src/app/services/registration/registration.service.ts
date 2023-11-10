@@ -11,7 +11,7 @@ export class RegistrationService {
 
   public register(registrationRequest: RegistrationRequest) {
     console.log(registrationRequest)
-    return this.http.post<RegistrationRequest>(`${this.apiUrl}/api/registration/register`, registrationRequest)
+    return this.http.post<RegistrationRequest>(`${this.apiUrl}/api/auth/register`, registrationRequest)
   }
   
   constructor(private http: HttpClient) {  }

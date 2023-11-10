@@ -34,17 +34,17 @@ public class CurrentGame {
     )
     private Long id;
 
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Account account;
 
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "game_record_id")
     private GameRecord gameRecord;
 
 
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "position_id")
     @OnDelete(action = OnDeleteAction.SET_NULL)
     private Position position;

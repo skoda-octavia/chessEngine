@@ -1,4 +1,4 @@
-package chessEngine.registration.token;
+package chessEngine.confirmationToken;
 
 import chessEngine.account.Account;
 import jakarta.persistence.*;

@@ -1,4 +1,4 @@
-package chessEngine.registration;
+package chessEngine.security;
 
 import org.springframework.stereotype.Service;
 

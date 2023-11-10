@@ -15,7 +15,7 @@ export class TokenService {
 
   public confirmToken(token: String) {
     const body = { token: token };
-    return this.http.post(`${this.apiUrl}/api/registration/confirm`, body)
+    return this.http.post(`${this.apiUrl}/api/auth/confirm`, body)
   }
   
   constructor(private http: HttpClient) {  }

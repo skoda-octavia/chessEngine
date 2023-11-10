@@ -1,22 +1,22 @@
-<form [formGroup]="loginForm">
+<form [formGroup]="loginForm" (ngSubmit)="submitDetails()">
 	<p-card header="Login" [style]="{ width: '360px' }">
 		<div class="field">
-			<label for="email">Email</label>
+			<label for="login">Login</label>
 			<input 
 				type="text"
 				pInputText 
-				formControlName="email"
+				formControlName="login"
 				class="w-full"
-				name="email"
-				placeholder="Type your email"
+				name="login"
+				placeholder="Type your login"
 				/>
 		</div>
 		<small 
-			*ngIf="loginForm.controls['email'].invalid && (loginForm.controls['email'].dirty || loginForm.controls['email'].touched)"
+			*ngIf="loginForm.controls['login'].invalid && (loginForm.controls['login'].dirty || loginForm.controls['login'].touched)"
 			class="block p-error"
 			>
-				<div *ngIf="loginForm.controls['email'].errors?.['required']">Email is required.</div>
-        		<div *ngIf="loginForm.controls['email'].errors?.['email']">Email should be valid</div>
+				<div *ngIf="loginForm.controls['login'].errors?.['required']">Login is required.</div>
+        		<div *ngIf="loginForm.controls['login'].errors?.['login']">Login should be valid</div>
 			<div ></div>
 		</small>
 		<div class="field">
@@ -39,7 +39,10 @@
 
 		</div>
 
-		<p-button label="SIGN IN" styleClass="w-full" [disabled]="loginForm.invalid"></p-button>
+		<p-button label="SIGN IN" 
+					styleClass="w-full" 
+					[disabled]="loginForm.invalid"
+					type="submit"></p-button>
 		<div class="mt-2">
 			<a routerLink="/register">Not registered yet?</a>
 		</div>

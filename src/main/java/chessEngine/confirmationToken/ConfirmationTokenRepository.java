@@ -1,4 +1,4 @@
-package chessEngine.registration.token;
+package chessEngine.confirmationToken;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

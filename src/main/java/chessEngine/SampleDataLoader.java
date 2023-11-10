@@ -2,6 +2,7 @@ package chessEngine;
 
 import chessEngine.account.Account;
 import chessEngine.account.AccountRepository;
+import chessEngine.account.AccountRole;
 import chessEngine.currentGame.CurrentGame;
 import chessEngine.currentGame.CurrentGameRepository;
 import chessEngine.gameRecord.GameRecord;
@@ -52,6 +53,7 @@ public class SampleDataLoader implements CommandLineRunner {
         account.setEmail("lemonPeter123@gmail.com");
         account.setPassword(passwordEncoder.encode("haslo1"));
         account.setEnabled(true);
+        account.setAccountRole(AccountRole.USER);
 
         GameRecord gameRecord = new GameRecord();
         gameRecord.setAccount(account);

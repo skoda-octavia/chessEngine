@@ -1,25 +1,20 @@
 package chessEngine.account;
 
 import chessEngine.gameRecord.GameRecord;
-import chessEngine.registration.EmailValidator;
-import chessEngine.registration.RegistrationRequest;
-import chessEngine.registration.token.ConfirmationToken;
-import chessEngine.registration.token.ConfirmationTokenService;
+import chessEngine.security.EmailValidator;
+import chessEngine.confirmationToken.ConfirmationToken;
+import chessEngine.confirmationToken.ConfirmationTokenService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @AllArgsConstructor
 @Component
@@ -54,21 +49,12 @@ public class AccountService implements UserDetailsService {
     }
 
     @Transactional
-    public String signUpAccount(Account account) {
+    public void signUpAccount(Account account) {
         String encodedPass = passwordEncoder.encode(account.getPassword());
         account.setPassword(encodedPass);
 
         accountRepository.save(account);
 
-        String token = UUID.randomUUID().toString();
-        ConfirmationToken confirmationToken = new ConfirmationToken(
-                token,
-                LocalDateTime.now(),
-                LocalDateTime.now().plusMinutes(15),
-                account
-        );
-        confirmationTokenService.saveCofirmationToken(confirmationToken);
-        return token;
     }
 
     @Override
@@ -87,10 +73,19 @@ public class AccountService implements UserDetailsService {
 
     }
 
+    public void save(Account account) {
+        accountRepository.save(account);
+    }
+
+    public Optional<Account> findByUsername(String username) {
+        return accountRepository.findByUsername(username);
+    }
+
     public List<Account> getAllAccounts() {
         return accountRepository.findAll();
     }
 
+    public boolean emailTaken(String email) {return accountRepository.findByEmail(email).isPresent();}
     public boolean loginTaken(String username) {
         return accountRepository.findByUsername(username).isPresent();
     }

@@ -1,6 +1,5 @@
 package chessEngine.security;
 
-import chessEngine.registration.RegistrationRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,4 +26,10 @@ public class AuthenticationController {
     public ResponseEntity<AuthenticateResponse> authenticate(
             @RequestBody AuthenticateRequest authRequest
     ) { return ResponseEntity.ok(authenticateService.authenticate(authRequest));}
+
+    @PostMapping(path="/confirm")
+    public ResponseEntity<TokenConfirmationResponse> confirm(@RequestBody RegistrationToken token) {
+        return ResponseEntity.ok(authenticateService.confirmToken(token.getToken()));
+    }
+
 }
