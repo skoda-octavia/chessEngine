@@ -25,11 +25,11 @@ import java.util.List;
 @AllArgsConstructor
 public class SampleDataLoader implements CommandLineRunner {
 
-    private AccountRepository accountRepository;
-    private CurrentGameRepository currentGameRepository;
-    private GameRecordRepository gameRecordRepository;
-    private MoveRepository moveRepository;
-    private PositionRepository positionRepository;
+    private final AccountRepository accountRepository;
+    private final CurrentGameRepository currentGameRepository;
+    private final GameRecordRepository gameRecordRepository;
+    private final MoveRepository moveRepository;
+    private final PositionRepository positionRepository;
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
@@ -81,11 +81,11 @@ public class SampleDataLoader implements CommandLineRunner {
         posCode += "bPbPbPbPbPbPbPbP";
         posCode += "                ";
         posCode += "                ";
+        posCode += "        wP      ";
         posCode += "                ";
-        posCode += "                ";
-        posCode += "wPwPwPwPwPwPwPwP";
+        posCode += "wPwPwPwP  wPwPwP";
         posCode += "wRwkwBwQwKwBwkwR";
-        Position pos = new Position(posCode, true);
+        Position pos = new Position(posCode, false);
         positionRepository.save(pos);
 
         CurrentGame currentGame = new CurrentGame(account, gameRecord2, pos);

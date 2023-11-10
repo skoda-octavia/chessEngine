@@ -1,6 +1,7 @@
 package chessEngine.position;
 import chessEngine.chess.EnginePosition;
 import chessEngine.move.Move;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -20,6 +21,7 @@ import java.util.Objects;
 @NoArgsConstructor
 public class Position {
 
+    @JsonIgnore
     @Id
     @SequenceGenerator(
             name = "position_sequence",
@@ -36,10 +38,12 @@ public class Position {
     @Column(nullable = false, name = "white_moves")
     private boolean whiteMoves;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     private List<Move> childMoves;
 
+    @JsonIgnore
     @Transient
     private EnginePosition enginePosition;
 

@@ -270,11 +270,15 @@ export class Board {
     }
 
 
-    constructor(height: number, width: number, boardComponent: BoardComponent) {
+    constructor(height: number, width: number, boardComponent: BoardComponent, positionCode: String, movingColor: PieceColor) {
         this.boardGenerator = new BoardGenerator();
         this.height = height
         this.width = width
-        this.boardGenerator.setDefaultBoard(this)
+        if (positionCode.length == 0) {this.boardGenerator.setDefaultBoard(this)}
+        else {
+            this.boardGenerator.setBoardFromCode(positionCode, this)
+            this.movingColor = movingColor
+        }
         this.castlingOperator = new CastlingOperator(this.fields, this);
         this.boardComponent = boardComponent
     }

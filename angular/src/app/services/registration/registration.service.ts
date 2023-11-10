@@ -1,5 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/app/config/config';
 import { RegistrationRequest } from 'src/app/interfaces/registration'
 
 
@@ -7,11 +8,11 @@ import { RegistrationRequest } from 'src/app/interfaces/registration'
   providedIn: 'root'
 })
 export class RegistrationService {
-  private apiUrl: String = 'http://localhost:8080'
+
 
   public register(registrationRequest: RegistrationRequest) {
     console.log(registrationRequest)
-    return this.http.post<RegistrationRequest>(`${this.apiUrl}/api/auth/register`, registrationRequest)
+    return this.http.post<RegistrationRequest>(`${environment.apiUrl}/api/auth/register`, registrationRequest)
   }
   
   constructor(private http: HttpClient) {  }

@@ -4,6 +4,7 @@ package chessEngine.currentGame;
 import chessEngine.account.Account;
 import chessEngine.gameRecord.GameRecord;
 import chessEngine.position.Position;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,12 +17,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @NoArgsConstructor
 public class CurrentGame {
 
-    public CurrentGame(Account account, GameRecord gameRecord, Position position) {
-        this.account = account;
-        this.gameRecord = gameRecord;
-        this.position = position;
-    }
-
+    @JsonIgnore
     @Id
     @SequenceGenerator(
             name = "current_game_sequence",
@@ -34,17 +30,19 @@ public class CurrentGame {
     )
     private Long id;
 
+    @JsonIgnore
     @OneToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Account account;
 
+    @JsonIgnore
     @OneToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "game_record_id")
     private GameRecord gameRecord;
 
 
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @OneToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "position_id")
     @OnDelete(action = OnDeleteAction.SET_NULL)
     private Position position;
@@ -67,7 +65,11 @@ public class CurrentGame {
     @Column(nullable = false, columnDefinition = "boolean DEFAULT 'false'")
     private boolean blackRightRookMoved;
 
-
+    public CurrentGame(Account account, GameRecord gameRecord, Position position) {
+        this.account = account;
+        this.gameRecord = gameRecord;
+        this.position = position;
+    }
 
 
 

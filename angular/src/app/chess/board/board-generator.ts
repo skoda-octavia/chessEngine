@@ -44,7 +44,41 @@ export class BoardGenerator {
     }
 
     setTransformationBoard(color: PieceColor) {
+    }
 
+
+    pieceGenerator(pieceCode: String, height: number, width: number, board: Board) {
+        switch (pieceCode) {
+            case "wK":
+                return new WhiteKing(height, width, board)
+            case "wQ":
+                return new WhiteQueen(height, width, board)
+            case "wR":
+                return new WhiteRook(height, width, board)
+            case "wB":
+                return new WhiteBishop(height, width, board)
+            case "wk":
+                return new WhiteKnight(height, width, board)
+            case "wP":
+                return new WhitePawn(height, width, board)
+            case "bK":
+                return new BlackKing(height, width, board)
+            case "bQ":
+                return new BlackQueen(height, width, board)
+            case "bR":
+                return new BlackRook(height, width, board)
+            case "bB":
+                return new BlackBishop(height, width, board)
+            case "bk":
+                return new BlackKnight(height, width, board)
+            case "bP":
+                return new BlackPawn(height, width, board)
+            case "  ":
+                return null;
+            default:
+                throw new Error("illegal piece code: " + pieceCode)
+        
+        }
     }
 
 
@@ -74,8 +108,28 @@ export class BoardGenerator {
         board.fields[7][7].setPiece(new WhiteRook(7, 7, board));
     }
 
+    setPiecesFromCode(posCode: String, board: Board) {
+        var i = 0;
+        for (let h = 0; h < board.height; h++) {
+            for (let w = 0; w < board.width; w++) {
+                var pieceCode = posCode.substring(i, i + 2)
+                var tempPiece = this.pieceGenerator(pieceCode, h, w, board)
+                if (tempPiece != null) {
+                    board.fields[h][w].setPiece(tempPiece)
+                }
+                i+=2
+            }
+        }
+    }
+
     setDefaultBoard(board: Board) {
         this.setBaseBoard(board, true);
         this.setBasePosition(board);
+    }
+
+
+    setBoardFromCode(positionCode: String, board: Board) {
+        this.setBaseBoard(board, true);
+        this.setPiecesFromCode(positionCode, board)
     }
 }

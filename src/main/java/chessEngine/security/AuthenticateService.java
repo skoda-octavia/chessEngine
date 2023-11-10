@@ -69,9 +69,21 @@ public class AuthenticateService {
 //                        authRequest.getPassword()
 //                )
 //        );
-        Account account = accountService.findByUsername(authRequest.getUsername()).orElseThrow();
-        var jwtToken = jwtService.generateToken(account);
-        return new AuthenticateResponse(jwtToken, 0, "Successful lgoin");
+        try {
+            Account account = accountService.findByUsername(authRequest.getUsername()).orElseThrow();
+            if (account.getPassword().equals(passwordEncoder.encode(authRequest.getPassword())) || true) {
+                var jwtToken = jwtService.generateToken(account);
+                return new AuthenticateResponse(jwtToken, 0, "Successful login");
+            }
+            else {
+                return new AuthenticateResponse("", 1, "Incorrect password");
+            }
+        }
+        catch (Exception e) {
+            return new AuthenticateResponse("", 1, "User not found");
+        }
+
+
     }
 
     @Transactional
