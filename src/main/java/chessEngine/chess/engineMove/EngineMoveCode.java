@@ -14,4 +14,18 @@ public enum EngineMoveCode {
     EngineMoveCode(int number) {
         this.number = number;
     }
+
+    public int getValue() {
+        return number;
+    }
+
+    public static EngineMoveCode fromInt(int number) {
+        for (EngineMoveCode enumValue : EngineMoveCode.values()) {
+            if (enumValue.getValue() == number) {
+                return enumValue;
+            }
+        }
+        throw new IllegalArgumentException("Illegal value: " + number);
+    }
 }
+

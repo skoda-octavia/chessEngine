@@ -54,28 +54,7 @@ public class SampleDataLoader implements CommandLineRunner {
         account.setPassword(passwordEncoder.encode("haslo1"));
         account.setEnabled(true);
         account.setAccountRole(AccountRole.USER);
-
-        GameRecord gameRecord = new GameRecord();
-        gameRecord.setAccount(account);
-        gameRecord.setFinished(true);
-        gameRecord.setGameCode("fdsfsdfsfsdsdfds");
-
-        GameRecord gameRecord2 = new GameRecord();
-        gameRecord2.setAccount(account);
-        gameRecord2.setFinished(true);
-        gameRecord2.setGameCode("");
-
-
-        List<GameRecord> gameRecordList = new ArrayList<>();
-        gameRecordList.add(gameRecord);
-        gameRecordList.add(gameRecord2);
-
-        account.setGameRecordList(gameRecordList);
         accountRepository.save(account);
-
-        gameRecordRepository.save(gameRecord);
-        gameRecordRepository.save(gameRecord2);
-
 
         String posCode = "bRbkbBbQbKbBbkbR";
         posCode += "bPbPbPbPbPbPbPbP";
@@ -88,9 +67,26 @@ public class SampleDataLoader implements CommandLineRunner {
         Position pos = new Position(posCode, true);
         positionRepository.save(pos);
 
+        GameRecord gameRecord2 = new GameRecord();
+        gameRecord2.setAccount(account);
+        gameRecord2.setFinished(true);
+        gameRecord2.setGameCode("");
+        gameRecordRepository.save(gameRecord2);
+
         CurrentGame currentGame = new CurrentGame(account, gameRecord2, pos);
         currentGameRepository.save(currentGame);
 
+        account.setCurrentGame(currentGame);
+        accountRepository.save(account);
+
+
+        Account account2 = new Account();
+        account2.setUsername("a");
+        account2.setEmail("le3@gmail.com");
+        account2.setPassword(passwordEncoder.encode("a"));
+        account2.setEnabled(true);
+        account2.setAccountRole(AccountRole.USER);
+        accountRepository.save(account2);
     }
 
 }

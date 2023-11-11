@@ -32,13 +32,12 @@ public class CurrentGame {
 
     @JsonIgnore
     @OneToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "account_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "account_id", referencedColumnName = "id")
     private Account account;
 
     @JsonIgnore
     @OneToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "game_record_id")
+    @JoinColumn(name = "game_record_id", referencedColumnName = "id")
     private GameRecord gameRecord;
 
 

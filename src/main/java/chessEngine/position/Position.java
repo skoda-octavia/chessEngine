@@ -1,6 +1,8 @@
 package chessEngine.position;
 import chessEngine.chess.EnginePosition;
+import chessEngine.chess.engineMove.EngineMove;
 import chessEngine.move.Move;
+import chessEngine.move.MoveRequestResponse;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -14,7 +16,16 @@ import java.util.Objects;
 @Entity
 @Table(
         name = "Position",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"position_code", "white_moves"})
+        uniqueConstraints = @UniqueConstraint(columnNames = {
+                "position_code",
+                "white_moves",
+                "white_king_moved",
+                "white_left_rook_moved",
+                "white_right_rook_moved",
+                "black_king_moved",
+                "black_left_rook_moved",
+                "black_right_rook_moved",
+        })
 )
 
 @Data
@@ -43,9 +54,43 @@ public class Position {
     @JoinColumn(name = "parent_id")
     private List<Move> childMoves;
 
-    @JsonIgnore
-    @Transient
-    private EnginePosition enginePosition;
+    @Column(name = "white_king_moved", nullable = false, columnDefinition = "boolean DEFAULT 'false'")
+    private boolean whiteKingMoved;
+
+    @Column(name = "black_king_moved", nullable = false, columnDefinition = "boolean DEFAULT 'false'")
+    private boolean blackKingMoved;
+
+    @Column(name = "white_left_rook_moved", nullable = false, columnDefinition = "boolean DEFAULT 'false'")
+    private boolean whiteLeftRookMoved;
+
+    @Column(name = "white_right_rook_moved", nullable = false, columnDefinition = "boolean DEFAULT 'false'")
+    private boolean whiteRightRookMoved;
+
+    @Column(name = "black_left_rook_moved", nullable = false, columnDefinition = "boolean DEFAULT 'false'")
+    private boolean blackLeftRookMoved;
+
+    @Column(name = "black_right_rook_moved", nullable = false, columnDefinition = "boolean DEFAULT 'false'")
+    private boolean blackRightRookMoved;
+
+//    @JsonIgnore
+//    @Transient
+//    private EnginePosition enginePosition;
+//
+
+    public EnginePosition getEnginePosition(EngineMove parentEngineMove) {
+        EnginePosition thisPos = new EnginePosition(
+                this.positionCode,
+                this.whiteMoves,
+                this.whiteKingMoved,
+                this.blackKingMoved,
+                this.whiteLeftRookMoved,
+                this.whiteRightRookMoved,
+                this.blackLeftRookMoved,
+                this.blackRightRookMoved,
+                parentEngineMove);
+        thisPos.set();
+        return thisPos;
+    }
 
     public Position(Long id, String positionCode, boolean whiteMoves) {
         this.id = id;
@@ -56,5 +101,23 @@ public class Position {
     public Position(String positionCode, boolean whiteMoves) {
         this.positionCode = positionCode;
         this.whiteMoves = whiteMoves;
+    }
+
+    public Position(String positionCode,
+                    boolean whiteMoves,
+                    boolean whiteKingMoved,
+                    boolean blackKingMoved,
+                    boolean whiteLeftRookMoved,
+                    boolean whiteRightRookMoved,
+                    boolean blackLeftRookMoved,
+                    boolean blackRightRookMoved) {
+        this.positionCode = positionCode;
+        this.whiteMoves = whiteMoves;
+        this.whiteKingMoved = whiteKingMoved;
+        this.blackKingMoved = blackKingMoved;
+        this.whiteLeftRookMoved = whiteLeftRookMoved;
+        this.whiteRightRookMoved = whiteRightRookMoved;
+        this.blackLeftRookMoved = blackLeftRookMoved;
+        this.blackRightRookMoved = blackRightRookMoved;
     }
 }

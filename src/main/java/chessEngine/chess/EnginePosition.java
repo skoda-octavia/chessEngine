@@ -12,6 +12,7 @@ import chessEngine.chess.piece.infiniteRangePiece.queen.BlackQueen;
 import chessEngine.chess.piece.infiniteRangePiece.queen.WhiteQueen;
 import chessEngine.chess.piece.pawn.Pawn;
 import chessEngine.chess.pieceGenerator.PieceGenerator;
+import chessEngine.position.Position;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,13 +22,22 @@ import java.util.*;
 @Getter
 @Setter
 public class EnginePosition {
+
+    private boolean whiteKingMoved;
+    private boolean blackKingMoved;
+    private boolean whiteLeftRookMoved;
+    private boolean whiteRightRookMoved;
+    private boolean blackLeftRookMoved;
+    private boolean blackRightRookMoved;
+    private final String positionCode;
+    private boolean whiteMoves;
     private final byte boardHeight = 8;
     private final byte boardWidth = 8;
     private EngineMove parentMove = null;
     private int value = 0;
-    private final String positionCode;
+
     private final CastlingOperator castlingOperator;
-    private boolean whiteMoves;
+
     private Piece[][] chessBoard = new Piece[this.boardHeight][this.boardWidth];
     private PieceColor[][] colorMap = null;
     private LinkedList<Piece> blackPieces = new LinkedList<>();
@@ -36,12 +46,7 @@ public class EnginePosition {
     private BlackKing blackKing = null;
     private WhiteQueen whiteQueen = null;
     private BlackQueen blackQueen = null;
-    private boolean whiteKingMoved;
-    private boolean blackKingMoved;
-    private boolean whiteLeftRookMoved;
-    private boolean whiteRightRookMoved;
-    private boolean blackLeftRookMoved;
-    private boolean blackRightRookMoved;
+
 
     private HashMap<Field, Byte> whiteControls;
     private HashMap<Field, Byte> blackControls;
@@ -281,10 +286,6 @@ public class EnginePosition {
     }
 
 
-
-
-
-
     public EnginePosition(String positionCode,
                           boolean whiteMoves,
                           boolean whiteKingMoved,
@@ -315,4 +316,17 @@ public class EnginePosition {
         this.whiteMoves = whiteMoves;
         this.castlingOperator = new CastlingOperator(this);
     }
+
+    public Position getPosition() {
+        return new Position(
+            this.positionCode,
+            this.whiteMoves,
+            this.whiteKingMoved,
+            this.blackKingMoved,
+            this.whiteLeftRookMoved,
+            this.whiteRightRookMoved,
+            this.blackLeftRookMoved,
+            this.blackRightRookMoved);
+    }
+
 }
