@@ -5,13 +5,17 @@ import chessEngine.account.Account;
 import chessEngine.currentGame.CurrentGame;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "game_record")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class GameRecord {
     @Id
     @SequenceGenerator(
@@ -38,8 +42,9 @@ public class GameRecord {
     @Column(name = "game_code", columnDefinition = "TEXT")
     private String gameCode;
 
-    @OneToOne(optional = true)
-    @JoinColumn(name = "current_game_id")
-    private CurrentGame currentGame;
-
+    public GameRecord(Account account) {
+        this.account = account;
+        this.finished = false;
+        this.gameCode = "";
+    }
 }

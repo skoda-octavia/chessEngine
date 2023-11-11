@@ -72,6 +72,7 @@ public class AccountService implements UserDetailsService {
         accountRepository.enableAccount(account.getEmail());
 
     }
+    public void updateCurrentGame(String email, Long gameId) {accountRepository.updateCurrentGame(email, gameId);}
 
     public void save(Account account) {
         accountRepository.save(account);

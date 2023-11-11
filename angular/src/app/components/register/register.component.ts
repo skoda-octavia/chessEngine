@@ -37,6 +37,7 @@ export class RegisterComponent {
       (response: any) => {
         if (response.status === 0) {
           console.log(response.message)
+          window.localStorage.setItem("auth_token", response.token);
           this.router.navigate(['/confirmEmail']);
         }
         else {

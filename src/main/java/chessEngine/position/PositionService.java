@@ -17,4 +17,8 @@ public class PositionService {
     public List<Position> getPositions() {
         return positionRepository.findAll();
     }
+
+    public Position getStartingPosition() {
+        return positionRepository.findById(1L).orElseThrow();
+    }
 }

@@ -47,7 +47,7 @@ public class Account implements UserDetails {
     private AccountRole accountRole;
 
     @OneToOne(mappedBy = "account", optional = true, fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn(name = "current_game_id")
+    @JoinColumn(name = "current_game_id")
     private CurrentGame currentGame;
 
     @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
@@ -59,6 +59,10 @@ public class Account implements UserDetails {
         this.email = email;
         this.password = password;
         this.accountRole = accountRole;
+    }
+
+    public void addGameRecord(GameRecord gameRecord) {
+        this.gameRecordList.add(gameRecord);
     }
 
     @Override

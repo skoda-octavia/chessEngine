@@ -19,24 +19,35 @@ export class BoardComponent implements OnInit {
   constructor(private currentGameService: CurrentGameService) {    
   }
 
+
+  createNewGame() {
+    this.board = new Board(8, 8, this, "", PieceColor.None);
+    this.currentGameService.createGame().subscribe(
+       (response: any) => {
+          console.log(response)
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error)
+      }
+    )
+  }
+
+
+
   ngOnInit(): void {
       this.currentGameService.getCurrentGame().subscribe(
       (response: any) => {
-        if (response.position != null) {
-          var movingColor = PieceColor.Black
-          if (response.position.whiteMoves) {movingColor = PieceColor.White}
-          this.board = new Board(8, 8, this, response.position.positionCode, movingColor);
-        }
-        else {
-          this.board = new Board(8, 8, this, "", PieceColor.None);
-        }
-        this.pawnTransformationBoard = new pawnTransformationBoard(4, 1, this)
+        var movingColor = PieceColor.Black
+        if (response.position.whiteMoves) {movingColor = PieceColor.White}
+        this.board = new Board(8, 8, this, response.position.positionCode, movingColor);
       
       },
       (error: HttpErrorResponse) => {
-        console.log(error.message);
+        console.log("player has no current game");
+        this.createNewGame()
       }
     );;
+    this.pawnTransformationBoard = new pawnTransformationBoard(4, 1, this)
   }
 
 }

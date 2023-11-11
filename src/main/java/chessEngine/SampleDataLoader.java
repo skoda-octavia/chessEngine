@@ -81,11 +81,11 @@ public class SampleDataLoader implements CommandLineRunner {
         posCode += "bPbPbPbPbPbPbPbP";
         posCode += "                ";
         posCode += "                ";
-        posCode += "        wP      ";
         posCode += "                ";
-        posCode += "wPwPwPwP  wPwPwP";
+        posCode += "                ";
+        posCode += "wPwPwPwPwPwPwPwP";
         posCode += "wRwkwBwQwKwBwkwR";
-        Position pos = new Position(posCode, false);
+        Position pos = new Position(posCode, true);
         positionRepository.save(pos);
 
         CurrentGame currentGame = new CurrentGame(account, gameRecord2, pos);

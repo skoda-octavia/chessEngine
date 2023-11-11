@@ -42,8 +42,8 @@ public class CurrentGame {
     private GameRecord gameRecord;
 
 
-    @OneToOne(optional = false, fetch = FetchType.EAGER)
-    @JoinColumn(name = "position_id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "position_id", unique = false)
     @OnDelete(action = OnDeleteAction.SET_NULL)
     private Position position;
 

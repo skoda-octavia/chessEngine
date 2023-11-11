@@ -25,6 +25,12 @@ public class JwtService {
         return extractClaim(token, Claims::getSubject);
     }
 
+    public String extractUsernameFromHeader(String header) {
+        String jwtToken = header.substring(7);
+        String username = extractUsername(jwtToken);
+        return username;
+    }
+
     public String generateToken(UserDetails userDetails) {
         return generateToken(new HashMap<>(), userDetails);
     }

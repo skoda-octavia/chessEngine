@@ -25,4 +25,11 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     @Modifying
     @Query("UPDATE Account a SET a.enabled = TRUE WHERE a.email = :email")
     int enableAccount(@Param("email") String email);
+
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE Account a SET a.currentGame.id = :id WHERE a.email = :email")
+    int updateCurrentGame(@Param("email") String email, @Param("id") Long id);
+
 }
