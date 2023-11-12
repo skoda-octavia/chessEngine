@@ -5,16 +5,19 @@ import chessEngine.account.Account;
 import chessEngine.gameRecord.GameRecord;
 import chessEngine.position.Position;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.transaction.annotation.Transactional;
 
 @Entity
 @Table(name = "current_game")
 @Data
 @NoArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class CurrentGame {
 
     @JsonIgnore
@@ -64,12 +67,16 @@ public class CurrentGame {
     @Column(nullable = false, columnDefinition = "boolean DEFAULT 'false'")
     private boolean blackRightRookMoved;
 
+    @Transient
+    private byte status = 0;
+
     public CurrentGame(Account account, GameRecord gameRecord, Position position) {
         this.account = account;
         this.gameRecord = gameRecord;
         this.position = position;
     }
 
-
-
+    public CurrentGame(byte status) {
+        this.status = status;
+    }
 }

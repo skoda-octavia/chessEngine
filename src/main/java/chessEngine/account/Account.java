@@ -46,7 +46,7 @@ public class Account implements UserDetails {
     @Enumerated(EnumType.STRING)
     private AccountRole accountRole;
 
-    @OneToOne(cascade = CascadeType.ALL, optional = true, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, optional = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "current_game_id", referencedColumnName = "id")
     private CurrentGame currentGame;
 

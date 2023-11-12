@@ -329,4 +329,14 @@ public class EnginePosition {
             this.blackRightRookMoved);
     }
 
+    public EngineMove generateRandomMove() {
+        if (!this.set) {this.set();}
+        ArrayList<EngineMove> legalMoves = this.possibleLegalMoves();
+        if (legalMoves == null || legalMoves.size() == 0) {
+            throw new IllegalStateException("Game over or error while generating possible moves");
+        }
+        Random random = new Random();
+        int randomIdx = random.nextInt(legalMoves.size());
+        return legalMoves.get(randomIdx);
+    }
 }

@@ -3,24 +3,26 @@ package chessEngine.move;
 import chessEngine.chess.engineMove.EngineMove;
 import chessEngine.chess.engineMove.EngineMoveCode;
 import chessEngine.chess.engineMove.field.Field;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
 public class MoveRequestResponse {
-    private byte fromY;
-    private byte fromX;
-    private byte toY;
-    private byte toX;
-    private byte moveCode;
+    private int fromY;
+    private int fromX;
+    private int toY;
+    private int toX;
+    private int moveCode;
 
 
     public EngineMove getEngineMove() {
         return new EngineMove(
-                new Field(this.fromY, fromX),
-                new Field(toY, toX),
+                new Field((byte)fromY, (byte)fromX),
+                new Field((byte)toY, (byte)toX),
                 EngineMoveCode.fromInt(moveCode)
         );
     }

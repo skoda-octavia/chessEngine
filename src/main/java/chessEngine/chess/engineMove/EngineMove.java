@@ -3,6 +3,7 @@ package chessEngine.chess.engineMove;
 import chessEngine.chess.EnginePosition;
 import chessEngine.chess.engineMove.field.Field;
 import chessEngine.chess.piece.PieceColor;
+import chessEngine.move.MoveRequestResponse;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -67,6 +68,15 @@ public class EngineMove {
         }
     }
 
+    public MoveRequestResponse getRequestResponse() {
+        return new MoveRequestResponse(
+                this.from.height(),
+                this.from.width(),
+                this.to.height(),
+                this.to.width(),
+                (byte)this.engineMoveCode.number
+        );
+    }
 
     public EngineMove(Field from, Field to) {
         this.from = from;

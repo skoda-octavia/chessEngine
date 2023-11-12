@@ -16,7 +16,7 @@ public class GameRecordService {
     }
 
     public void updateGameRecord(Long id, String moveCode) {
-        if (moveCode.length() != GameRecord.MOVE_LENGTH) {
+        if (moveCode.length() != GameRecord.MOVE_LENGTH * 2) {
             throw new IllegalArgumentException("Given move code has illegal length: " + moveCode);
         }
         else {

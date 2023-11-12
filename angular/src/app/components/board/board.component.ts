@@ -54,21 +54,29 @@ export class BoardComponent implements OnInit {
 
 
   ngOnInit(): void {
-      this.currentGameService.getCurrentGame().subscribe(
-      (response: any) => {
-        var movingColor = PieceColor.Black
-        if (response.position.whiteMoves) {movingColor = PieceColor.White}
-        this.board = new Board(8, 8, this, response.position.positionCode, movingColor);
-        this.sendExampleMove()  
-      
-      },
-      (error: HttpErrorResponse) => {
-        console.log("player has no current game");
-        this.createNewGame()
-        this.sendExampleMove()
-      }
-    );;
+    var responsseStatus = 0
+    this.currentGameService.getCurrentGame().subscribe(
+    (response: any) => {
+    if(response.status === 1) {
+      console.log("player has no current game");
+      responsseStatus = 1      
+    }  
+    else {
+      var movingColor = PieceColor.Black
+      if (response.position.whiteMoves) {movingColor = PieceColor.White}
+      this.board = new Board(8, 8, this, response.position.positionCode, movingColor);  
+    }
+    },
+    (error: HttpErrorResponse) => {
+      console.log(error)
+    }
+  );;
     this.pawnTransformationBoard = new pawnTransformationBoard(4, 1, this)
+    // if (responsseStatus === 1) {
+    //   this.createNewGame()
+    // }
+    this.createNewGame()
+    this.sendExampleMove()
     
   }
 

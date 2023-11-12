@@ -8,6 +8,8 @@ import { Move } from 'src/app/interfaces/move';
 })
 export class CurrentGameService {
 
+  constructor(private http: HttpClient) { }
+
   public getCurrentGame() {
     const authToken = window.localStorage.getItem('auth_token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${authToken}`);
@@ -19,7 +21,9 @@ export class CurrentGameService {
 
   public createNewGame() {
     const authToken = window.localStorage.getItem('auth_token');
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${authToken}`);
+    const headers = new HttpHeaders()
+      .set('Authorization', `Bearer ${authToken}`)
+      .set('Content-Type', 'application/json');  // Dodanie nagłówka Content-Type
     const options = {
       headers: headers
     };
@@ -28,14 +32,12 @@ export class CurrentGameService {
 
   public move(move: Move) {
     const authToken = window.localStorage.getItem('auth_token');
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${authToken}`);
+    const headers = new HttpHeaders()
+      .set('Authorization', `Bearer ${authToken}`)
+      .set('Content-Type', 'application/json');  // Dodanie nagłówka Content-Type
     const options = {
       headers: headers
     };
     return this.http.post(`${environment.apiUrl}/api/current-game/move`, move, options);
-  } 
-  
-
-
-  constructor(private http: HttpClient) { }
+  }
 }
