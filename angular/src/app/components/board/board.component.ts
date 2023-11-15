@@ -33,17 +33,20 @@ export class BoardComponent implements OnInit {
     )
   }
 
-  sendExampleMove() {
+  sendMove(fromY: number, fromX: number, toY: number, toX: number, moveCode: number) {
     const move: Move = {
-      fromY: 6,
-      fromX: 3,
-      toY: 5,
-      toX: 3,
-      moveCode: 0
+      fromY: fromY,
+      fromX: fromX,
+      toY: toY,
+      toX: toX,
+      moveCode: moveCode
     }
     this.currentGameService.move(move).subscribe(
       (response: any) => {
         console.log(response)
+        this.board.firstButtonClicked(response.fromY, response.fromX)
+        this.board.secondButtonClicked(response.toY, response.toX)
+        // todo transformation
         
       },
       (error: HttpErrorResponse) => {
@@ -54,7 +57,6 @@ export class BoardComponent implements OnInit {
 
 
   ngOnInit(): void {
-    var responsseStatus = 0
     this.currentGameService.getCurrentGame().subscribe(
     (response: any) => {
     if(response.status == 1) {
@@ -74,16 +76,6 @@ export class BoardComponent implements OnInit {
       console.log(error)
     }
   );;
-    
-    setTimeout(() => {
-      console.log('Minęło 10 sekund');
-      this.sendExampleMove()
-    }, 3000);
-    
-    
-    
-    
-    
   }
 
 }

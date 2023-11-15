@@ -1,13 +1,17 @@
 import { BoardComponent } from "src/app/components/board/board.component";
 import { Field } from "../../field/field";
 import { Piece, PieceColor } from "../../pieces/piece";
+import { Bishop } from "../../pieces/piece/infiniteRangePiece/bishop/bishop";
 import { BlackBishop } from "../../pieces/piece/infiniteRangePiece/bishop/blackBishop/black-bishop";
 import { WhiteBishop } from "../../pieces/piece/infiniteRangePiece/bishop/whiteBishop/white-bishop";
 import { BlackQueen } from "../../pieces/piece/infiniteRangePiece/queen/blackQueen/black-queen";
+import { Queen } from "../../pieces/piece/infiniteRangePiece/queen/queen";
 import { WhiteQueen } from "../../pieces/piece/infiniteRangePiece/queen/whiteQueen/white-queen";
 import { BlackRook } from "../../pieces/piece/infiniteRangePiece/rook/blackRook/black-rook";
+import { Rook } from "../../pieces/piece/infiniteRangePiece/rook/rook";
 import { WhiteRook } from "../../pieces/piece/infiniteRangePiece/rook/whiteRook/white-rook";
 import { BlackKnight } from "../../pieces/piece/knight/blackKnight/black-knight";
+import { Knight } from "../../pieces/piece/knight/knight";
 import { WhiteKnight } from "../../pieces/piece/knight/whiteKnight/white-knight";
 import { Pawn } from "../../pieces/piece/pawn/pawn";
 import { Board } from "../board";
@@ -28,7 +32,13 @@ export class pawnTransformationBoard {
         piece.fieldHeight = this.pawn.fieldHeight
         piece.fieldWidth = this.pawn.fieldWidth
         this.boardComponent.transformationVisible = false
-        this.boardComponent.board.pawnTransformed(this.pawn, piece)
+        var pieceString = ""
+        if (piece instanceof Queen) { pieceString = "queen" }
+        if (piece instanceof Rook) { pieceString = "rook" }
+        if (piece instanceof Knight) { pieceString = "knight" }
+        if (piece instanceof Bishop) { pieceString = "bishop" }
+        var moveCode = this.boardComponent.board.moveCodeDictionary[pieceString]
+        this.boardComponent.board.pawnTransformed(this.pawn, piece, moveCode)
     }
 
     setTransBoard(color: PieceColor) {

@@ -58,17 +58,18 @@ public class GameRecord {
         if (gameCode.length() == 0) {return null;}
         try {
             String lastMoveCode = gameCode.substring(gameCode.length() - MOVE_LENGTH);
-            byte fromY = (byte) lastMoveCode.charAt(0);
-            byte fromX = (byte) lastMoveCode.charAt(1);
-            byte toY = (byte) lastMoveCode.charAt(2);
-            byte toX = (byte) lastMoveCode.charAt(3);
-            int moveCodeValue =  (int)lastMoveCode.charAt(4);
+            byte fromY = (byte) Character.getNumericValue(lastMoveCode.charAt(0));
+            byte fromX = (byte) Character.getNumericValue(lastMoveCode.charAt(1));
+            byte toY = (byte) Character.getNumericValue(lastMoveCode.charAt(2));
+            byte toX = (byte) Character.getNumericValue(lastMoveCode.charAt(3));
+            int moveCodeValue = Character.getNumericValue(lastMoveCode.charAt(4));
             return new EngineMove(
                     new Field(fromY, fromX),
                     new Field(toY, toX),
                     EngineMoveCode.fromInt(moveCodeValue)
             );
-        } catch (Exception e) {}
-            throw new IllegalStateException("exception while decoding last engine move from code: " + gameCode);
+        } catch (Exception e) {
+            throw new IllegalStateException("Exception while decoding last move from code: " + gameCode);
+        }
     }
 }

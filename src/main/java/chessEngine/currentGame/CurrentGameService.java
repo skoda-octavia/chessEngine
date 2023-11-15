@@ -64,8 +64,6 @@ public class CurrentGameService {
     public MoveRequestResponse returnMove(String username, MoveRequestResponse moveRequestResponse) {
         Account account  = accountService.findByUsername(username).orElseThrow();
         CurrentGame currentGame = account.getCurrentGame();
-//        CurrentGame currentGame = currentGameRepository.findByAccountId(account.getId()).orElseThrow();
-
         GameRecord gameRecord = currentGame.getGameRecord();
         EnginePosition enginePosition = makeOpponentsMove(currentGame, gameRecord, moveRequestResponse);
 
@@ -90,7 +88,12 @@ public class CurrentGameService {
         EnginePosition currentEnginePosition = position.getEnginePosition(parentEngineMove);
         EngineMove nextEngineMove = moveRequestResponse.generateEngineMove();
         if (!currentEnginePosition.possibleLegalMoves().contains(nextEngineMove)) {
+            System.out.println("Exception, printing possible moves");
+            for(EngineMove possibleEngineMove: currentEnginePosition.possibleLegalMoves()) {
+                System.out.println(possibleEngineMove);
+            }
             throw new IllegalStateException("given move is illegal: " + moveRequestResponse);
+
         }
         EnginePosition nextEnginePosition = ChildGenerator.generateChild(currentEnginePosition, nextEngineMove);
         saveMoveChanges(nextEnginePosition, currentGame, gameRecord, moveRequestResponse);
