@@ -3,10 +3,7 @@ package chessEngine.move;
 import chessEngine.chess.engineMove.EngineMove;
 import chessEngine.chess.engineMove.EngineMoveCode;
 import chessEngine.chess.engineMove.field.Field;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
@@ -19,7 +16,7 @@ public class MoveRequestResponse {
     private int moveCode;
 
 
-    public EngineMove getEngineMove() {
+    public EngineMove generateEngineMove() {
         return new EngineMove(
                 new Field((byte)fromY, (byte)fromX),
                 new Field((byte)toY, (byte)toX),

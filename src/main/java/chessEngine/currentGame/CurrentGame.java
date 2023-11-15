@@ -14,10 +14,9 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.transaction.annotation.Transactional;
 
 @Entity
-@Table(name = "current_game")
+@Table
 @Data
 @NoArgsConstructor
-@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class CurrentGame {
 
     @JsonIgnore
@@ -33,9 +32,9 @@ public class CurrentGame {
     )
     private Long id;
 
-    @JsonIgnore
+
     @OneToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "account_id", referencedColumnName = "id")
+    @JoinColumn(referencedColumnName = "id")
     private Account account;
 
     @JsonIgnore
@@ -44,6 +43,7 @@ public class CurrentGame {
     private GameRecord gameRecord;
 
 
+    @JsonIgnore
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "position_id", unique = false)
     @OnDelete(action = OnDeleteAction.SET_NULL)

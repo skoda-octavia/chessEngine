@@ -74,7 +74,7 @@ public class EngineMove {
                 this.from.width(),
                 this.to.height(),
                 this.to.width(),
-                (byte)this.engineMoveCode.number
+                this.engineMoveCode.number
         );
     }
 

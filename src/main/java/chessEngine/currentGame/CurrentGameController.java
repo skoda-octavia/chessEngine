@@ -35,10 +35,8 @@ public class CurrentGameController {
             @RequestBody MoveRequestResponse moveRequestResponse
         ) {
         String username = jwtService.extractUsernameFromHeader(authorizationHeader);
-        System.out.println("\n");
-        System.out.println(username + "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
-        System.out.println("\n");
         MoveRequestResponse myMove = currentGameService.returnMove(username, moveRequestResponse);
+        System.out.println(myMove);
         return ResponseEntity.ok().body(myMove);
     }
 }

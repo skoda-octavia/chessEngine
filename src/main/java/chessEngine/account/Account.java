@@ -15,11 +15,12 @@ import java.util.Collections;
 import java.util.List;
 
 
-@Data
 @Entity
-@Table(name = "account")
+@Table
 @NoArgsConstructor
 @Builder
+@Getter
+@Setter
 @AllArgsConstructor
 public class Account implements UserDetails {
 
@@ -50,6 +51,7 @@ public class Account implements UserDetails {
     @JoinColumn(name = "current_game_id", referencedColumnName = "id")
     private CurrentGame currentGame;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
     private List<GameRecord> gameRecordList = new ArrayList<>();
 

@@ -44,6 +44,7 @@ export class BoardComponent implements OnInit {
     this.currentGameService.move(move).subscribe(
       (response: any) => {
         console.log(response)
+        
       },
       (error: HttpErrorResponse) => {
         console.log("error while sending move");
@@ -52,31 +53,36 @@ export class BoardComponent implements OnInit {
   }
 
 
-
   ngOnInit(): void {
     var responsseStatus = 0
     this.currentGameService.getCurrentGame().subscribe(
     (response: any) => {
-    if(response.status === 1) {
+    if(response.status == 1) {
       console.log("player has no current game");
-      responsseStatus = 1      
+      this.pawnTransformationBoard = new pawnTransformationBoard(4, 1, this)
+      this.createNewGame()
+      
     }  
     else {
       var movingColor = PieceColor.Black
       if (response.position.whiteMoves) {movingColor = PieceColor.White}
-      this.board = new Board(8, 8, this, response.position.positionCode, movingColor);  
+      this.board = new Board(8, 8, this, response.positionCode, movingColor);
+      this.pawnTransformationBoard = new pawnTransformationBoard(4, 1, this)
     }
     },
     (error: HttpErrorResponse) => {
       console.log(error)
     }
   );;
-    this.pawnTransformationBoard = new pawnTransformationBoard(4, 1, this)
-    // if (responsseStatus === 1) {
-    //   this.createNewGame()
-    // }
-    this.createNewGame()
-    this.sendExampleMove()
+    
+    setTimeout(() => {
+      console.log('Minęło 10 sekund');
+      this.sendExampleMove()
+    }, 3000);
+    
+    
+    
+    
     
   }
 
