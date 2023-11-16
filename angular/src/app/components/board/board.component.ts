@@ -16,6 +16,7 @@ export class BoardComponent implements OnInit {
   board: any = null;
   pawnTransformationBoard: any = null;
   transformationVisible = false;
+  playAgainVisible = false;
 
   constructor(private currentGameService: CurrentGameService) {    
   }
@@ -47,6 +48,8 @@ export class BoardComponent implements OnInit {
         if (response.moveCode == -1) {
           console.log("Game finished!")
           this.board.movingColor = PieceColor.None
+          this.playAgainVisible = true
+
         }
         else {
           this.board.firstButtonClicked(response.fromY, response.fromX)
@@ -59,6 +62,8 @@ export class BoardComponent implements OnInit {
       }
     );;
   }
+
+  startNewGame() {}
 
 
   ngOnInit(): void {
