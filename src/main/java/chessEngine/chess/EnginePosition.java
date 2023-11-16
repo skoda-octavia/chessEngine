@@ -87,7 +87,7 @@ public class EnginePosition {
     }
 
     public boolean pawnOnField(Field field) {
-        Piece piece = chessBoard[field.height()][field.width()];
+        Piece piece = chessBoard[field.getHeight()][field.getWidth()];
         if (piece instanceof Pawn) {return true;}
         return false;
     }
@@ -174,7 +174,7 @@ public class EnginePosition {
             if (tempPiece instanceof Pawn) {
                 for (EngineMove move : possibleMoves) {
                     if(move.getTo().equals(checkingPiece.getField()) &&
-                            tempPiece.getField().width() != checkingPiece.getField().width()) {
+                            tempPiece.getField().getWidth() != checkingPiece.getField().getWidth()) {
                         legalMoves.add(move);
                         continue;
                     }
@@ -193,6 +193,7 @@ public class EnginePosition {
     }
 
     private ArrayList<EngineMove> standardLegalMoves() {
+        PieceColor movingColor = whiteMoves ? PieceColor.WHITE : PieceColor.BLACK;
         ArrayList<EngineMove> possibleMoves = new ArrayList<>();
         Iterator<Piece> iterator = whiteMoves ? whitePieces.iterator() : blackPieces.iterator();
         HashMap enemyControls = whiteMoves ? blackControls : whiteControls;
@@ -207,7 +208,7 @@ public class EnginePosition {
                 continue;
             }
 
-            if(tempPiece.getPinningPiece() != null) {
+            if(tempPiece.getPinningPiece() != null && !tempPiece.getPieceColor().equals(movingColor)) {
                 Field kingsField = whiteMoves ? whiteKing.getField() : blackKing.getField();
                 InfiniteRangePiece pinningPiece = tempPiece.getPinningPiece();
                 ArrayList<Field> pinnedLine = EngineMove.coveringLine(kingsField, pinningPiece.getField());
@@ -276,7 +277,7 @@ public class EnginePosition {
     }
 
     public boolean occupiedField(Field field) {
-        if (this.chessBoard[field.height()][field.width()] != null) {return true;}
+        if (this.chessBoard[field.getHeight()][field.getWidth()] != null) {return true;}
         return false;
     }
 
