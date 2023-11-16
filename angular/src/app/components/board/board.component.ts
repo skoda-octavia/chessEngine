@@ -63,7 +63,11 @@ export class BoardComponent implements OnInit {
     );;
   }
 
-  startNewGame() {}
+  startNewGame() {
+    this.playAgainVisible = false
+    this.createNewGame()
+    
+  }
 
 
   ngOnInit(): void {
@@ -77,7 +81,7 @@ export class BoardComponent implements OnInit {
     }  
     else {
       var movingColor = PieceColor.Black
-      if (response.position.whiteMoves) {movingColor = PieceColor.White}
+      if (response.whiteMoves == true) {movingColor = PieceColor.White}
       this.board = new Board(8, 8, this, response.positionCode, movingColor);
       this.pawnTransformationBoard = new pawnTransformationBoard(4, 1, this)
     }

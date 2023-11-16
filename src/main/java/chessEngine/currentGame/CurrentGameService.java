@@ -90,7 +90,7 @@ public class CurrentGameService {
         gameRecord.setFinished(true);
         gameRecord.setFinishedAt(LocalDateTime.now());
         gameRecordService.save(gameRecord);
-        currentGameRepository.delete(currentGame);
+        currentGameRepository.deleteGameById(currentGame.getId());
     }
 
 

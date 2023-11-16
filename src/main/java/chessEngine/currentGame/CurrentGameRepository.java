@@ -42,4 +42,8 @@ public interface CurrentGameRepository extends JpaRepository<CurrentGame, Long> 
     void deleteById(Long id);
 
     void delete(CurrentGame currentGame);
+
+    @Modifying
+    @Query("DELETE FROM CurrentGame g WHERE g.id = :id")
+    void deleteGameById(@Param("id") Long id);
 }

@@ -1,4 +1,14 @@
 <main>
+    <div>
+        <p-card header="Your game has ended" *ngIf="playAgainVisible">
+            <p class="m-0">
+                If You want to play again just click!
+            </p>
+            <div class="text-center mt-3">
+                <button pButton type="button" label="Play Again" (click)="startNewGame()" style="width: 100%;"></button>
+            </div>
+        </p-card>
+    </div>    
     <div class="board-container">
         <div class="row" *ngFor="let row of board.fields">
             <app-square *ngFor="let field of row" [field]="field"></app-square>
@@ -10,13 +20,6 @@
         </div>
     </div>
         <div class="board-container center" *ngIf="playAgainVisible">
-            <p-card header="Your game has ended">
-                <p class="m-0">
-                    If You want to play again just click!
-                </p>
-                    <div class="text-center mt-3">
-                        <button pButton type="button" label="Play Again" (click)="startNewGame()"></button>
-                    </div>
-            </p-card>
+
     </div>
 </main>
