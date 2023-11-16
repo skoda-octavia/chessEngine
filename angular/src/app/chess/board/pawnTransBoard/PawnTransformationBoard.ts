@@ -1,3 +1,4 @@
+import { NONE_TYPE } from "@angular/compiler";
 import { BoardComponent } from "src/app/components/board/board.component";
 import { Field } from "../../field/field";
 import { Piece, PieceColor } from "../../pieces/piece";
@@ -64,6 +65,43 @@ export class pawnTransformationBoard {
         this.setTransBoard(pawn.color)
         this.boardComponent.transformationVisible = true
         this.pawn = pawn
+    }
+
+    transformEnginesPawn(transformedPawn: Pawn, toY: number, toX: number, moveCode: number) {
+        var piece = this.generateEnginePiece(transformedPawn, toY, toX, moveCode)
+        this.boardComponent.board.pawnTransformed(transformedPawn, piece, moveCode)
+    }
+
+    generateEnginePiece(transformedPawn: Pawn, toY: number, toX: number, moveCode: number) {
+        if (transformedPawn.color == PieceColor.White) {
+            switch (moveCode) {
+                case 2:
+                    return new WhiteKnight(toY, toX, this.boardComponent.board)
+                case 3:
+                    return new WhiteRook(toY, toX, this.boardComponent.board)
+                case 4:
+                    return new WhiteQueen(toY, toX, this.boardComponent.board)
+                case 5:
+                    return new WhiteBishop(toY, toX, this.boardComponent.board)
+                default:
+                    throw Error("incorrect move code")
+            }
+        }
+        else if (transformedPawn.color == PieceColor.Black) {
+            switch (moveCode) {
+                case 2:
+                    return new BlackKnight(toY, toX, this.boardComponent.board)
+                case 3:
+                    return new BlackRook(toY, toX, this.boardComponent.board)
+                case 4:
+                    return new BlackQueen(toY, toX, this.boardComponent.board)
+                case 5:
+                    return new BlackBishop(toY, toX, this.boardComponent.board)
+                default:
+                    throw Error("incorrect move code")
+            }
+        }
+        throw Error("invorrect pawn color in transformation")
     }
 
     constructor(height: number, width: number, boardComponent: BoardComponent) {

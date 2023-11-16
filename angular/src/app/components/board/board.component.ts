@@ -54,7 +54,12 @@ export class BoardComponent implements OnInit {
         else {
           this.board.firstButtonClicked(response.fromY, response.fromX)
           this.board.secondButtonClicked(response.toY, response.toX)
-          // todo transformation
+          moveCode = response.moveCode
+          if (moveCode == 2 || moveCode == 3 || moveCode == 4 || moveCode == 5) {
+            var pawn = this.board.fields[response.toY][response.toX].piece
+            this.pawnTransformationBoard.transformEnginesPawn(pawn, response.toY, response.toX, moveCode)
+          }
+          
         }
       },
       (error: HttpErrorResponse) => {

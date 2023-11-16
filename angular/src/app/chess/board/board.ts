@@ -180,7 +180,8 @@ export class Board {
         this.movingColor = piece.color
         this.changeMovingColor()
 
-        if (!this.engineMoves){
+        // to do second condition temporary
+        if (!this.engineMoves && piece.color == PieceColor.White){
             this.boardComponent.sendMove(
             this.markedField.height,
             this.markedField.width,
@@ -204,10 +205,11 @@ export class Board {
         var pawnToTransform = this.pawnToTransformation() 
         this.unmarkEnPassant()
 
-        if (pawnToTransform) { 
+        if (pawnToTransform && !this.engineMoves) { 
             this.movingColor = PieceColor.None
             this.boardComponent.pawnTransformationBoard.transformation(pawnToTransform)
         }
+        else if (pawnToTransform && this.engineMoves) {}
         else {
             this.changeMovingColor()
             if (!this.engineMoves){
