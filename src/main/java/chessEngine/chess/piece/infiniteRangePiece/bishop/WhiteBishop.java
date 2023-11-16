@@ -12,7 +12,7 @@ public final class WhiteBishop extends Bishop {
     public WhiteBishop(Field field, EnginePosition pos) {
 
         super(PieceColor.WHITE, pos, "wB", field);
-        if (!correctFieldCoordinates(field.height(), field.width())) {
+        if (!correctFieldCoordinates(field.getHeight(), field.getWidth())) {
             throw new IllegalArgumentException("illegal height or width in constructor: " + field);
         }
     }

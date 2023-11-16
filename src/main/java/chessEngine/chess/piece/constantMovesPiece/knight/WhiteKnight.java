@@ -13,7 +13,7 @@ public final class WhiteKnight extends Knight{
 
     public WhiteKnight(Field field, EnginePosition pos) {
         super(PieceColor.WHITE, pos, "wk", field);
-        if (!correctFieldCoordinates(field.height(), field.width())) {
+        if (!correctFieldCoordinates(field.getHeight(), field.getWidth())) {
             throw new IllegalArgumentException("illegal height or width in constructor: " + field);
         }
     }

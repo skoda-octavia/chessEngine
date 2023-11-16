@@ -23,24 +23,24 @@ public abstract class Pawn extends Piece {
 
     private boolean possibleEnPassant(PieceColor[][] colorMap) {
         EngineMove parenMove = position.getParentMove();
-        if (parenMove == null || this.field.height() != this.enpassantRow) {return false;}
+        if (parenMove == null || this.field.getHeight() != this.enpassantRow) {return false;}
 
         Field from = parenMove.getFrom();
         Field to = parenMove.getTo();
 
         if (
-                from.height() != this.field.height() + 2 * this.movingDirection ||
-                to.height() != this.field.height()
+                from.getHeight() != this.field.getHeight() + 2 * this.movingDirection ||
+                to.getHeight() != this.field.getHeight()
         ) {return false;}
 
         if (
-                from.width() != to.width() ||
-                Math.abs(this.field.width() - to.width()) != 1
+                from.getWidth() != to.getWidth() ||
+                Math.abs(this.field.getWidth() - to.getWidth()) != 1
         ) {return false;}
 
         if (
                 !position.pawnOnField(to) ||
-                !colorMap[to.height()][to.width()].equals(enemyPieceColor())
+                !colorMap[to.getHeight()][to.getWidth()].equals(enemyPieceColor())
         ) {return false;}
         return true;
     }
@@ -69,8 +69,8 @@ public abstract class Pawn extends Piece {
         ArrayList<EngineMove> possibleEngineMoves = new ArrayList<>();
         HashSet<Field> controlledFields = new HashSet<>();
         byte[][] captureFields = new byte[][]{
-                {(byte)(this.field.height() + this.movingDirection), (byte)(this.field.width() + 1)},
-                {(byte)(this.field.height() + this.movingDirection), (byte)(this.field.width() - 1)}
+                {(byte)(this.field.getHeight() + this.movingDirection), (byte)(this.field.getWidth() + 1)},
+                {(byte)(this.field.getHeight() + this.movingDirection), (byte)(this.field.getWidth() - 1)}
         };
         for (byte[] field : captureFields) {
             byte nextY = field[0], nextX = field[1];
@@ -89,7 +89,7 @@ public abstract class Pawn extends Piece {
             }
         }
 
-        byte nextY = (byte)(this.field.height() + this.movingDirection), nextX = this.field.width();
+        byte nextY = (byte)(this.field.getHeight() + this.movingDirection), nextX = this.field.getWidth();
         if (this.correctFieldCoordinates(nextY, nextX) && colorMap[nextY][nextX].equals(PieceColor.NONE)) {
             Field nextField = new Field(nextY, nextX);
             if(nextY == this.transformationRow) {
@@ -98,8 +98,8 @@ public abstract class Pawn extends Piece {
             else {possibleEngineMoves.add(new EngineMove(this.field, nextField));}
         }
 
-        if (this.field.height() == this.startingRow && colorMap[nextY][nextX].equals(PieceColor.NONE)) {
-            byte nextYJump = (byte)(this.field.height() + 2 * this.movingDirection);
+        if (this.field.getHeight() == this.startingRow && colorMap[nextY][nextX].equals(PieceColor.NONE)) {
+            byte nextYJump = (byte)(this.field.getHeight() + 2 * this.movingDirection);
             if (colorMap[nextYJump][nextX].equals(PieceColor.NONE)) {
                 possibleEngineMoves.add(new EngineMove(
                         this.field, new Field(nextYJump, nextX))
@@ -112,8 +112,8 @@ public abstract class Pawn extends Piece {
             possibleEngineMoves.add(new EngineMove(
                     this.field,
                     new Field(
-                            (byte)(this.field.height() + movingDirection),
-                            parentMove.getTo().width()),
+                            (byte)(this.field.getHeight() + movingDirection),
+                            parentMove.getTo().getWidth()),
                             EngineMoveCode.ENPASSANT
                     )
                 );

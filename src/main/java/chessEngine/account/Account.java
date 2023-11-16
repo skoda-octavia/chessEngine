@@ -5,6 +5,8 @@ import chessEngine.gameRecord.GameRecord;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -49,6 +51,7 @@ public class Account implements UserDetails {
 
     @OneToOne(cascade = CascadeType.ALL, optional = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "current_game_id", referencedColumnName = "id")
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private CurrentGame currentGame;
 
     @JsonIgnore

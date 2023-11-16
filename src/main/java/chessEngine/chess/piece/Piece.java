@@ -22,6 +22,7 @@ public abstract class Piece {
     protected HashSet<Field> controlledFields = null;
     protected ArrayList<EngineMove> possibleMoves = null;
     protected InfiniteRangePiece pinningPiece = null;
+    protected  InfiniteRangePiece discoveringPiece = null;
 
     public boolean correctFieldCoordinates(int height, int width) {
         if (height < 0 || height >= this.position.getBoardHeight()) {return false;}

@@ -6,10 +6,12 @@ import chessEngine.chess.engineMove.field.Field;
 import chessEngine.chess.piece.Piece;
 import chessEngine.chess.piece.PieceColor;
 import chessEngine.chess.piece.infiniteRangePiece.bishop.BlackBishop;
+import chessEngine.chess.piece.infiniteRangePiece.bishop.WhiteBishop;
 import chessEngine.chess.piece.infiniteRangePiece.queen.BlackQueen;
 import chessEngine.chess.piece.infiniteRangePiece.queen.WhiteQueen;
 import chessEngine.chess.piece.infiniteRangePiece.rook.BlackRook;
 import chessEngine.chess.piece.infiniteRangePiece.rook.WhiteRook;
+import chessEngine.chess.piece.pawn.WhitePawn;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -113,7 +115,41 @@ public class InfiniteRangePieceTest {
         assertTrue(blackRook.isPinningQueen());
         assertFalse(blackRook.isPinningKing());
         assertTrue(blackBishop.isPinningQueen());
+    }
 
+    @Test
+    void discoveryCheckPawn() {
+        String posCode = "";
+        posCode += "                ";
+        posCode += "      bPbK      ";
+        posCode += "        wP      ";
+        posCode += "                ";
+        posCode += "                ";
+        posCode += "                ";
+        posCode += "wPwPwPwPwQwPwPwP";
+        posCode += "wRwkwB  wKwBwkwR";
+        EnginePosition enginePosition = new EnginePosition(posCode, true);
+        enginePosition.set();
+        Piece[][] chessBoard = enginePosition.getChessBoard();
+        WhitePawn whitePawn = (WhitePawn) chessBoard[2][4];
+        assertEquals(1, whitePawn.getPossibleMoves().size());
+    }
+    @Test
+    void discoveryCheckBishop() {
+        String posCode = "";
+        posCode += "                ";
+        posCode += "      bPbK      ";
+        posCode += "        wB      ";
+        posCode += "      bP  bP    ";
+        posCode += "                ";
+        posCode += "                ";
+        posCode += "      wPwRwP    ";
+        posCode += "        wK      ";
+        EnginePosition enginePosition = new EnginePosition(posCode, true);
+        enginePosition.set();
+        Piece[][] chessBoard = enginePosition.getChessBoard();
+        WhiteBishop whiteBishop = (WhiteBishop) chessBoard[2][4];
+        assertEquals(14, enginePosition.possibleLegalMoves().size());
     }
 
 }

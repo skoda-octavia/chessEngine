@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Component
@@ -65,17 +66,53 @@ public class CurrentGameService {
         Account account  = accountService.findByUsername(username).orElseThrow();
         CurrentGame currentGame = account.getCurrentGame();
         GameRecord gameRecord = currentGame.getGameRecord();
+        updateGameBooleanFields(moveRequestResponse);
         EnginePosition enginePosition = makeOpponentsMove(currentGame, gameRecord, moveRequestResponse);
-
-        EngineMove myEngineMove = enginePosition.generateRandomMove();
+        EngineMove myEngineMove = null;
+        try {
+            myEngineMove = enginePosition.generateRandomMove();
+        }   catch (IllegalStateException e) {
+            finishGame(currentGame, gameRecord);
+            return new MoveRequestResponse(-1, -1, -1, -1, -1);
+        }
         EnginePosition myNewEnginePosition = ChildGenerator.generateChild(enginePosition, myEngineMove);
         MoveRequestResponse myResponse = myEngineMove.getRequestResponse();
         System.out.println(myResponse);
 
         saveMoveChanges(myNewEnginePosition, currentGame, gameRecord, moveRequestResponse);
         gameRecordService.updateGameRecord(gameRecord.getId(), moveRequestResponse.toString() + myResponse.toString());
+        updateGameBooleanFields(myResponse);
 
         return myResponse;
+    }
+
+    private void finishGame(CurrentGame currentGame, GameRecord gameRecord) {
+        gameRecord.setFinished(true);
+        gameRecord.setFinishedAt(LocalDateTime.now());
+        gameRecordService.save(gameRecord);
+        currentGameRepository.delete(currentGame);
+    }
+
+
+    private void updateGameBooleanFields(MoveRequestResponse moveRequestResponse) {
+        if (moveRequestResponse.getFromY() == 0 && moveRequestResponse.getFromX() == 0) {
+            currentGameRepository.setBlackLeftRookMovedTrue();
+        }
+        else if (moveRequestResponse.getFromY() == 0 && moveRequestResponse.getFromX() == 4) {
+            currentGameRepository.setBlackKingMovedTrue();
+        }
+        else if (moveRequestResponse.getFromY() == 0 && moveRequestResponse.getFromX() == 7) {
+            currentGameRepository.setBlackRightRookMovedTrue();
+        }
+        else if (moveRequestResponse.getFromY() == 7 && moveRequestResponse.getFromX() == 0) {
+            currentGameRepository.setWhiteLeftRookMovedTrue();
+        }
+        else if (moveRequestResponse.getFromY() == 7 && moveRequestResponse.getFromX() == 4) {
+            currentGameRepository.setWhiteKingMovedTrue();
+        }
+        else if (moveRequestResponse.getFromY() == 7 && moveRequestResponse.getFromX() == 7) {
+            currentGameRepository.setWhiteRightRookMovedTrue();
+        }
     }
 
     private EnginePosition makeOpponentsMove(
@@ -88,6 +125,13 @@ public class CurrentGameService {
         EnginePosition currentEnginePosition = position.getEnginePosition(parentEngineMove);
         EngineMove nextEngineMove = moveRequestResponse.generateEngineMove();
         if (!currentEnginePosition.possibleLegalMoves().contains(nextEngineMove)) {
+            System.out.println("Excepiton, printing illegal piece: ");
+            System.out.println(
+                    currentEnginePosition
+                            .getChessBoard()
+                            [moveRequestResponse.getFromY()]
+                            [moveRequestResponse.getFromX()]
+            );
             System.out.println("Exception, printing possible moves");
             for(EngineMove possibleEngineMove: currentEnginePosition.possibleLegalMoves()) {
                 System.out.println(possibleEngineMove);

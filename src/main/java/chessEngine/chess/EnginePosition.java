@@ -208,7 +208,7 @@ public class EnginePosition {
                 continue;
             }
 
-            if(tempPiece.getPinningPiece() != null && !tempPiece.getPieceColor().equals(movingColor)) {
+            if(tempPiece.getPinningPiece() != null) {
                 Field kingsField = whiteMoves ? whiteKing.getField() : blackKing.getField();
                 InfiniteRangePiece pinningPiece = tempPiece.getPinningPiece();
                 ArrayList<Field> pinnedLine = EngineMove.coveringLine(kingsField, pinningPiece.getField());

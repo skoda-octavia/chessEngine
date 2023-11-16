@@ -14,6 +14,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "game_record")
 @Data
@@ -37,7 +39,11 @@ public class GameRecord {
     @Column(name = "finished", nullable = false)
     private boolean finished;
 
+    @Column(nullable = false)
+    private LocalDateTime startedAt;
 
+    @Column()
+    private LocalDateTime finishedAt;
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "account_id")
@@ -52,6 +58,7 @@ public class GameRecord {
         this.account = account;
         this.finished = false;
         this.gameCode = "";
+        this.startedAt = LocalDateTime.now();
     }
 
     public EngineMove getParentEngineMove() {

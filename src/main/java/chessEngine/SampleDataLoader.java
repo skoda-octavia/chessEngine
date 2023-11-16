@@ -18,6 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,6 +72,7 @@ public class SampleDataLoader implements CommandLineRunner {
         gameRecord2.setAccount(account);
         gameRecord2.setFinished(true);
         gameRecord2.setGameCode("");
+        gameRecord2.setStartedAt(LocalDateTime.now());
         gameRecordRepository.save(gameRecord2);
 
         CurrentGame currentGame = new CurrentGame(account, gameRecord2, pos);

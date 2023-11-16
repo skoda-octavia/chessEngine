@@ -5,6 +5,8 @@ import chessEngine.move.Move;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
 @Component
 @AllArgsConstructor
 public class GameRecordService {
@@ -23,4 +25,13 @@ public class GameRecordService {
             gameRecordRepository.extendGameCodeById(id, moveCode);
         }
     }
+
+    public void updateFinishedAt(Long id, LocalDateTime finishedAt) {
+        gameRecordRepository.updateFinishedAt(id, finishedAt);
+    }
+
+    public void updateFinishedToFalse(Long id) {
+        gameRecordRepository.updateFinishedToFalse(id);
+    }
+
 }

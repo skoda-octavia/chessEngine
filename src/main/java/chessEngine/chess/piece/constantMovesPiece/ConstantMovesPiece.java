@@ -23,8 +23,8 @@ public abstract class ConstantMovesPiece extends Piece {
         for (byte[] direction : this.constantMoves) {
             byte yDir = direction[0];
             byte xDir = direction[1];
-            byte nextY = (byte) (this.field.height() + yDir);
-            byte nextX = (byte) (this.field.width() + xDir);
+            byte nextY = (byte) (this.field.getHeight() + yDir);
+            byte nextX = (byte) (this.field.getWidth() + xDir);
             Field nextField = new Field(nextY, nextX);
             if (!this.correctFieldCoordinates(nextY, nextX)) {continue;}
             PieceColor tempPieceColor = colorMap[nextY][nextX];

@@ -12,7 +12,7 @@ public final class WhiteRook extends Rook {
 
     public WhiteRook(Field field, EnginePosition pos) {
         super(PieceColor.WHITE, pos, "wR", field);
-        if (!correctFieldCoordinates(field.height(), field.width())) {
+        if (!correctFieldCoordinates(field.getHeight(), field.getWidth())) {
             throw new IllegalArgumentException("illegal height or width in constructor: " + field);
         }
     }

@@ -26,9 +26,9 @@ public class ChildGenerator {
         Field to = move.getTo();
         for (byte h = 0;h < parentPosition.getBoardHeight();h++) {
             for(byte w = 0; w < parentPosition.getBoardWidth();w++) {
-                if (h== from.height() && w == from.width()) {newCode += "  ";}
-                else if (h == to.height() && w == to.width()) {
-                        Piece piece = parentPosition.getChessBoard()[from.height()][from.width()];
+                if (h== from.getHeight() && w == from.getWidth()) {newCode += "  ";}
+                else if (h == to.getHeight() && w == to.getWidth()) {
+                        Piece piece = parentPosition.getChessBoard()[from.getHeight()][from.getWidth()];
                         newCode += piece.getPieceCode();
                 }
                 else {
@@ -54,12 +54,12 @@ public class ChildGenerator {
                 move
         );
 
-        if (from.height() == 0 && from.width() == 0) {newEnginePosition.setBlackLeftRookMoved(true);}
-        else if (from.height() == 0 && from.width() == 7) {newEnginePosition.setBlackRightRookMoved(true);}
-        else if (from.height() == 7 && from.width() == 0) {newEnginePosition.setWhiteLeftRookMoved(true);}
-        else if (from.height() == 7 && from.width() == 7) {newEnginePosition.setWhiteRightRookMoved(true);}
-        else if (from.height() == 0 && from.width() == 4) {newEnginePosition.setBlackKingMoved(true);}
-        else if (from.height() == 7 && from.width() == 4) {newEnginePosition.setWhiteKingMoved(true);}
+        if (from.getHeight() == 0 && from.getWidth() == 0) {newEnginePosition.setBlackLeftRookMoved(true);}
+        else if (from.getHeight() == 0 && from.getWidth() == 7) {newEnginePosition.setBlackRightRookMoved(true);}
+        else if (from.getHeight() == 7 && from.getWidth() == 0) {newEnginePosition.setWhiteLeftRookMoved(true);}
+        else if (from.getHeight() == 7 && from.getWidth() == 7) {newEnginePosition.setWhiteRightRookMoved(true);}
+        else if (from.getHeight() == 0 && from.getWidth() == 4) {newEnginePosition.setBlackKingMoved(true);}
+        else if (from.getHeight() == 7 && from.getWidth() == 4) {newEnginePosition.setWhiteKingMoved(true);}
         return newEnginePosition;
     }
 
@@ -67,12 +67,12 @@ public class ChildGenerator {
         String newCode = "";
         Field from = move.getFrom();
         Field to = move.getTo();
-        Field enPassantField = new Field(move.getFrom().height(),move.getTo().width());
+        Field enPassantField = new Field(move.getFrom().getHeight(),move.getTo().getWidth());
         for (byte h = 0;h < parentPosition.getBoardHeight();h++) {
             for(byte w = 0; w < parentPosition.getBoardWidth();w++) {
-                if (h== from.height() && w == from.width()) {newCode += "  ";}
-                else if (h == to.height() && w == to.width()) {newCode += parentPosition.isWhiteMoves() ? "wP" : "bP";}
-                else if (h == enPassantField.height() && w == enPassantField.width()) {newCode += "  ";}
+                if (h== from.getHeight() && w == from.getWidth()) {newCode += "  ";}
+                else if (h == to.getHeight() && w == to.getWidth()) {newCode += parentPosition.isWhiteMoves() ? "wP" : "bP";}
+                else if (h == enPassantField.getHeight() && w == enPassantField.getWidth()) {newCode += "  ";}
                 else {
                     try {
                         Piece piece = parentPosition.getChessBoard()[h][w];
@@ -103,8 +103,8 @@ public class ChildGenerator {
             Field to = move.getTo();
             for (byte h = 0;h < parentPosition.getBoardHeight();h++) {
                 for(byte w = 0; w < parentPosition.getBoardWidth();w++) {
-                    if (h== from.height() && w == from.width()) {newCode += "  ";}
-                    else if (h == to.height() && w == to.width()) {
+                    if (h== from.getHeight() && w == from.getWidth()) {newCode += "  ";}
+                    else if (h == to.getHeight() && w == to.getWidth()) {
                         PieceColor currentColor = parentPosition.isWhiteMoves() ? PieceColor.WHITE : PieceColor.BLACK;
                         String newPieceCode = EngineMove.getNewPieceCode(move.getEngineMoveCode(), currentColor);
                         newCode += newPieceCode;
@@ -142,17 +142,17 @@ public class ChildGenerator {
             String rooksCode = null;
             Field rookOldField = null;
             Field rookNewField = null;
-            if(kingsNewField.height() == 0 &&kingsNewField.width() == 2) {
+            if(kingsNewField.getHeight() == 0 &&kingsNewField.getWidth() == 2) {
                 rookOldField = new Field((byte)0, (byte)0);
                 rookNewField = new Field((byte)0, (byte)3);
                 kingsCode = "bK"; rooksCode = "bR";
             }
-            else if(kingsNewField.height() == 0 &&kingsNewField.width() == 6) {
+            else if(kingsNewField.getHeight() == 0 &&kingsNewField.getWidth() == 6) {
                 rookOldField = new Field((byte)0, (byte)7);
                 rookNewField = new Field((byte)0, (byte)5);
                 kingsCode = "bK"; rooksCode = "bR";
             }
-            else if(kingsNewField.height() == 7 &&kingsNewField.width() == 2) {
+            else if(kingsNewField.getHeight() == 7 &&kingsNewField.getWidth() == 2) {
                 rookOldField = new Field((byte)7, (byte)0);
                 rookNewField = new Field((byte)7, (byte)3);
                 kingsCode = "wK"; rooksCode = "wR";
@@ -164,10 +164,10 @@ public class ChildGenerator {
             }
             for (byte h = 0;h < parentPosition.getBoardHeight();h++) {
                 for(byte w = 0; w < parentPosition.getBoardWidth();w++) {
-                    if (h== kingsOldField.height() && w == kingsOldField.width()) {newCode += "  ";}
-                    else if (h== kingsNewField.height() && w == kingsNewField.width()) {newCode += kingsCode;}
-                    else if (h== rookOldField.height() && w == rookOldField.width()) {newCode += "  ";}
-                    else if (h== rookNewField.height() && w == rookNewField.width()) {newCode += rooksCode;}
+                    if (h== kingsOldField.getHeight() && w == kingsOldField.getWidth()) {newCode += "  ";}
+                    else if (h== kingsNewField.getHeight() && w == kingsNewField.getWidth()) {newCode += kingsCode;}
+                    else if (h== rookOldField.getHeight() && w == rookOldField.getWidth()) {newCode += "  ";}
+                    else if (h== rookNewField.getHeight() && w == rookNewField.getWidth()) {newCode += rooksCode;}
                     else {
                         try {
                             Piece piece = parentPosition.getChessBoard()[h][w];

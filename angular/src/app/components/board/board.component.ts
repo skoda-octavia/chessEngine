@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { PieceColor } from 'src/app/chess/pieces/piece';
+import { Piece, PieceColor } from 'src/app/chess/pieces/piece';
 import { Move } from 'src/app/interfaces/move';
 import { CurrentGameService } from 'src/app/services/curentGame/current-game.service';
 import { Board } from '../../chess/board/board';
@@ -44,10 +44,15 @@ export class BoardComponent implements OnInit {
     this.currentGameService.move(move).subscribe(
       (response: any) => {
         console.log(response)
-        this.board.firstButtonClicked(response.fromY, response.fromX)
-        this.board.secondButtonClicked(response.toY, response.toX)
-        // todo transformation
-        
+        if (response.moveCode == -1) {
+          console.log("Game finished!")
+          this.board.movingColor = PieceColor.None
+        }
+        else {
+          this.board.firstButtonClicked(response.fromY, response.fromX)
+          this.board.secondButtonClicked(response.toY, response.toX)
+          // todo transformation
+        }
       },
       (error: HttpErrorResponse) => {
         console.log("error while sending move");

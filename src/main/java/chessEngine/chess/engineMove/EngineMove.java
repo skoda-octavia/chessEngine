@@ -6,12 +6,14 @@ import chessEngine.chess.piece.PieceColor;
 import chessEngine.move.MoveRequestResponse;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
 @Getter
 @Setter
+@ToString
 public class EngineMove {
     private final Field from;
     private final Field to;
@@ -41,11 +43,11 @@ public class EngineMove {
 
     public static ArrayList<Field> coveringLine(Field kingsField, Field attackingField) {
         ArrayList<Field> coveringLine = new ArrayList<>();
-        byte yDiff = (byte)(kingsField.height() - attackingField.height());
-        byte xDiff = (byte)(kingsField.width() - attackingField.width());
+        byte yDiff = (byte)(kingsField.getHeight() - attackingField.getHeight());
+        byte xDiff = (byte)(kingsField.getWidth() - attackingField.getWidth());
         if (Math.abs(yDiff) == 1 || Math.abs(xDiff) == 1) {return coveringLine;}
         byte ySgn = sgn(yDiff), xSgn = sgn(xDiff);
-        byte nextY = (byte)(attackingField.height() + ySgn), nextX = (byte)(attackingField.width() + xSgn);
+        byte nextY = (byte)(attackingField.getHeight() + ySgn), nextX = (byte)(attackingField.getWidth() + xSgn);
         Field nextField = new Field(nextY, nextX);
         do {
             coveringLine.add(nextField);
@@ -70,10 +72,10 @@ public class EngineMove {
 
     public MoveRequestResponse getRequestResponse() {
         return new MoveRequestResponse(
-                this.from.height(),
-                this.from.width(),
-                this.to.height(),
-                this.to.width(),
+                this.from.getHeight(),
+                this.from.getWidth(),
+                this.to.getHeight(),
+                this.to.getWidth(),
                 this.engineMoveCode.number
         );
     }

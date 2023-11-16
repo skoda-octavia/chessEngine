@@ -12,7 +12,7 @@ public final class BlackPawn extends Pawn {
 
     public BlackPawn(Field field, EnginePosition pos) {
         super(PieceColor.BLACK, pos, (byte)1, (byte)1, (byte)4, (byte)7, "bP", field);
-        if (!correctFieldCoordinates(field.height(), field.width())) {
+        if (!correctFieldCoordinates(field.getHeight(), field.getWidth())) {
             throw new IllegalArgumentException("illegal height or width in constructor: " + field);
         }
     }
