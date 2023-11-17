@@ -3,18 +3,22 @@ package chessEngine.chess.piece.infiniteRangePiece.queen;
 import chessEngine.chess.EnginePosition;
 import chessEngine.chess.HeuristicGenerator;
 import chessEngine.chess.engineMove.field.Field;
+import chessEngine.chess.piece.Piece;
 import chessEngine.chess.piece.PieceColor;
 import chessEngine.chess.piece.infiniteRangePiece.InfiniteRangePiece;
+import chessEngine.chess.piece.pawn.Pawn;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 @Getter
 @Setter
 public abstract class Queen  extends InfiniteRangePiece {
 
-    public static final int HEU_VALUE = 90;
+    public static final int HEU_VALUE = 900;
     @Override
     public int generateHeuristicValue(EnginePosition enginePosition) {
         int val = HEU_VALUE;
@@ -28,8 +32,12 @@ public abstract class Queen  extends InfiniteRangePiece {
         if (discoveringPiece != null) {
             val += HeuristicGenerator.DISCOVERY_REWARD;
         }
+        if (pawnAttacks(enginePosition)) {
+            val -= HEU_VALUE / 2;
+        }
         return val;
     }
+
     public Queen(PieceColor pieceColor, EnginePosition pos, String pieceCode, Field field) {
         super(pieceColor, pos, new byte[][] {
                 {1, 0},

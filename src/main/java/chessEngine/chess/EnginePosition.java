@@ -252,6 +252,7 @@ public class EnginePosition {
     }
 
     public void set() {
+        if (set) {return;}
         int codeIndex = 0;
         for (byte height = 0; height < this.boardHeight; height++) {
             for (byte width = 0; width < this.boardWidth; width++) {

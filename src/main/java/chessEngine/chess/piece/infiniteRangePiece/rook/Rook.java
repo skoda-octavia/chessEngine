@@ -15,7 +15,7 @@ import java.util.HashMap;
 @Setter
 public abstract class Rook extends InfiniteRangePiece {
 
-    public static final int HEU_VALUE = 50;
+    public static final int HEU_VALUE = 500;
     @Override
     public int generateHeuristicValue(EnginePosition enginePosition) {
         int val = HEU_VALUE;
@@ -38,7 +38,9 @@ public abstract class Rook extends InfiniteRangePiece {
         if (discoveringPiece != null) {
             val += HeuristicGenerator.DISCOVERY_REWARD;
         }
-
+        if (pawnAttacks(enginePosition)) {
+            val -= HEU_VALUE / 2;
+        }
         return val;
     }
 

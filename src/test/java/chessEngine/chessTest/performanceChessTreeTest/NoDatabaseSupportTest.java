@@ -1,14 +1,6 @@
 package chessEngine.chessTest.performanceChessTreeTest;
 
 
-import chessEngine.chess.EnginePosition;
-import chessEngine.chess.tree.ChessTree;
-import chessEngine.chess.tree.Node;
-import org.json.simple.JSONObject;
-import org.junit.jupiter.api.Test;
-import java.io.FileWriter;
-import java.io.IOException;
-
 public class NoDatabaseSupportTest {
 
 //    @Test

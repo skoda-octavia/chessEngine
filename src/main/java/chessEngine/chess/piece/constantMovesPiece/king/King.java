@@ -4,16 +4,16 @@ import chessEngine.chess.EnginePosition;
 import chessEngine.chess.HeuristicGenerator;
 import chessEngine.chess.engineMove.EngineMove;
 import chessEngine.chess.engineMove.field.Field;
+import chessEngine.chess.piece.Piece;
 import chessEngine.chess.piece.PieceColor;
 import chessEngine.chess.piece.constantMovesPiece.ConstantMovesPiece;
+import chessEngine.chess.piece.pawn.Pawn;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 public abstract class King extends ConstantMovesPiece {
 
-    public static final int HEU_VALUE = 30;
+    public static final int HEU_VALUE = 300;
     public void setCastlingMoves() {
         PieceColor movingColor = position.isWhiteMoves() ? PieceColor.WHITE : PieceColor.BLACK;
         if (movingColor.equals(this.pieceColor)) {
@@ -37,6 +37,7 @@ public abstract class King extends ConstantMovesPiece {
         }
         return val;
     }
+
 
     public King(PieceColor pieceColor, EnginePosition pos, String pieceCode, Field field) {
         super(pieceColor, pos, new byte[][] {

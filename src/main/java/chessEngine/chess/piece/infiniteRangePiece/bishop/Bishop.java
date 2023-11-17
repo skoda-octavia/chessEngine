@@ -3,14 +3,18 @@ package chessEngine.chess.piece.infiniteRangePiece.bishop;
 import chessEngine.chess.EnginePosition;
 import chessEngine.chess.HeuristicGenerator;
 import chessEngine.chess.engineMove.field.Field;
+import chessEngine.chess.piece.Piece;
 import chessEngine.chess.piece.PieceColor;
 import chessEngine.chess.piece.infiniteRangePiece.InfiniteRangePiece;
+import chessEngine.chess.piece.pawn.Pawn;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 public abstract class Bishop extends InfiniteRangePiece {
 
-    public static final int HEU_VALUE = 30;
+    public static final int HEU_VALUE = 300;
     @Override
     public int generateHeuristicValue(EnginePosition enginePosition) {
         int val = HEU_VALUE;
@@ -31,6 +35,9 @@ public abstract class Bishop extends InfiniteRangePiece {
         }
         if (discoveringPiece != null) {
             val += HeuristicGenerator.DISCOVERY_REWARD;
+        }
+        if (pawnAttacks(enginePosition)) {
+            val -= HEU_VALUE / 2;
         }
         return val;
     }

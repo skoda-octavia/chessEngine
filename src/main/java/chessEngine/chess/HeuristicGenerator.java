@@ -10,18 +10,18 @@ import java.util.Iterator;
 @AllArgsConstructor
 public class HeuristicGenerator {
 
-    public static final int FIELDS_CONTROLLED_RATIO = 2;
-    public static final int PINNING_REWARD = 25;
-    public static final int PINNED_PENALTY = 20;
-    public static final int MOVING_REWARD = 20;
-    public static final int WINNING_REWARD = 10000;
-    public static final int UNDER_CHECK_PENALTY = 50;
-    public static final int ATTACKED_PIECE_RATIO = 3;
-    public static final int ROOKS_CONNECTED_REWARD = 14;
+    public static final int FIELDS_CONTROLLED_RATIO = 8;
+    public static final int PINNING_REWARD = 60;
+    public static final int PINNED_PENALTY = 45;
+    public static final int MOVING_REWARD = 60;
+    public static final int WINNING_REWARD = 100000;
+    public static final int UNDER_CHECK_PENALTY = 200;
+    public static final int ATTACKED_PIECE_RATIO = 8;
+    public static final int ROOKS_CONNECTED_REWARD = 110;
 
-    public static final int DISCOVERY_REWARD = 15;
-    public static final int DOUBLED_PAWN_PENALTY = 5;
-    public static final int CASTLING_THRESHOLD = 50;
+    public static final int DISCOVERY_REWARD = 90;
+    public static final int DOUBLED_PAWN_PENALTY = 65;
+    public static final int CASTLING_THRESHOLD = 100;
 
     private final EnginePosition enginePosition;
 

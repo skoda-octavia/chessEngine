@@ -62,6 +62,7 @@ public abstract class InfiniteRangePiece extends Piece {
                         nextY += yDir;
                         nextX += xDir;
                         nextField = new Field(nextY, nextX);
+                        if (!correctFieldCoordinates(nextY, nextX)) {break;}
                         controlledFields.add(nextField);
                         pinnedPiece = null;
                         discoveryPiece = null;

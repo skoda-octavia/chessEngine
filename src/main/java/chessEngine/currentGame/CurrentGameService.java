@@ -5,6 +5,7 @@ import chessEngine.account.AccountService;
 import chessEngine.chess.ChildGenerator;
 import chessEngine.chess.EnginePosition;
 import chessEngine.chess.engineMove.EngineMove;
+import chessEngine.chess.tree.Node;
 import chessEngine.gameRecord.GameRecordService;
 import chessEngine.gameRecord.GameRecord;
 import chessEngine.move.MoveRequestResponse;
@@ -24,6 +25,7 @@ public class CurrentGameService {
     private final GameRecordService gameRecordService;
     private final CurrentGameRepository currentGameRepository;
     private final PositionService positionService;
+    private final int GAME_TREE_DEPTH = 4;
 
     public CurrentGameResponse getCurrentGameFor(String username) {
         try {
@@ -69,12 +71,22 @@ public class CurrentGameService {
         updateGameBooleanFields(moveRequestResponse);
         EnginePosition enginePosition = makeOpponentsMove(currentGame, gameRecord, moveRequestResponse);
         EngineMove myEngineMove = null;
-        try {
-            myEngineMove = enginePosition.generateRandomMove();
-        }   catch (IllegalStateException e) {
+//        try {
+//            myEngineMove = enginePosition.generateRandomMove();
+//        }   catch (IllegalStateException e) {
+//            finishGame(currentGame, gameRecord);
+//            return new MoveRequestResponse(-1, -1, -1, -1, -1);
+//        }
+
+        if (enginePosition.possibleLegalMoves().size() == 0) {
             finishGame(currentGame, gameRecord);
             return new MoveRequestResponse(-1, -1, -1, -1, -1);
+        } else {
+            Node primeNode = new Node(enginePosition, GAME_TREE_DEPTH);
+            primeNode.generateChildrenNodes();
+            myEngineMove = primeNode.findOptimalChildMove();
         }
+
         EnginePosition myNewEnginePosition = ChildGenerator.generateChild(enginePosition, myEngineMove);
         MoveRequestResponse myResponse = myEngineMove.getRequestResponse();
         System.out.println(myResponse);
@@ -141,6 +153,7 @@ public class CurrentGameService {
         }
         EnginePosition nextEnginePosition = ChildGenerator.generateChild(currentEnginePosition, nextEngineMove);
         saveMoveChanges(nextEnginePosition, currentGame, gameRecord, moveRequestResponse);
+        nextEnginePosition.set();
         return nextEnginePosition;
     }
 

@@ -4,12 +4,11 @@ import chessEngine.chess.EnginePosition;
 import chessEngine.chess.engineMove.EngineMove;
 import chessEngine.chess.engineMove.field.Field;
 import chessEngine.chess.piece.infiniteRangePiece.InfiniteRangePiece;
+import chessEngine.chess.piece.pawn.Pawn;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 @Getter
 @Setter
@@ -43,6 +42,19 @@ public abstract class Piece {
             number++;
             map.put(field, number);
         }
+    }
+    protected boolean pawnAttacks(EnginePosition enginePosition) {
+        LinkedList enemyPieces = pieceColor.equals(PieceColor.WHITE) ? enginePosition.getBlackPieces() : enginePosition.getWhitePieces();
+        Iterator<Piece> iterator = enemyPieces.iterator();
+        while (iterator.hasNext()) {
+            Piece tempPiece = iterator.next();
+            if (tempPiece instanceof Pawn) {
+                if (tempPiece.getControlledFields().contains(this.field)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public Piece(PieceColor pieceColor, EnginePosition position, String pieceCode, Field field) {

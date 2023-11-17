@@ -23,7 +23,7 @@ public abstract class Pawn extends Piece {
     protected final byte enpassantRow;
     protected final byte transformationRow;
 
-    public static final int HEU_VALUE = 10;
+    public static final int HEU_VALUE = 100;
     @Override
     public int generateHeuristicValue(EnginePosition enginePosition) {
         int val = HEU_VALUE;
@@ -52,6 +52,9 @@ public abstract class Pawn extends Piece {
         if (pawnsDoubled(chessBoard)) {
             val -= HeuristicGenerator.DOUBLED_PAWN_PENALTY;
         }
+        if(this.field.getHeight() == this.startingRow + 4*movingDirection) {val+= 200;}
+        else if(this.field.getHeight() == this.startingRow + 5*movingDirection) {val+= 300;}
+
         return val;
     }
 
