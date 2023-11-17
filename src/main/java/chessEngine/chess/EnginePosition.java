@@ -47,10 +47,11 @@ public class EnginePosition {
     private WhiteQueen whiteQueen = null;
     private BlackQueen blackQueen = null;
 
-
+    private ArrayList<EngineMove> possibleLegalMoves = null;
     private HashMap<Field, Byte> whiteControls;
     private HashMap<Field, Byte> blackControls;
     private boolean set = false;
+    private final HeuristicGenerator heuristicGenerator = new HeuristicGenerator(this);
 
     public PieceColor[][] getColorMap() {
         if (this.colorMap == null) {
@@ -121,18 +122,25 @@ public class EnginePosition {
     }
 
     public ArrayList<EngineMove> possibleLegalMoves() {
+        if (this.possibleLegalMoves != null) {return this.possibleLegalMoves;}
         PieceColor checkingColor = whiteMoves ? PieceColor.BLACK : PieceColor.WHITE;
         ArrayList<Piece> checkingPieces = this.checkingPieces(checkingColor);
+        ArrayList<EngineMove> possibleLegalMoves = null;
         switch (checkingPieces.size()) {
             case 0 :
-                return this.standardLegalMoves();
+                possibleLegalMoves = this.standardLegalMoves();
+                break;
             case 1 :
-                return this.singleCheckLegalMoves(checkingPieces);
+                possibleLegalMoves = this.singleCheckLegalMoves(checkingPieces);
+                break;
             case 2 :
-                return this.doubleCheckLegalMoves(checkingPieces);
+                possibleLegalMoves = this.doubleCheckLegalMoves(checkingPieces);
+                break;
             default:
                 throw new IllegalArgumentException("incorrect number of checking pieces");
         }
+        this.possibleLegalMoves = possibleLegalMoves;
+        return possibleLegalMoves;
     }
 
     private ArrayList<EngineMove> doubleCheckLegalMoves(ArrayList<Piece> checkingPieces) {
@@ -267,6 +275,7 @@ public class EnginePosition {
         buildControlFieldMap();
         whiteKing.setCastlingMoves();
         blackKing.setCastlingMoves();
+        possibleLegalMoves();
         this.set = true;
     }
 
@@ -284,6 +293,22 @@ public class EnginePosition {
     public ArrayList<EnginePosition> getChildren() {
         if(!this.set) {set();}
         return null;
+    }
+
+    public EngineMove generateRandomMove() {
+        if (!this.set) {this.set();}
+        ArrayList<EngineMove> legalMoves = this.possibleLegalMoves();
+        if (legalMoves == null || legalMoves.size() == 0) {
+            throw new IllegalStateException("Game over or error while generating possible moves");
+        }
+        Random random = new Random();
+        int randomIdx = random.nextInt(legalMoves.size());
+        return legalMoves.get(randomIdx);
+    }
+
+    public int generateHeuristicValue() {
+        if (!set) {this.set();}
+        return heuristicGenerator.generate();
     }
 
 
@@ -330,14 +355,5 @@ public class EnginePosition {
             this.blackRightRookMoved);
     }
 
-    public EngineMove generateRandomMove() {
-        if (!this.set) {this.set();}
-        ArrayList<EngineMove> legalMoves = this.possibleLegalMoves();
-        if (legalMoves == null || legalMoves.size() == 0) {
-            throw new IllegalStateException("Game over or error while generating possible moves");
-        }
-        Random random = new Random();
-        int randomIdx = random.nextInt(legalMoves.size());
-        return legalMoves.get(randomIdx);
-    }
+
 }

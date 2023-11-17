@@ -1,6 +1,7 @@
 package chessEngine.chess.piece.pawn;
 
 import chessEngine.chess.EnginePosition;
+import chessEngine.chess.HeuristicGenerator;
 import chessEngine.chess.engineMove.EngineMove;
 import chessEngine.chess.engineMove.EngineMoveCode;
 import chessEngine.chess.engineMove.field.Field;
@@ -10,6 +11,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 @Getter
@@ -20,6 +22,51 @@ public abstract class Pawn extends Piece {
 
     protected final byte enpassantRow;
     protected final byte transformationRow;
+
+    public static final int HEU_VALUE = 10;
+    @Override
+    public int generateHeuristicValue(EnginePosition enginePosition) {
+        int val = HEU_VALUE;
+        int attackingNumber = enginePosition.getWhiteControls().getOrDefault(field, (byte)0) - enginePosition.getBlackControls().getOrDefault(field, (byte)0);
+        if (pieceColor.equals(PieceColor.BLACK)) {
+            val -= attackingNumber * HeuristicGenerator.ATTACKED_PIECE_RATIO;
+        }
+        else {
+            val += attackingNumber*HeuristicGenerator.ATTACKED_PIECE_RATIO;
+        }
+        if (pinningPiece != null ) {
+            val -= HeuristicGenerator.PINNED_PENALTY;
+        }
+        if (discoveringPiece != null) {
+            val += HeuristicGenerator.DISCOVERY_REWARD;
+        }
+        Piece[][] chessBoard = enginePosition.getChessBoard();
+        for (Field controlledField : controlledFields) {
+            if (chessBoard[controlledField.getHeight()][controlledField.getWidth()] != null) {
+                Piece tempPiece = chessBoard[controlledField.getHeight()][controlledField.getWidth()];
+                if (tempPiece instanceof Pawn && tempPiece.getPieceColor().equals(pieceColor)) {
+                    val += HeuristicGenerator.ATTACKED_PIECE_RATIO;
+                }
+            }
+        }
+        if (pawnsDoubled(chessBoard)) {
+            val -= HeuristicGenerator.DOUBLED_PAWN_PENALTY;
+        }
+        return val;
+    }
+
+    private boolean pawnsDoubled(Piece[][] chessBoard) {
+        for(int h = 0;h < chessBoard.length; h++) {
+            if (h == this.field.getHeight()) {continue;}
+            if (chessBoard[h][field.getWidth()] != null) {
+                Piece tempPiece = chessBoard[h][field.getWidth()];
+                if (tempPiece instanceof Pawn && tempPiece.getPieceColor().equals(this.pieceColor)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     private boolean possibleEnPassant(PieceColor[][] colorMap) {
         EngineMove parenMove = position.getParentMove();

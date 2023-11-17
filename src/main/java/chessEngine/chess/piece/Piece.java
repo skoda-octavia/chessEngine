@@ -51,4 +51,6 @@ public abstract class Piece {
         this.pieceCode = pieceCode;
         this.field = field;
     }
+
+    public abstract int generateHeuristicValue(EnginePosition enginePosition);
 }
